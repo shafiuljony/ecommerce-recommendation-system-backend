@@ -1,3 +1,5 @@
+@extends('admin.layout.layout')
+@section('content')
 <div class="main-panel">
 <div class="content-wrapper">
     <div class="row">
@@ -29,7 +31,7 @@
         <div class="col-md-6 grid-margin stretch-card">
             <div class="card tale-bg">
                 <div class="card-people mt-auto">
-                    <img src="images/dashboard/people.svg" alt="people">
+                    <img src="{{ asset('admin/images/dashboard/people.svg') }}" alt="people">
                     <div class="weather-info">
                         <div class="d-flex">
                             <div>
@@ -613,7 +615,7 @@
                     <ul class="icon-data-list">
                         <li>
                             <div class="d-flex">
-                                <img src="images/faces/face1.jpg" alt="user">
+                                <img src="{{ asset('admin/images/faces/face1.jpg') }}" alt="user">
                                 <div>
                                     <p class="text-info mb-1">Isabella Becker</p>
                                     <p class="mb-0">Sales dashboard have been created</p>
@@ -623,7 +625,7 @@
                         </li>
                         <li>
                             <div class="d-flex">
-                                <img src="images/faces/face2.jpg" alt="user">
+                                <img src="{{ asset('admin/images/faces/face2.jpg')}}" alt="user">
                                 <div>
                                     <p class="text-info mb-1">Adam Warren</p>
                                     <p class="mb-0">You have done a great job #TW111</p>
@@ -633,7 +635,7 @@
                         </li>
                         <li>
                             <div class="d-flex">
-                                <img src="images/faces/face3.jpg" alt="user">
+                                <img src="{{ asset('admin/images/faces/face3.jpg')}}" alt="user">
                                 <div>
                                     <p class="text-info mb-1">Leonard Thornton</p>
                                     <p class="mb-0">Sales dashboard have been created</p>
@@ -643,7 +645,7 @@
                         </li>
                         <li>
                             <div class="d-flex">
-                                <img src="images/faces/face4.jpg" alt="user">
+                                <img src="{{ asset('admin/images/faces/face4.jpg')}}" alt="user">
                                 <div>
                                     <p class="text-info mb-1">George Morrison</p>
                                     <p class="mb-0">Sales dashboard have been created</p>
@@ -653,7 +655,7 @@
                         </li>
                         <li>
                             <div class="d-flex">
-                                <img src="images/faces/face5.jpg" alt="user">
+                                <img src="{{ asset('admin/images/faces/face5.jpg')}}" alt="user">
                                 <div>
                                     <p class="text-info mb-1">Ryan Cortez</p>
                                     <p class="mb-0">Herbs are fun and easy to grow.</p>
@@ -696,3 +698,5 @@
         </div>
     </div>
 </div>
+
+@endsection
