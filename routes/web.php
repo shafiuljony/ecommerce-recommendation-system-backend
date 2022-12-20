@@ -31,13 +31,18 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function(){
-    // Admin Login 
+    
+    // Admin Login  route
 
     Route::match(['get', 'post'],'login', 'AdminController@login');
 
     Route::group(['middleware'=>['admin']],function(){
+
        // admin dashboard route  
         Route::get('dashboard', 'AdminController@dashboard');
+
+        // admin logout
+        Route::get('logout', 'AdminCOntroller@logout');
     });   
 });
 
