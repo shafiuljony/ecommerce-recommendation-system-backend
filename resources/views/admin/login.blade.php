@@ -5,7 +5,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Skydash Admin</title>
+  <title>Anon Admin</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="{{ url('admin/vendors/feather/feather.css')}}">
   <link rel="stylesheet" href="{{ url('admin/vendors/ti-icons/css/themify-icons.css')}}">
@@ -16,7 +16,7 @@
   <!-- inject:css -->
   <link rel="stylesheet" href="{{ url('admin/css/vertical-layout-light/style.css')}}">
   <!-- endinject -->
-  <link rel="shortcut icon" href="{{ url('admin/images/favicon.png')}}" />
+  <link rel="shortcut icon" href="{{ url('admin/images/favicon.ico')}}" />
 </head>
 
 <body>
@@ -41,7 +41,7 @@
               @endif
               <form class="pt-3" action="{{ url('admin/login') }}" method="post">@csrf
                 <div class="form-group">
-                  <input type="email" name="email" id="email" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Username" required >
+                  <input type="text" name="email" id="email" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Username" required >
                 </div>
                 <div class="form-group">
                   <input type="password" name="password" id="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password" required>
