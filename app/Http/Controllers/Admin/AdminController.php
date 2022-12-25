@@ -15,28 +15,30 @@ class AdminController extends Controller
     public function login(Request  $request){
         // echo $password = Hash::make('12345678'); die;
 
-        // $validated = $request->validate([
-        //     'email' => 'required|email|max:255',  larabel error message
-        //     'password' => 'required',
-        // ]);
-
-        $rules = [
-            'email' => 'requred|email|max:255',
-            'password' => 'required',
-        ];
-
-        $customMessages =[
-            // adding custom message 
-            'email.required' => 'Email is Address required',
-            'email.email' => 'Valid Email is Address required',
-            'password.required' => 'Password is required',
-        ];
-
-        $this->validate($request,$rules,$customMessages);
-
         if($request->isMethod('post')){
             $data = $request->all();
             // echo "<pre>"; print_r($data); die;
+
+            // $validated = $request->validate([
+
+            //     // larabel error message
+            //     'email' => 'required|email|max:255', 
+            //     'password' => 'required',
+            // ]);
+    
+            $rules = [
+                'email' => 'required|email|max:255',
+                'password' => 'required',
+            ];
+    
+            $customMessages =[
+                // adding custom message 
+                'email.required' => 'Email is Address required!',
+                'email.email' => 'Valid Email is Address required',
+                'password.required' => 'Password is required',
+            ];
+    
+            $this->validate($request,$rules,$customMessages);
 
 
             // auth guard attempt 
