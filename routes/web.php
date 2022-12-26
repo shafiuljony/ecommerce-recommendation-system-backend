@@ -31,13 +31,23 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function(){
-    // Admin Login 
+    
+    // Admin Login  route
 
     Route::match(['get', 'post'],'login', 'AdminController@login');
 
-    // admin dashboard route  
+    Route::group(['middleware'=>['admin']],function(){
 
-    Route::get('dashboard', 'AdminController@dashboard');
+       // admin dashboard route  
+        Route::get('dashboard', 'AdminController@dashboard');
+
+        //update admin password
+
+        Route::match(['get','post'],'update-admin-password','AdminController@updateAdminPassword');
+
+        // admin logout
+        Route::get('logout', 'AdminCOntroller@logout');
+    });   
 });
 
 
