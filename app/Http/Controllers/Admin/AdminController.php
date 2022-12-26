@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Auth;
 // use Hash;
 
 class AdminController extends Controller
@@ -13,7 +14,10 @@ class AdminController extends Controller
         return view('admin.dashboard');
     }
     public function updateAdminPassword(){
-        return view('admin.settings.update_admin_password');
+
+        // echo "<pre>"; print_r(Auth::guard('admin')->user()); die;
+        $adminDetails = Admin::where('email', Auth::guard('admin')->user()->email)->first()->toArray();
+        return view('admin.settings.update_admin_password')->with(compact('adminDetails'));
     }
     public function login(Request  $request){
         // echo $password = Hash::make('12345678'); die;
