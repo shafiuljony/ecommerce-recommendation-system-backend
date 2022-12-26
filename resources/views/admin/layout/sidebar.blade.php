@@ -1,7 +1,7 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
         <li class="nav-item">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="{{ url('admin/dashboard')}}">
             <i class="icon-grid menu-icon"></i>
             <span class="menu-title">Dashboard</span>
             </a>
@@ -14,8 +14,8 @@
             </a>
             <div class="collapse" id="ui-basic">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="{{url('update-admin-password')}}">Update Password</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{url('update-admin-details')}}">Update Details</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ url('admin/update-admin-password') }}">Update Password</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ url('admin/update-admin-details') }}">Update Details</a></li>
                 </ul>
             </div>
         </li>
