@@ -12,6 +12,9 @@ class AdminController extends Controller
     public function dashboard(){
         return view('admin.dashboard');
     }
+    public function updateAdminPassword(){
+        return view('admin.settings.update_admin_password');
+    }
     public function login(Request  $request){
         // echo $password = Hash::make('12345678'); die;
 
