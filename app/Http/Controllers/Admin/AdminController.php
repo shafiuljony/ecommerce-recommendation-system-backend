@@ -7,8 +7,7 @@ use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-
-// use Hash;
+use Image;
 
 class AdminController extends Controller
 {
@@ -51,6 +50,7 @@ class AdminController extends Controller
     public function updateAdminDetails(Request $request){
         if($request->isMethod('post')){
             $data = $request->all();
+            // echo "<pre>"; print_r($data); die;
 
             $rules =[
                 'admin_name' => 'required|regex:/^[\pL\s\-]+$/u',
@@ -65,9 +65,23 @@ class AdminController extends Controller
 
             $this->validate($request,$rules,$customMessages);
 
+            // Upload Admin Photo
+
+            if($request->hasFile('admin_image')){
+                $image_tmp = $request->file('admin_image');
+                if($image_tmp->isValid()){
+                    //Get Image Extension
+                    $extension = $image_tmp->getClientOriginalExtension();
+                    //Generate New Image Name
+                    $imageName = rand(111,99999).'.'.$extension;
+                    $imagePath = 'admin/images/photos/'.$imageName;
+                    //upload the image
+                    Image::make($image_tmp)->save($imagePath);
+                }
+            }
             //update Admin details
 
-            Admin::where('id', Auth::guard('admin')->user()->id)->update(['name'=>$data['admin_name'], 'mobile'=>$data['admin_mobile']]);
+            Admin::where('id', Auth::guard('admin')->user()->id)->update(['name'=>$data['admin_name'], 'mobile'=>$data['admin_mobile'], 'image'=>$imageName]);
 
             return redirect()->back()->with('success_message', 'Admin details updated');
         }

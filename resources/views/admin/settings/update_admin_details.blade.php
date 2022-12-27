@@ -30,7 +30,7 @@
         <div class="col-md-6 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Update Admin Password</h4>
+                  <h4 class="card-title">Update Admin Details</h4>
                   @if ($errors->any())
 
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -50,7 +50,7 @@
                       </button>
                     </div>
                   @endif
-                  <form class="forms-sample" action="{{ url('admin/update-admin-details') }}" method="post">@csrf
+                  <form class="forms-sample" action="{{ url('admin/update-admin-details') }}" method="post" enctype="multipart/form-data">@csrf
                     <div class="form-group">
                       <label>Admin Username/Email</label>
                       <input class="form-control" readonly value="{{ Auth::guard('admin')->user()->email}}" placeholder="Username">
@@ -66,6 +66,13 @@
                     <div class="form-group">
                       <label for="admin_mobile">Mobile Number</label>
                       <input type="text" class="form-control" value="{{ Auth::guard('admin')->user()->mobile}}" id="admin_mobile" placeholder="Enter your Mobile Number" name="admin_mobile" require maxlength="11" minlength="11" >
+                    </div>
+                    <div class="form-group">
+                      <label for="admin_image">Admin Photo</label>
+                      <input type="file" class="form-control" id="admin_image"  name="admin_image">
+                      @if(!empty(Auth::guard('admin')->user()->image))
+                      <a target="_blank" href="{{ url('admin/images/photos/'.Auth::guard('admin')->user()->image)}}">View Image</a>
+                      @endif
                     </div>
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                     <button class="btn btn-light">Cancel</button>
