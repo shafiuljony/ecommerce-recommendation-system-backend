@@ -48,6 +48,18 @@ class AdminController extends Controller
             return "false";
         };
     }
+    public function updateAdminDetails(Request $request){
+        if($request->isMethod('post')){
+            $data = $request->all();
+
+            //update Admin details
+
+            Admin::where('id', Auth::guard('admin')->user()->id)->update(['name'=>$data['admin_name'], 'mobile'=>$data['admin_mobile']]);
+
+            return redirect()->back()->with('success_message', 'Admin details updated');
+        }
+        return view('admin.settings.update_admin_details');
+    }
     public function login(Request  $request){
         // echo $password = Hash::make('12345678'); die;
 

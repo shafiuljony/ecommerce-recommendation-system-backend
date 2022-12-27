@@ -47,6 +47,9 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         //check admin password
         Route::post('check-admin-password','AdminController@checkAdminPassword');
 
+        //update admin details
+        Route::match(['get', 'post'], 'update-admin-details', 'AdminController@updateAdminDetails');
+
         // admin logout
         Route::get('logout', 'AdminCOntroller@logout');
     });   
