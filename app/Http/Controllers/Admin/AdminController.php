@@ -78,6 +78,10 @@ class AdminController extends Controller
                     //upload the image
                     Image::make($image_tmp)->save($imagePath);
                 }
+            }elseif(!empty($data['current_admin_image'])){
+                $imageName = $data['current_admin_image'];
+            }else{
+                $imageName ="";
             }
             //update Admin details
 
