@@ -31,14 +31,17 @@
             <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Update Admin Password</h4>
-                  @if(Session::has('error_message'))
+                  @if ($errors->any())
+
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                      <strong>Error: </strong> {{ Session::get('error_message')}}
-                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
-                      </button>
+                        </button>
                     </div>
-                  @endif
+                    @endif
                   @if(Session::has('success_message'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                       <strong>Success: </strong> {{ Session::get('success_message')}}
@@ -62,7 +65,7 @@
                     </div>
                     <div class="form-group">
                       <label for="admin_mobile">Mobile Number</label>
-                      <input type="text" class="form-control" value="{{ Auth::guard('admin')->user()->mobile}}" id="admin_mobile" placeholder="Enter your Mobile Number" name="admin_mobile" require>
+                      <input type="text" class="form-control" value="{{ Auth::guard('admin')->user()->mobile}}" id="admin_mobile" placeholder="Enter your Mobile Number" name="admin_mobile" require maxlength="11" minlength="11" >
                     </div>
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                     <button class="btn btn-light">Cancel</button>

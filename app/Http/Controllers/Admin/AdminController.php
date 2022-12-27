@@ -52,6 +52,19 @@ class AdminController extends Controller
         if($request->isMethod('post')){
             $data = $request->all();
 
+            $rules =[
+                'admin_name' => 'required|regex:/^[\pL\s\-]+$/u',
+                'admin_mobile' => 'required|numeric',
+            ];
+
+            $customMessages = [
+                'admin_name.required' => 'Name is required',
+                'admin_name.regex' => 'Valid Name Is required',
+                'admin_mobile.numeric' => 'Valid number Is required',
+            ];
+
+            $this->validate($request,$rules,$customMessages);
+
             //update Admin details
 
             Admin::where('id', Auth::guard('admin')->user()->id)->update(['name'=>$data['admin_name'], 'mobile'=>$data['admin_mobile']]);
