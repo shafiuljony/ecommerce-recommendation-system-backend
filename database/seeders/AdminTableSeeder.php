@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Admin;
+use App\Models\Vendor;
 
 class AdminTableSeeder extends Seeder
 {
@@ -17,15 +18,15 @@ class AdminTableSeeder extends Seeder
     {
         $adminRecords = [
             [
-                'id'=>1,
-                'name'=>'Super Admin',
-                'type'=>'superAdmin',
-                'vendor_id'=>0,
+                'id'=>2,
+                'name'=>'sadequl',
+                'type'=>'vendor',
+                'vendor_id'=>1,
                 'mobile'=>'01558947938',
-                'email'=>'admin@eduadmin.com',
+                'email'=>'sadeq@admin.com',
                 'password'=>'$2y$10$tEIpd9ycboqkcpTSd.5qce3j3Q8cpWRRsHeG5Hd6lhNJQgFEwBkFy',
                 'image'=>'',
-                'status'=> 1
+                'status'=> 0
             ]
             ];
             Admin::insert($adminRecords);
