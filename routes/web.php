@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -50,8 +51,12 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         //update admin details
         Route::match(['get', 'post'], 'update-admin-details', 'AdminController@updateAdminDetails');
 
+
+        //Update Vendor Details
+        Route::match(['get','post'], 'update-vendor-details/{slug}', 'AdminController@updateVendorDetails');
+
         // admin logout
-        Route::get('logout', 'AdminCOntroller@logout');
+        Route::get('logout', 'AdminController@logout');
     });   
 });
 

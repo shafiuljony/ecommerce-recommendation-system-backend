@@ -91,6 +91,15 @@ class AdminController extends Controller
         }
         return view('admin.settings.update_admin_details');
     }
+    public function updateVendorDetails($slug){
+        if($slug=="personal"){
+
+        }elseif($slug=="business"){
+
+        }elseif($slug=="bank"){
+            return view('admin.settings.update_vendor_details')->with(compact('slug'));
+        }
+    }
     public function login(Request  $request){
         // echo $password = Hash::make('12345678'); die;
 
