@@ -93,9 +93,9 @@ class AdminController extends Controller
     }
     public function updateVendorDetails($slug){
         if($slug=="personal"){
-
+            return view('admin.settings.update_vendor_details')->with(compact('slug'));
         }elseif($slug=="business"){
-
+            return view('admin.settings.update_vendor_details')->with(compact('slug'));
         }elseif($slug=="bank"){
             return view('admin.settings.update_vendor_details')->with(compact('slug'));
         }
