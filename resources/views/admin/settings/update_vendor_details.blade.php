@@ -85,11 +85,11 @@
                       <input type="text" class="form-control" value="{{ $vendorDetails['mobile'] }}" id="admin_mobile" placeholder="Enter your Mobile Number" name="admin_mobile" require maxlength="11" minlength="11" >
                     </div>
                     <div class="form-group">
-                      <label for="admin_image">Photo</label>
-                      <input type="file" class="form-control" id="admin_image"  name="admin_image">
+                      <label for="vendor_image">Photo</label>
+                      <input type="file" class="form-control" id="vendor_image"  name="vendor_image">
                       @if(!empty(Auth::guard('admin')->user()->image))
                       <a target="_blank" href="{{ url('admin/images/photos/'.Auth::guard('admin')->user()->image)}}">View Image</a>
-                      <input type="hidden" name="current_admin_image" value="{{
+                      <input type="hidden" name="current_vendor_image" value="{{
                         Auth::guard('admin')->user()->image
                       }}">
                       @endif
