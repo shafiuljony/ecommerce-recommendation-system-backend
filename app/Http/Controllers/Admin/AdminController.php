@@ -96,50 +96,55 @@ class AdminController extends Controller
         if($slug=="personal"){
             if($request->isMethod('post')){
                 $data = $request->all();
+                $rules =[
+                    'vendor_name' => 'required|regex:/^[\pL\s\-]+$/u',
+                    'vendor_city' => 'required|regex:/^[\pL\s\-]+$/u',
+                    'vendor_mobile' => 'required|numeric',
+                ];
+    
+                $customMessages = [
+                    'vendor_name.required' => 'Name is required',
+                    'vendor_city.required' => 'City is required',
+                    'vendor_name.regex' => 'Valid Name Is required',
+                    'vendor_city.regex' => 'Valid City Is required',
+                    'vendor_mobile.numeric' => 'Valid number Is required',
+                ];
+    
+                $this->validate($request,$rules,$customMessages);
+    
+                // Upload Admin Photo
+    
+                if($request->hasFile('vendor_image')){
+                    $image_tmp = $request->file('vendor_image');
+                    if($image_tmp->isValid()){
+                        //Get Image Extension
+                        $extension = $image_tmp->getClientOriginalExtension();
+                        //Generate New Image Name
+                        $imageName = rand(111,99999).'.'.$extension;
+                        $imagePath = 'admin/images/photos/'.$imageName;
+                        //upload the image
+                        Image::make($image_tmp)->save($imagePath);
+                    }
+                }elseif(!empty($data['current_vendor_image'])){
+                    $imageName = $data['current_vendor_image'];
+                }else{
+                    $imageName ="";
+                }
+                //update in Admins Table
+    
+                Admin::where('id', Auth::guard('admin')->user()->id)->update(['name'=>$data['vendor_name'], 'mobile'=>$data['vendor_mobile'], 'image'=>$imageName]);
+
+
+                    //update in Vendors Table
+                Vendor::where('id', Auth::guard('admin')->user()->vendor_id)->update(['name'=>$data['vendor_name'], 'mobile'=>$data['vendor_mobile'],'address'=>$data['vendor_address'],'city'=>$data['vendor_city'],'state'=>$data['vendor_state'],'country'=>$data['vendor_country'],'pincode'=>$data['vendor_pincode']]);
+                return redirect()->back()->with('success_message', 'Vendor details updated');
+                
+            }elseif($slug=="business"){
+            }elseif($slug=="bank"){
+            }
             }
             $vendorDetails = Vendor::where('id', Auth::guard('admin')->user()->vendor_id)->first()->toArray();
-            $rules =[
-                'vendor_name' => 'required|regex:/^[\pL\s\-]+$/u',
-                'vendor_mobile' => 'required|numeric',
-            ];
-
-            $customMessages = [
-                'vendor_name.required' => 'Name is required',
-                'vendor_name.regex' => 'Valid Name Is required',
-                'vendor_mobile.numeric' => 'Valid number Is required',
-            ];
-
-            $this->validate($request,$rules,$customMessages);
-
-            // Upload Admin Photo
-
-            if($request->hasFile('vendor_image')){
-                $image_tmp = $request->file('vendor_image');
-                if($image_tmp->isValid()){
-                    //Get Image Extension
-                    $extension = $image_tmp->getClientOriginalExtension();
-                    //Generate New Image Name
-                    $imageName = rand(111,99999).'.'.$extension;
-                    $imagePath = 'admin/images/photos/'.$imageName;
-                    //upload the image
-                    Image::make($image_tmp)->save($imagePath);
-                }
-            }elseif(!empty($data['current_vendor_image'])){
-                $imageName = $data['current_vendor_image'];
-            }else{
-                $imageName ="";
-            }
-            //update in Admins Table
-
-            Admin::where('id', Auth::guard('admin')->user()->id)->update(['name'=>$data['vendor_name'], 'mobile'=>$data['vendor_mobile'], 'image'=>$imageName]);
-                //update in Vendors Table
-            Vendor::where('id', Auth::guard('admin')->user()->vendor_id)->update(['name'=>$data['vendor_name'], 'mobile'=>$data['vendor_mobile'],'address'=>$data['vendor_address'],'city'=>$data['vendor_city'],'state'=>$data['vendor_state'],'country'=>$data['vendor_country'],'pincode'=>$data['vendor_pincode']]);
-            return redirect()->back()->with('success_message', 'Admin details updated');
             
-        }elseif($slug=="business"){
-        }elseif($slug=="bank"){
-        }
-        return view('admin.settings.update_vendor_details')->with(compact('slug','vendorDetails'));
     }
     public function login(Request  $request){
         // echo $password = Hash::make('12345678'); die;
