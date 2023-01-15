@@ -51,25 +51,41 @@
                       </button>
                     </div>
                   @endif
-                  <form class="forms-sample" action="{{ url('admin/update-admin-details') }}" method="post" enctype="multipart/form-data">@csrf
+                  <form class="forms-sample" action="{{ url('admin/update-vendor-details/personal') }}" method="post" enctype="multipart/form-data">@csrf
                     <div class="form-group">
-                      <label>Admin Username/Email</label>
+                      <label>Vendor Username/Email</label>
                       <input class="form-control" readonly value="{{ Auth::guard('admin')->user()->email}}" placeholder="Username">
                     </div>
                     <div class="form-group">
-                      <label>Admin Type</label>
-                      <input  class="form-control" value="{{ Auth::guard('admin')->user()->type}}" readonly>
+                      <label for="vendor_name">Name</label>
+                      <input type="text" class="form-control" value="{{ Auth::guard('admin')->user()->name}}" id="vendor_name" placeholder="Enter your name" name="vendor_name" require>
                     </div>
                     <div class="form-group">
-                      <label for="admin_name">Name</label>
-                      <input type="text" class="form-control" value="{{ Auth::guard('admin')->user()->name}}" id="admin_name" placeholder="Enter your name" name="admin_name" require>
+                      <label for="vendor_address">Address</label>
+                      <input type="text" class="form-control" value="{{ $vendorDetails['address'] }}" id="vendor_address" placeholder="Enter your Address" name="vendor_address" require>
+                    </div>
+                    <div class="form-group">
+                      <label for="vendor_city">City</label>
+                      <input type="text" class="form-control" value="{{ $vendorDetails['city'] }}" id="vendor_city" placeholder="Enter your City" name="vendor_city" require>
+                    </div>
+                    <div class="form-group">
+                      <label for="vendor_state">State</label>
+                      <input type="text" class="form-control" value="{{ $vendorDetails['state'] }}" id="vendor_state" placeholder="Enter your State" name="vendor_state" require>
+                    </div>
+                    <div class="form-group">
+                      <label for="Vendor_country">Country</label>
+                      <input type="text" class="form-control" value="{{ $vendorDetails['country'] }}" id="Vendor_country" placeholder="Enter your name" name="Vendor_country" require>
+                    </div>
+                    <div class="form-group">
+                      <label for="vendor_pincode">Pincode</label>
+                      <input type="text" class="form-control" value="{{ $vendorDetails['pincode'] }}" id="vendor_pincode" placeholder="Enter your name" name="vendor_pincode" require>
                     </div>
                     <div class="form-group">
                       <label for="admin_mobile">Mobile Number</label>
-                      <input type="text" class="form-control" value="{{ Auth::guard('admin')->user()->mobile}}" id="admin_mobile" placeholder="Enter your Mobile Number" name="admin_mobile" require maxlength="11" minlength="11" >
+                      <input type="text" class="form-control" value="{{ $vendorDetails['mobile'] }}" id="admin_mobile" placeholder="Enter your Mobile Number" name="admin_mobile" require maxlength="11" minlength="11" >
                     </div>
                     <div class="form-group">
-                      <label for="admin_image">Admin Photo</label>
+                      <label for="admin_image">Photo</label>
                       <input type="file" class="form-control" id="admin_image"  name="admin_image">
                       @if(!empty(Auth::guard('admin')->user()->image))
                       <a target="_blank" href="{{ url('admin/images/photos/'.Auth::guard('admin')->user()->image)}}">View Image</a>

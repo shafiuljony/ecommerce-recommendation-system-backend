@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -91,14 +92,17 @@ class AdminController extends Controller
         }
         return view('admin.settings.update_admin_details');
     }
-    public function updateVendorDetails($slug){
+    public function updateVendorDetails($slug, Request $request){
         if($slug=="personal"){
-            return view('admin.settings.update_vendor_details')->with(compact('slug'));
+            if($request->isMethod('post')){
+                $data = $request->all();
+                echo "<pre>"; print_r($data); die;
+            }
+            $vendorDetails = Vendor::where('id', Auth::guard('admin')->user()->vendor_id)->first()->toArray();
         }elseif($slug=="business"){
-            return view('admin.settings.update_vendor_details')->with(compact('slug'));
         }elseif($slug=="bank"){
-            return view('admin.settings.update_vendor_details')->with(compact('slug'));
         }
+        return view('admin.settings.update_vendor_details')->with(compact('slug','vendorDetails'));
     }
     public function login(Request  $request){
         // echo $password = Hash::make('12345678'); die;
