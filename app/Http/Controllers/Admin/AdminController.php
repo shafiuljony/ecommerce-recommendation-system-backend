@@ -96,17 +96,17 @@ class AdminController extends Controller
         if($slug=="personal"){
             if($request->isMethod('post')){
                 $data = $request->all();
+
+                // echo "<pre>"; print_r($data); die;
+
                 $rules =[
                     'vendor_name' => 'required|regex:/^[\pL\s\-]+$/u',
-                    'vendor_city' => 'required|regex:/^[\pL\s\-]+$/u',
                     'vendor_mobile' => 'required|numeric',
                 ];
     
                 $customMessages = [
                     'vendor_name.required' => 'Name is required',
-                    'vendor_city.required' => 'City is required',
                     'vendor_name.regex' => 'Valid Name Is required',
-                    'vendor_city.regex' => 'Valid City Is required',
                     'vendor_mobile.numeric' => 'Valid number Is required',
                 ];
     
@@ -130,21 +130,26 @@ class AdminController extends Controller
                 }else{
                     $imageName ="";
                 }
-                //update in Admins Table
+                //update in Admin table
     
                 Admin::where('id', Auth::guard('admin')->user()->id)->update(['name'=>$data['vendor_name'], 'mobile'=>$data['vendor_mobile'], 'image'=>$imageName]);
 
+                //update in vendor table
 
-                    //update in Vendors Table
-                Vendor::where('id', Auth::guard('admin')->user()->vendor_id)->update(['name'=>$data['vendor_name'], 'mobile'=>$data['vendor_mobile'],'address'=>$data['vendor_address'],'city'=>$data['vendor_city'],'state'=>$data['vendor_state'],'country'=>$data['vendor_country'],'pincode'=>$data['vendor_pincode']]);
-                return redirect()->back()->with('success_message', 'Vendor details updated');
-                
-            }elseif($slug=="business"){
-            }elseif($slug=="bank"){
-            }
+                Vendor::where('id', Auth::guard('admin')->user()->vendor_id)->update(['name'=>$data['vendor_name'],'address'=>$data['vendor_address'],'city'=>$data['vendor_city'],'state'=>$data['vendor_state'],'country'=>$data['vendor_country'],'pincode'=>$data['vendor_pincode'],'mobile'=>$data['vendor_mobile']]);
+    
+                return redirect()->back()->with('success_message', 'Vendor details updated successfully');
             }
             $vendorDetails = Vendor::where('id', Auth::guard('admin')->user()->vendor_id)->first()->toArray();
-            
+               
+        }elseif($slug=="business"){
+            //business
+        }elseif($slug=="bank"){
+            //bank
+        }
+
+        return view('admin.settings.update_vendor_details')->with(compact('slug','vendorDetails'));
+        
     }
     public function login(Request  $request){
         // echo $password = Hash::make('12345678'); die;

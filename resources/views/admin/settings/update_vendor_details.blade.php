@@ -73,16 +73,16 @@
                       <input type="text" class="form-control" value="{{ $vendorDetails['state'] }}" id="vendor_state" placeholder="Enter your State" name="vendor_state" require>
                     </div>
                     <div class="form-group">
-                      <label for="Vendor_country">Country</label>
-                      <input type="text" class="form-control" value="{{ $vendorDetails['country'] }}" id="Vendor_country" placeholder="Enter your name" name="Vendor_country" require>
+                      <label for="vendor_country">Country</label>
+                      <input type="text" class="form-control" value="{{ $vendorDetails['country'] }}" id="vendor_country" placeholder="Enter your country Name" name="vendor_country" require>
                     </div>
                     <div class="form-group">
                       <label for="vendor_pincode">Pincode</label>
                       <input type="text" class="form-control" value="{{ $vendorDetails['pincode'] }}" id="vendor_pincode" placeholder="Enter your name" name="vendor_pincode" require>
                     </div>
                     <div class="form-group">
-                      <label for="admin_mobile">Mobile Number</label>
-                      <input type="text" class="form-control" value="{{ $vendorDetails['mobile'] }}" id="admin_mobile" placeholder="Enter your Mobile Number" name="admin_mobile" require maxlength="11" minlength="11" >
+                      <label for="vendor_mobile">Mobile Number</label>
+                      <input type="text" class="form-control" value="{{ $vendorDetails['mobile'] }}" id="vendor_mobile" placeholder="Enter your Mobile Number" name="vendor_mobile" require maxlength="11" minlength="11" >
                     </div>
                     <div class="form-group">
                       <label for="vendor_image">Photo</label>
