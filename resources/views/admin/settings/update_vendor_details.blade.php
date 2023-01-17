@@ -201,6 +201,59 @@
         </div>
     </div>
     @elseif($slug=="bank")
+
+    <div class="row">
+        <div class="col-md-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Update Bank Information</h4>
+                  @if ($errors->any())
+
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @endif
+                  @if(Session::has('success_message'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                      <strong>Success: </strong> {{ Session::get('success_message')}}
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                  @endif
+                  <form class="forms-sample" action="{{ url('admin/update-vendor-details/bank') }}" method="post" enctype="multipart/form-data">@csrf
+                    <div class="form-group">
+                      <label>Vendor Username/Email</label>
+                      <input class="form-control" readonly value="{{ Auth::guard('admin')->user()->email}}" placeholder="Username">
+                    </div>
+                    <div class="form-group">
+                      <label for="account_holder_name">Account Holde Name</label>
+                      <input type="text" class="form-control" value="{{ $vendorDetails['account_holder_name']}}" id="account_holder_name" placeholder="Enter Account Holde Name" name="account_holder_name" require>
+                    </div>
+                    <div class="form-group">
+                      <label for="bank_name">Bank Name</label>
+                      <input type="text" class="form-control" value="{{ $vendorDetails['bank_name'] }}" id="bank_name" placeholder="Enter Bank Name" name="bank_name" require>
+                    </div>
+                    <div class="form-group">
+                      <label for="account_number">Account Number</label>
+                      <input type="text" class="form-control" value="{{ $vendorDetails['account_number'] }}" id="account_number" placeholder="Enter your Shop Mobile Number" name="account_number" require maxlength="20" >
+                    </div>
+                    <div class="form-group">
+                      <label for="bank_ifsc_code">Bank Ifsc Code</label>
+                      <input type="text" class="form-control" value="{{ $vendorDetails['bank_ifsc_code'] }}" id="bank_ifsc_code" placeholder="Enter your Shop  Mobile Number" name="bank_ifsc_code" require maxlength="10" >
+                    </div>
+                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    <button class="btn btn-light">Cancel</button>
+                  </form>
+                </div>
+              </div>
+        </div>
+    </div>
     @endif
 </div>
 
