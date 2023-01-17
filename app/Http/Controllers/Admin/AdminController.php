@@ -101,14 +101,14 @@ class AdminController extends Controller
                 // echo "<pre>"; print_r($data); die;
 
                 $rules =[
-                    'vendor_name' => 'required|regex:/^[\pL\s\-]+$/u',
-                    'vendor_mobile' => 'required|numeric',
+                    'shop_name' => 'required|regex:/^[\pL\s\-]+$/u',
+                    'shop_mobile' => 'required|numeric',
                 ];
     
                 $customMessages = [
-                    'vendor_name.required' => 'Name is required',
-                    'vendor_name.regex' => 'Valid Name Is required',
-                    'vendor_mobile.numeric' => 'Valid number Is required',
+                    'shop_name.required' => 'Name is required',
+                    'shop_name.regex' => 'Valid Name Is required',
+                    'shop_mobile.numeric' => 'Valid number Is required',
                 ];
     
                 $this->validate($request,$rules,$customMessages);
@@ -145,12 +145,70 @@ class AdminController extends Controller
                
         }elseif($slug=="business"){
             //business
-            $vendorBusinessDetails = VendorsBusinessDetails::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->first()->toArray();
+
+            if($request->isMethod('post')){
+                $data = $request->all();
+
+                // echo "<pre>"; print_r($data); die;
+
+                $rules =[
+                    'shop_name' => 'required|regex:/^[\pL\s\-]+$/u',
+                    'shop_mobile' => 'required|numeric',
+                    'address_proof' => 'required',
+                    'address_proof_image' => 'required|image'
+                ];
+    
+                $customMessages = [
+                    'shop_name.required' => 'Name is required',
+                    'shop_name.regex' => 'Valid Name Is required',
+                    'shop_mobile.numeric' => 'Valid number Is required',
+                    'shop_mobile.required' => 'Valid number Is required',
+                    'address_proof_image.required' => 'Address Proof Image Is required',
+                    'shop_mobile.numeric' => 'Vali Address Proof Image Is required',
+                ];
+    
+                $this->validate($request,$rules,$customMessages);
+    
+                // Upload Admin Photo
+    
+                if($request->hasFile('address_proof')){
+                    $image_tmp = $request->file('address_proof');
+                    if($image_tmp->isValid()){
+                        //Get Image Extension
+                        $extension = $image_tmp->getClientOriginalExtension();
+                        //Generate New Image Name
+                        $imageName = rand(111,99999).'.'.$extension;
+                        $imagePath = 'admin/images/proofs/'.$imageName;
+                        //upload the image
+                        Image::make($image_tmp)->save($imagePath);
+                    }
+                }elseif(!empty($data['current_address_proof'])){
+                    $imageName = $data['current_address_proof'];
+                }else{
+                    $imageName ="";
+                }
+                
+
+                //update in vendors business details table
+
+                VendorsBusinessDetails::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->update(['shop_name'=>$data['shop_name'],'shop_address'=>$data['shop_address'],'shop_city'=>$data['shop_city'],'shop_state'=>$data['shop_state'],'shop_country'=>$data['shop_country'],'shop_pincode'=>$data['shop_pincode'],'shop_mobile'=>$data['shop_mobile'],
+                'shop_website'=>$data['shop_website'],
+                'shop_email'=>$data['shop_email'],
+                'address_proof'=>$data['address_proof'],
+                'address_proof_image'=>$imageName,
+                'business_license_number'=>$data['business_license_number'],
+                'gst_number'=>$data['gst_number'],
+                'pan_number'=>$data['pan_number']]);
+    
+                return redirect()->back()->with('success_message', 'Vendor details updated successfully');
+            }
+
+            $vendorDetails = VendorsBusinessDetails::where('shop_id', Auth::guard('admin')->user()->shop_id)->first()->toArray();
         }elseif($slug=="bank"){
             //bank
         }
 
-        return view('admin.settings.update_vendor_details')->with(compact('slug','vendorDetails'));
+        return view('admin.settings.update_shop_details')->with(compact('slug','vendorDetails'));
         
     }
     public function login(Request  $request){

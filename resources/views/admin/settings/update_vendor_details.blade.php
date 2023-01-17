@@ -137,39 +137,39 @@
                     </div>
                     <div class="form-group">
                       <label for="shop_address"> Shop Address</label>
-                      <input type="text" class="form-control" value="{{ $vendorDetails['address'] }}" id="shop_address" placeholder="Enter your Shop  Address" name="shop_address" require>
+                      <input type="text" class="form-control" value="{{ $vendorDetails['shop_address'] }}" id="shop_address" placeholder="Enter your Shop  Address" name="shop_address" require>
                     </div>
                     <div class="form-group">
                       <label for="shop_city"> Shop City</label>
-                      <input type="text" class="form-control" value="{{ $vendorDetails['city'] }}" id="shop_city" placeholder="Enter your  Shop City" name="shop_city" require>
+                      <input type="text" class="form-control" value="{{ $vendorDetails['shop_city'] }}" id="shop_city" placeholder="Enter your  Shop City" name="shop_city" require>
                     </div>
                     <div class="form-group">
                       <label for="shop_state"> Shop State</label>
-                      <input type="text" class="form-control" value="{{ $vendorDetails['state'] }}" id="shop_state" placeholder="Enter your  Shop State" name="shop_state" require>
+                      <input type="text" class="form-control" value="{{ $vendorDetails['shop_state'] }}" id="shop_state" placeholder="Enter your  Shop State" name="shop_state" require>
                     </div>
                     <div class="form-group">
                       <label for="shop_country"> Shop Country</label>
-                      <input type="text" class="form-control" value="{{ $vendorDetails['country'] }}" id="shop_country" placeholder="Enter your  Shop country Name" name="shop_country" require>
+                      <input type="text" class="form-control" value="{{ $vendorDetails['shop_country'] }}" id="shop_country" placeholder="Enter your  Shop country Name" name="shop_country" require>
                     </div>
                     <div class="form-group">
                       <label for="shop_pincode"> Shop Pincode</label>
-                      <input type="text" class="form-control" value="{{ $vendorDetails['pincode'] }}" id="shop_pincode" placeholder="Enter your  Shop name" name="shop_pincode" require>
+                      <input type="text" class="form-control" value="{{ $vendorDetails['shop_pincode'] }}" id="shop_pincode" placeholder="Enter your  Shop name" name="shop_pincode" require>
                     </div>
                     <div class="form-group">
                       <label for="business_license_number">Business License Number</label>
-                      <input type="text" class="form-control" value="{{ $vendorDetails['mobile'] }}" id="business_license_number" placeholder="Enter your Shop  Mobile Number" name="business_license_number" require >
+                      <input type="text" class="form-control" value="{{ $vendorDetails['business_license_number'] }}" id="business_license_number" placeholder="Enter your Shop  Licence Number" name="business_license_number" require >
                     </div>
                     <div class="form-group">
                       <label for="gst_number"> Gst Number</label>
-                      <input type="text" class="form-control" value="{{ $vendorDetails['mobile'] }}" id="gst_number" placeholder="Enter your Gst Number" name="gst_number" require>
+                      <input type="text" class="form-control" value="{{ $vendorDetails['gst_number'] }}" id="gst_number" placeholder="Enter your Gst Number" name="gst_number" require>
                     </div>
                     <div class="form-group">
                       <label for="pan_number"> Pan Number</label>
-                      <input type="text" class="form-control" value="{{ $vendorDetails['mobile'] }}" id="pan_number" placeholder="Enter your Shop  Mobile Number" name="pan_number" require maxlength="11" minlength="11" >
+                      <input type="text" class="form-control" value="{{ $vendorDetails['pan_number'] }}" id="pan_number" placeholder="Enter your Shop  Pan Number" name="pan_number" require maxlength="11" minlength="11" >
                     </div>
                     <div class="form-group">
                       <label for="shop_mobile"> Shop Mobile Number</label>
-                      <input type="text" class="form-control" value="{{ $vendorDetails['mobile'] }}" id="shop_mobile" placeholder="Enter your Shop  Mobile Number" name="shop_mobile" require maxlength="11" minlength="11" >
+                      <input type="text" class="form-control" value="{{ $vendorDetails['shop_mobile'] }}" id="shop_mobile" placeholder="Enter your Shop  Mobile Number" name="shop_mobile" require maxlength="11" minlength="11" >
                     </div>
                     <div class="form-group">
                       <label for="address_proof">Address Proof</label>
@@ -182,10 +182,10 @@
                     <div class="form-group">
                       <label for="address_proof_image"> Address Proof Image</label>
                       <input type="file" class="form-control" id="address_proof_image"  name="address_proof_image">
-                      @if(!empty(Auth::guard('admin')->user()->image))
-                      <a target="_blank" href="{{ url('admin/images/proofs/'.Auth::guard('admin')->user()->image)}}">View Image</a>
-                      <input type="hidden" name="current_vendor_image" value="{{
-                        Auth::guard('admin')->user()->image
+                      @if(!empty($vendorDetails['address_proof_image']))
+                      <a target="_blank" href="{{ url('admin/images/proofs/'.$vendorDetails['current_address_proof'])}}">View Image</a>
+                      <input type="hidden" name="current_address_proof" value="{{
+                        $vendorDetails['address_proof_image']
                       }}">
                       @endif
                     </div>
