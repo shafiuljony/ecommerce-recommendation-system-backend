@@ -178,9 +178,9 @@
                     <div class="form-group">
                       <label for="address_proof">Address Proof</label>
                       <select name="address_proof" class="form-control" id="address_proof">
-                        <option value="Passport">Passport</option>
-                        <option value="Nid">National Id</option>
-                        <option value="Tread lisence">Tread lisence</option>
+                        <option value="Passport" @if($vendorDetails['address_proof']=="Passport") selected @endif>Passport</option>
+                        <option value="Nid" @if($vendorDetails['address_proof']=="National Id") selected @endif>National Id</option>
+                        <option value="Tread lisence" @if($vendorDetails['address_proof']=="Tread lisence") selected @endif>Tread lisence</option>
                       </select>
                     </div>
                     <div class="form-group">

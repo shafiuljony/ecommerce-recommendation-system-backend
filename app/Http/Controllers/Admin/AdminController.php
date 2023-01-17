@@ -154,16 +154,14 @@ class AdminController extends Controller
                 $rules =[
                     'shop_name' => 'required|regex:/^[\pL\s\-]+$/u',
                     'shop_mobile' => 'required|numeric',
-                    'address_proof' => 'required',
-                    'address_proof_image' => 'required|image'
+                    'address_proof' => 'required'
                 ];
     
                 $customMessages = [
                     'shop_name.required' => 'Name is required',
                     'shop_name.regex' => 'Valid Name Is required',
-                    'shop_mobile.numeric' => 'Valid number Is required',
+                    'shop_city.required' => 'Valid number Is required',
                     'shop_mobile.required' => 'Valid number Is required',
-                    'address_proof_image.required' => 'Address Proof Image Is required',
                     'shop_mobile.numeric' => 'Vali Address Proof Image Is required',
                 ];
     
@@ -171,8 +169,8 @@ class AdminController extends Controller
     
                 // Upload Admin Photo
     
-                if($request->hasFile('address_proof')){
-                    $image_tmp = $request->file('address_proof');
+                if($request->hasFile('address_proof_image')){
+                    $image_tmp = $request->file('address_proof_image');
                     if($image_tmp->isValid()){
                         //Get Image Extension
                         $extension = $image_tmp->getClientOriginalExtension();
