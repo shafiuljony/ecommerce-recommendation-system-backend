@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Vendor;
+use App\Models\VendorsBusinessDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -144,6 +145,7 @@ class AdminController extends Controller
                
         }elseif($slug=="business"){
             //business
+            $vendorBusinessDetails = VendorsBusinessDetails::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->first()->toArray();
         }elseif($slug=="bank"){
             //bank
         }

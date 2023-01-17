@@ -102,6 +102,80 @@
         </div>
     </div>
     @elseif($slug=="business")
+    <div class="row">
+        <div class="col-md-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Update Business Information</h4>
+                  @if ($errors->any())
+
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @endif
+                  @if(Session::has('success_message'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                      <strong>Success: </strong> {{ Session::get('success_message')}}
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                  @endif
+                  <form class="forms-sample" action="{{ url('admin/update-vendor-details/business') }}" method="post" enctype="multipart/form-data">@csrf
+                    <div class="form-group">
+                      <label>Vendor Username/Email</label>
+                      <input class="form-control" readonly value="{{ Auth::guard('admin')->user()->email}}" placeholder="Username">
+                    </div>
+                    <div class="form-group">
+                      <label for="shop_name">Shop Name</label>
+                      <input type="text" class="form-control" value="{{ Auth::guard('admin')->user()->name}}" id="shop_name" placeholder="Enter your  Shop  name" name="shop_name" require>
+                    </div>
+                    <div class="form-group">
+                      <label for="shop_address"> Shop Address</label>
+                      <input type="text" class="form-control" value="{{ $vendorDetails['address'] }}" id="shop_address" placeholder="Enter your Shop  Address" name="shop_address" require>
+                    </div>
+                    <div class="form-group">
+                      <label for="shop_city"> Shop City</label>
+                      <input type="text" class="form-control" value="{{ $vendorDetails['city'] }}" id="shop_city" placeholder="Enter your  Shop City" name="shop_city" require>
+                    </div>
+                    <div class="form-group">
+                      <label for="shop_state"> Shop State</label>
+                      <input type="text" class="form-control" value="{{ $vendorDetails['state'] }}" id="shop_state" placeholder="Enter your  Shop State" name="shop_state" require>
+                    </div>
+                    <div class="form-group">
+                      <label for="shop_country"> Shop Country</label>
+                      <input type="text" class="form-control" value="{{ $vendorDetails['country'] }}" id="shop_country" placeholder="Enter your  Shop country Name" name="shop_country" require>
+                    </div>
+                    <div class="form-group">
+                      <label for="shop_pincode"> Shop Pincode</label>
+                      <input type="text" class="form-control" value="{{ $vendorDetails['pincode'] }}" id="shop_pincode" placeholder="Enter your  Shop name" name="shop_pincode" require>
+                    </div>
+                    <div class="form-group">
+                      <label for="shop_mobile"> Shop Mobile Number</label>
+                      <input type="text" class="form-control" value="{{ $vendorDetails['mobile'] }}" id="shop_mobile" placeholder="Enter your Shop  Mobile Number" name="shop_mobile" require maxlength="11" minlength="11" >
+                    </div>
+                    <div class="form-group">
+                      <label for="shop_image"> Shop Photo</label>
+                      <input type="file" class="form-control" id="shop_image"  name="vendor_image">
+                      @if(!empty(Auth::guard('admin')->user()->image))
+                      <a target="_blank" href="{{ url('admin/images/photos/'.Auth::guard('admin')->user()->image)}}">View Image</a>
+                      <input type="hidden" name="current_vendor_image" value="{{
+                        Auth::guard('admin')->user()->image
+                      }}">
+                      @endif
+                    </div>
+                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    <button class="btn btn-light">Cancel</button>
+                  </form>
+                </div>
+              </div>
+        </div>
+    </div>
     @elseif($slug=="bank")
     @endif
 </div>
