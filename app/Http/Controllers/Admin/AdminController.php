@@ -193,7 +193,6 @@ class AdminController extends Controller
 
                 VendorsBusinessDetails::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->update(['shop_name'=>$data['shop_name'],'shop_address'=>$data['shop_address'],'shop_city'=>$data['shop_city'],'shop_state'=>$data['shop_state'],'shop_country'=>$data['shop_country'],'shop_pincode'=>$data['shop_pincode'],'shop_mobile'=>$data['shop_mobile'],
                 'shop_website'=>$data['shop_website'],
-                'shop_email'=>$data['shop_email'],
                 'address_proof'=>$data['address_proof'],
                 'address_proof_image'=>$imageName,
                 'business_license_number'=>$data['business_license_number'],
@@ -203,12 +202,12 @@ class AdminController extends Controller
                 return redirect()->back()->with('success_message', 'Vendor details updated successfully');
             }
 
-            $vendorDetails = VendorsBusinessDetails::where('shop_id', Auth::guard('admin')->user()->shop_id)->first()->toArray();
+            $vendorDetails = VendorsBusinessDetails::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->first()->toArray();
         }elseif($slug=="bank"){
             //bank
         }
 
-        return view('admin.settings.update_shop_details')->with(compact('slug','vendorDetails'));
+        return view('admin.settings.update_vendor_details')->with(compact('slug','vendorDetails'));
         
     }
     public function login(Request  $request){

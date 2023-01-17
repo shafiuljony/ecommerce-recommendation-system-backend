@@ -133,7 +133,7 @@
                     </div>
                     <div class="form-group">
                       <label for="shop_name">Shop Name</label>
-                      <input type="text" class="form-control" value="{{ Auth::guard('admin')->user()->name}}" id="shop_name" placeholder="Enter your  Shop  name" name="shop_name" require>
+                      <input type="text" class="form-control" value="{{ $vendorDetails['shop_name']}}" id="shop_name" placeholder="Enter your  Shop name" name="shop_name" require>
                     </div>
                     <div class="form-group">
                       <label for="shop_address"> Shop Address</label>
@@ -172,6 +172,10 @@
                       <input type="text" class="form-control" value="{{ $vendorDetails['shop_mobile'] }}" id="shop_mobile" placeholder="Enter your Shop  Mobile Number" name="shop_mobile" require maxlength="11" minlength="11" >
                     </div>
                     <div class="form-group">
+                      <label for="shop_website"> Shop website</label>
+                      <input type="text" class="form-control" value="{{ $vendorDetails['shop_website'] }}" id="	shop_website" placeholder="Enter your Shop  Mobile Number" name="shop_website">
+                    </div>
+                    <div class="form-group">
                       <label for="address_proof">Address Proof</label>
                       <select name="address_proof" class="form-control" id="address_proof">
                         <option value="Passport">Passport</option>
@@ -183,7 +187,7 @@
                       <label for="address_proof_image"> Address Proof Image</label>
                       <input type="file" class="form-control" id="address_proof_image"  name="address_proof_image">
                       @if(!empty($vendorDetails['address_proof_image']))
-                      <a target="_blank" href="{{ url('admin/images/proofs/'.$vendorDetails['current_address_proof'])}}">View Image</a>
+                      <a target="_blank" href="{{ url('admin/images/proofs/'.$vendorDetails['address_proof_image'])}}">View Image</a>
                       <input type="hidden" name="current_address_proof" value="{{
                         $vendorDetails['address_proof_image']
                       }}">
