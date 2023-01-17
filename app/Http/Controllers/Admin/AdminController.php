@@ -241,6 +241,19 @@ class AdminController extends Controller
         return view('admin.settings.update_vendor_details')->with(compact('slug','vendorDetails'));
         
     }
+
+    public function admins($type=null){
+        
+        $admins = Admin::query();
+        if(!empty($type)){
+            $admins = $admins->where('type',$type);
+        }else{
+
+        }
+        $admins = $admins->get()->toArray();
+        // dd($admins);
+        return view('admin.admins.admins')->with(compact('admins'));
+    }
     public function login(Request  $request){
         // echo $password = Hash::make('12345678'); die;
 
@@ -284,4 +297,6 @@ class AdminController extends Controller
         Auth::guard('admin')->logout();
         return redirect('admin/logout');
     }
+
+    
 }

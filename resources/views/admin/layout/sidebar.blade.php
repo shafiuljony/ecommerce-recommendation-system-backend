@@ -43,9 +43,9 @@
             </a>
             <div class="collapse" id="ui-basic">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="{{ url('admin/admins/admin') }}">Admins</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ url('admin/admins/subAdmins') }}">Sub Admins</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ url('admin/admins/Vendors') }}">Vendors</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ url('admin/admins/admins') }}">Admins</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ url('admin/admins/subadmins') }}">Sub Admins</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ url('admin/admins/vendors') }}">Vendors</a></li>
                 </ul>
             </div>
         </li>
