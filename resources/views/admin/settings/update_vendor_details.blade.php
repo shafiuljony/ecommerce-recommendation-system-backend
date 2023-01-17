@@ -156,14 +156,34 @@
                       <input type="text" class="form-control" value="{{ $vendorDetails['pincode'] }}" id="shop_pincode" placeholder="Enter your  Shop name" name="shop_pincode" require>
                     </div>
                     <div class="form-group">
+                      <label for="business_license_number">Business License Number</label>
+                      <input type="text" class="form-control" value="{{ $vendorDetails['mobile'] }}" id="business_license_number" placeholder="Enter your Shop  Mobile Number" name="business_license_number" require >
+                    </div>
+                    <div class="form-group">
+                      <label for="gst_number"> Gst Number</label>
+                      <input type="text" class="form-control" value="{{ $vendorDetails['mobile'] }}" id="gst_number" placeholder="Enter your Gst Number" name="gst_number" require>
+                    </div>
+                    <div class="form-group">
+                      <label for="pan_number"> Pan Number</label>
+                      <input type="text" class="form-control" value="{{ $vendorDetails['mobile'] }}" id="pan_number" placeholder="Enter your Shop  Mobile Number" name="pan_number" require maxlength="11" minlength="11" >
+                    </div>
+                    <div class="form-group">
                       <label for="shop_mobile"> Shop Mobile Number</label>
                       <input type="text" class="form-control" value="{{ $vendorDetails['mobile'] }}" id="shop_mobile" placeholder="Enter your Shop  Mobile Number" name="shop_mobile" require maxlength="11" minlength="11" >
                     </div>
                     <div class="form-group">
-                      <label for="shop_image"> Shop Photo</label>
-                      <input type="file" class="form-control" id="shop_image"  name="vendor_image">
+                      <label for="address_proof">Address Proof</label>
+                      <select name="address_proof" class="form-control" id="address_proof">
+                        <option value="Passport">Passport</option>
+                        <option value="Nid">National Id</option>
+                        <option value="Tread lisence">Tread lisence</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="address_proof_image"> Address Proof Image</label>
+                      <input type="file" class="form-control" id="address_proof_image"  name="address_proof_image">
                       @if(!empty(Auth::guard('admin')->user()->image))
-                      <a target="_blank" href="{{ url('admin/images/photos/'.Auth::guard('admin')->user()->image)}}">View Image</a>
+                      <a target="_blank" href="{{ url('admin/images/proofs/'.Auth::guard('admin')->user()->image)}}">View Image</a>
                       <input type="hidden" name="current_vendor_image" value="{{
                         Auth::guard('admin')->user()->image
                       }}">
