@@ -7,6 +7,9 @@
             <div class="row">
                 <div class="col-12 col-xl-8 mb-4 mb-xl-0">
                     <h3 class="font-weight-bold">Vendor Details</h3>
+                    <h6 class="font-weight-normal mb-0">
+                      <a href="{{ url('admin/admins/vendor')}}">Back To Vendor</a>
+                    </h6>
                 </div>
                 <div class="col-12 col-xl-4">
                     <div class="justify-content-end d-flex">
@@ -144,7 +147,7 @@
                       <input  class="form-control" value="{{ $vendorDetails['vendor_bank']['account_number']}}"readonly>
                     </div>
                     <div class="form-group">
-                      <label>Bank Ifsc Code</label>
+                      <label>Ifsc Code</label>
                       <input  class="form-control" value="{{ $vendorDetails['vendor_bank']['bank_ifsc_code']}}"readonly>
                     </div>
                 </div>
