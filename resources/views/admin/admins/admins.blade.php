@@ -59,11 +59,16 @@
                                             <img src="{{  asset('admin/images/photos/'.$admin['image']) }}" alt="" srcset="">
                                         </td>
                                         <td>
-                                            @if( $admin['status'] == 1)
-                                                Active
+                                            @if($admin['status']==1)
+                                                <i class="mdi mdi-bookmark-check" style="font-size: 25px;"></i>
                                             @else
-                                                Inactive
+                                                <i class="mdi mdi-bookmark-outline" style="font-size: 25px;"></i>
                                             @endif        
+                                        </td>
+                                        <td>
+                                            @if($admin['type']=='vendor')
+                                                <a href="{{ url('admin/view-vendor-details'.$admin['id'])}}"></a>
+                                           @endif   
                                         </td>
                                     </tr>
                                     @endforeach
