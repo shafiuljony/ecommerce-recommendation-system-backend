@@ -247,12 +247,13 @@ class AdminController extends Controller
         $admins = Admin::query();
         if(!empty($type)){
             $admins = $admins->where('type',$type);
+            $title = ucfirst($type).'s';
         }else{
-
+            $title = " All Admins/Subadmins/Vendors";
         }
         $admins = $admins->get()->toArray();
         // dd($admins);
-        return view('admin.admins.admins')->with(compact('admins'));
+        return view('admin.admins.admins')->with(compact('admins','title'));
     }
     public function login(Request  $request){
         // echo $password = Hash::make('12345678'); die;
