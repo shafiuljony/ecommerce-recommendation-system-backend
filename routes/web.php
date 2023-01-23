@@ -63,6 +63,10 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
 
         Route::get('view-vendor-details/{id}','AdminController@viewVendorDetails');
 
+        //update admin status
+
+        Route::post('update-admin-status','AdminController@updateAdminStatus')
+
         // admin logout
         Route::get('logout', 'AdminController@logout');
     });   

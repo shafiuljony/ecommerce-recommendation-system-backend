@@ -262,6 +262,10 @@ class AdminController extends Controller
 
         return view('admin.admins.view_vendor_details')->with(compact('vendorDetails'));
     }
+
+    public function updateAdminStatus(Request $request){
+        
+    }
     public function login(Request  $request){
         // echo $password = Hash::make('12345678'); die;
 
