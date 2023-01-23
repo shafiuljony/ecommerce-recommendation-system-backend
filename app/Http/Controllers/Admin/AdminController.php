@@ -11,14 +11,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Image;
+use Session;
 
 class AdminController extends Controller
 {
     public function dashboard(){
+        Session::put('page','dashboard');
         return view('admin.dashboard');
     }
     public function updateAdminPassword(Request $request){
-
+        Session::put('page','update_admin_password');
         if($request->isMethod('post')){
             $data = $request->all();
             // echo "<pre>"; print_r($data); die;
@@ -51,6 +53,7 @@ class AdminController extends Controller
         };
     }
     public function updateAdminDetails(Request $request){
+        Session::put('page','update_admin_details');
         if($request->isMethod('post')){
             $data = $request->all();
             // echo "<pre>"; print_r($data); die;
