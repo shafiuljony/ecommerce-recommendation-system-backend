@@ -16,10 +16,10 @@ class VendorsBankDetailsTableSeeder extends Seeder
     public function run()
     {
         $vendorBankRecords =[
-            ['id'=>1,'vendor_id'=>1,'account_holder_name'=>'saad Electronics store',
+            ['id'=>2,'vendor_id'=>2,'account_holder_name'=>'sawrab Electronics store',
             'bank_name'=>'Al-arafa_islami-Bank',
-            'account_number'=>'127217867',
-            'bank_ifsc_code'=>'122123',
+            'account_number'=>'127217865',
+            'bank_ifsc_code'=>'1221231',
             ]
         ];
         VendorsBankDetails::insert($vendorBankRecords);
