@@ -65,7 +65,7 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
 
         //update admin status
 
-        Route::post('update-admin-status','AdminController@updateAdminStatus')
+        Route::post('update-admin-status','AdminController@updateAdminStatus');
 
         // admin logout
         Route::get('logout', 'AdminController@logout');
