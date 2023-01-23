@@ -242,7 +242,9 @@ class AdminController extends Controller
 
         }
 
-        return view('admin.settings.update_vendor_details')->with(compact('slug','vendorDetails'));
+        $countries = Country::where('status',1)->get();
+
+        return view('admin.settings.update_vendor_details')->with(compact('slug','vendorDetails','countries'));
         
     }
 
