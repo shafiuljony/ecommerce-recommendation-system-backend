@@ -189,7 +189,7 @@
                     </div>
                     <div class="form-group">
                       <label for="address_proof">Address Proof</label>
-                      <select name="address_proof" class="form-control select-color" id="address_proof">
+                      <select name="address_proof" class="form-control select-color" id="address_proof"> 
                         <option value="Passport" @if($vendorDetails['address_proof']=="Passport") selected @endif>Passport</option>
                         <option value="Nid" @if($vendorDetails['address_proof']=="National Id") selected @endif>National Id</option>
                         <option value="Tread lisence" @if($vendorDetails['address_proof']=="Tread lisence") selected @endif>Tread lisence</option>
