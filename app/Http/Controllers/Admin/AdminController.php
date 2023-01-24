@@ -7,6 +7,7 @@ use App\Models\Admin;
 use App\Models\Vendor;
 use App\Models\VendorsBankDetails;
 use App\Models\VendorsBusinessDetails;
+use App\Models\Country;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -106,14 +107,14 @@ class AdminController extends Controller
                 // echo "<pre>"; print_r($data); die;
 
                 $rules =[
-                    'shop_name' => 'required|regex:/^[\pL\s\-]+$/u',
-                    'shop_mobile' => 'required|numeric',
+                    'vendor_name' => 'required|regex:/^[\pL\s\-]+$/u',
+                    'vendor_mobile' => 'required|numeric',
                 ];
     
                 $customMessages = [
-                    'shop_name.required' => 'Name is required',
-                    'shop_name.regex' => 'Valid Name Is required',
-                    'shop_mobile.numeric' => 'Valid number Is required',
+                    'vendor_name.required' => 'Name is required',
+                    'vendor_name.regex' => 'Valid Name Is required',
+                    'vendor_mobile.numeric' => 'Valid number Is required',
                 ];
     
                 $this->validate($request,$rules,$customMessages);
@@ -242,7 +243,7 @@ class AdminController extends Controller
 
         }
 
-        $countries = Country::where('status',1)->get();
+        $countries = Country::where('status',1)->get()->toArray();
 
         return view('admin.settings.update_vendor_details')->with(compact('slug','vendorDetails','countries'));
         
