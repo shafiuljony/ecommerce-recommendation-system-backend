@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="{{ url('admin/vendors/datatables.net-bs4/dataTables.bootstrap4.css')}}">
   <link rel="stylesheet" href="{{ url('admin/vendors/ti-icons/css/themify-icons.css')}}">
   <link rel="stylesheet" type="text/css" href="{{ url('admin/js/select.dataTables.min.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{ url('admin/css/vertical-layout-light/dataTables.min.css')}}">
   <!-- End plugin css for this page -->
   <!-- inject:css -->
   <link rel="stylesheet" href="{{ url('admin/css/vertical-layout-light/style.css')}}">
@@ -51,6 +52,7 @@
   <!-- Plugin js for this page -->
   <script src="{{ url('admin/vendors/chart.js/Chart.min.js')}}"></script>
   <script src="{{ url('admin/vendors/datatables.net/jquery.dataTables.js')}}"></script>
+  <script src="{{ url('admin/js/dataTables.min.js')}}"></script>
   <script src="{{ url('admin/vendors/datatables.net-bs4/dataTables.bootstrap4.js')}}"></script>
   <script src="{{ url('admin/js/dataTables.select.min.js')}}"></script>
 

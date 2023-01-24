@@ -1,4 +1,9 @@
 $(document).ready(function(){
+
+    //call datatable class
+
+    $('#sections').DataTable();
+
     $(".nav-item").removeClass("active");
     $(".nav-link").removeClass("active");
 

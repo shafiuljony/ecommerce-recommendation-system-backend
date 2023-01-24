@@ -8,7 +8,7 @@
                     <div class="card-body">
                         <h4 class="card-title">Sections</h4>
                         <div class="table-responsive pt-3">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered" id="sections">
                                 <thead>
                                     <tr>
                                         <th>
@@ -42,8 +42,11 @@
                                             @endif        
                                         </td>
                                         <td>
-                                            <a href="{{ url('section/view-vendor-details/'.$section['id']) }}">
-                                                 <i style="font-size: 25px;" class="mdi mdi-file-document"></i>
+                                            <a href="{{ url('admin/add-edit-section/'.$section['id']) }}">
+                                                 <i style="font-size: 25px;" class="mdi mdi-pencil-box"></i>
+                                            </a> 
+                                            <a href="{{ url('admin/add-delete-section/'.$section['id']) }}">
+                                                 <i style="font-size: 25px;" class="mdi mdi-delete"></i>
                                             </a> 
                                         </td>
                                     </tr>
