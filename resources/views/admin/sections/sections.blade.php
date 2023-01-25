@@ -7,6 +7,16 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Sections</h4>
+
+                        <a href="{{ url('admin/add-edit-section')}}" class="btn btn-block btn-primary add-btn">Add Section</a>
+                        @if(Session::has('success_message'))
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>Success: </strong> {{ Session::get('success_message')}}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+                        @endif
                         <div class="table-responsive pt-3">
                             <table class="table table-bordered" id="sections">
                                 <thead>
@@ -45,7 +55,10 @@
                                             <a href="{{ url('admin/add-edit-section/'.$section['id']) }}">
                                                  <i style="font-size: 25px;" class="mdi mdi-pencil-box"></i>
                                             </a> 
-                                            <a href="{{ url('admin/add-delete-section/'.$section['id']) }}">
+                                            <!-- <a title="Section" class="confirmDelete" href="{{ url('admin/delete-section/'.$section['id']) }}">
+                                                 <i style="font-size: 25px;" class="mdi mdi-delete"></i>
+                                            </a>  -->
+                                            <a  class="confirmDelete" href="javascript:void(0)" module="section" moduleid="{{ $section['id'] }}">
                                                  <i style="font-size: 25px;" class="mdi mdi-delete"></i>
                                             </a> 
                                         </td>
@@ -60,5 +73,4 @@
         </div>
     </div>
     <!-- content-wrapper ends -->
-</div>
 @endsection

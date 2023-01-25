@@ -5,3 +5,7 @@
 .select-color{
     color: #495057 !important;
 }
+.add-btn{
+    max-width: 150px;
+    margin-bottom: 10px;
+}
