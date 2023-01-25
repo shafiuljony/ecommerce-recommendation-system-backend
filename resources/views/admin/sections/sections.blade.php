@@ -7,6 +7,8 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Sections</h4>
+
+                        <a href="{{ url('admin/add-edit-section')}}" class="btn btn-block btn-primary add-btn">Add Section</a>
                         @if(Session::has('success_message'))
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
                             <strong>Success: </strong> {{ Session::get('success_message')}}
@@ -71,5 +73,4 @@
         </div>
     </div>
     <!-- content-wrapper ends -->
-</div>
 @endsection
