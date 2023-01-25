@@ -74,6 +74,9 @@
     <script src="{{ url('admin/js/custom.js') }}"></script>
   <!--end custom admin js  -->
 
+  <!-- sweet Alert for confirm Deletion  -->
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </body>
 
 </html>
