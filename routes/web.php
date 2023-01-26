@@ -81,6 +81,10 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::match(['get','post'],'add-edit-section/{id?}','SectionController@addEditSection');
 
 
+        //Categories
+
+        Route::get('categories','CategoryController@categories');
+
     });   
 });
 

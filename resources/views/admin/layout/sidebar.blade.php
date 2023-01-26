@@ -60,7 +60,7 @@
             <div class="collapse" id="ui-catalogue">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a @if(Session::get('page')=="sections") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @else style="background: #fff !important; color:hsl(353deg 100% 78%) !important;"  @endif class="nav-link" href="{{ url('admin/sections') }}">Sections</a></li>
-                    <li class="nav-item"> <a  @if(Session::get('page')=="catagories") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @else style="background: #fff !important; color:hsl(353deg 100% 78%) !important;" @endif class="nav-link" href="{{ url('admin/catagories') }}">Catagories</a></li>
+                    <li class="nav-item"> <a  @if(Session::get('page')=="catagories") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @else style="background: #fff !important; color:hsl(353deg 100% 78%) !important;" @endif class="nav-link" href="{{ url('admin/categories') }}">Categories</a></li>
                     <li class="nav-item"> <a @if(Session::get('page')=="products") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @else style="background: #fff !important; color:hsl(353deg 100% 78%) !important;" @endif class="nav-link" href="{{ url('admin/products') }}">Products</a></li>
                 </ul>
             </div>
