@@ -8918,8 +8918,8 @@ select {
 button,
 [type="button"],
 [type="reset"],
-[type="submit"] ?
-  -webkit-appearance7ji: button;
+[type="submit"] {
+  -webkit-appearance: button;
 }
 
 button:not(:disabled),
