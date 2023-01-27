@@ -25,7 +25,16 @@
                                             ID
                                         </th>
                                         <th>
-                                            Name
+                                            Category
+                                        </th>
+                                        <th>
+                                            Parent Category
+                                        </th>
+                                        <th>
+                                            Section
+                                        </th>
+                                        <th>
+                                            URL
                                         </th>
                                         <th>
                                             Status
@@ -37,6 +46,11 @@
                                 </thead>
                                 <tbody>
                                     @foreach($categories as $category)
+                                    @if(isset($category['parentcategory']['category_name'])&&!empty($category['parentcategory']['category_name']))
+                                        @php $parent_category = $category['parentcategory']['category_name']; @endphp
+                                    @else
+                                       @php $parent_category = "Root"; @endphp
+                                    @endif
                                     <tr>
                                         <td>
                                             {{ $category['id'] }}
@@ -45,10 +59,19 @@
                                             {{ $category['category_name'] }}
                                         </td>
                                         <td>
+                                            {{ $parent_category}}
+                                        </td>
+                                        <td>
+                                            {{ $category['section']['name'] }}
+                                        </td>
+                                        <td>
+                                            {{ $category['url'] }}
+                                        </td>
+                                        <td>
                                             @if($category['status']==1)
-                                                <a  class="updateCategoriesStatus" id="category-{{ $category['id'] }}" category_id="{{ $category['id'] }}" href="javascript:void(0)"><i class="mdi mdi-bookmark-check" style="font-size: 25px;" status="Active"></i></a>
+                                                <a  class="updateCategoryStatus" id="category-{{ $category['id'] }}" category_id="{{ $category['id'] }}" href="javascript:void(0)"><i class="mdi mdi-bookmark-check" style="font-size: 25px;" status="Active"></i></a>
                                             @else
-                                            <a  class="updateCategoriesStatus" id="category-{{ $category['id'] }}" category_id="{{ $category['id'] }}" href="javascript:void(0)"><i class="mdi mdi-bookmark-outline" style="font-size: 25px;" status="Inactive"></i></a>
+                                            <a  class="updateCategoryStatus" id="category-{{ $category['id'] }}" category_id="{{ $category['id'] }}" href="javascript:void(0)"><i class="mdi mdi-bookmark-outline" style="font-size: 25px;" status="Inactive"></i></a>
                                             @endif        
                                         </td>
                                         <td>
