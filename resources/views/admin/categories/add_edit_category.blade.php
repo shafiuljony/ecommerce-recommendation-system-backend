@@ -6,7 +6,8 @@
         <div class="col-md-12 grid-margin">
             <div class="row">
                 <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                    <h3 class="font-weight-bold">Settings</h3>
+                    <h4 class="card-title">Catalogue Management</h3>
+                    <h6 class="font-weight-normal mb-0">Categories</h6>
                 </div>
                 <div class="col-12 col-xl-4">
                     <div class="justify-content-end d-flex">
@@ -51,9 +52,42 @@
                     </div>
                   @endif
                   <form class="forms-sample" @if(empty($category['id'])) action="{{ url('admin/add-edit-category') }}" @else action="{{ url('admin/add-edit-category/'.$category['id']) }}" @endif method="post" enctype="multipart/form-data">@csrf
-                  <div class="form-group">
+                    <div class="form-group">
                       <label for="category_name">Category Name</label>
                       <input type="text" class="form-control" @if(!empty($category['name'])) value="{{ $category['name'] }}" @else value="{{ old('category_name')}}" @endif id="category_name" placeholder="Enter your category Name" name="category_name" require>
+                    </div>
+                    <div class="form-group">
+                      <label for="section_id">Select Section</label>
+                      <!-- <input type="text" class="form-control" @if(!empty($category['name'])) value="{{ $category['name'] }}" @else value="{{ old('section_id')}}" @endif id="section_id" placeholder="Enter your category Name" name="section_id" require> -->
+
+                      <select name="section_id" id="section_id" class="form-control">
+                        <option value="">Select</option>
+                        @foreach($getSections as $section)
+                        <option value="{{ $section['id'] }}">{{ $section['name'] }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="parent_id">Select Category Level</label>
+                      <select name="parent_id" id="parent_id" class="form-control">
+                        <option value="0">Main Category</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="category_image">Category Image</label>
+                      <input type="file" class="form-control" id="category_image"  name="category_image">
+                    </div>
+                    <div class="form-group">
+                      <label for="category_discount">Category Discount</label>
+                      <input type="text" class="form-control" @if(!empty($category['category_discount'])) value="{{ $category['category_discount'] }}" @else value="{{ old('category_discount')}}" @endif id="category_discount" placeholder="Enter your category Discount" name="category_discount" require>
+                    </div>
+                    <div class="form-group">
+                      <label for="category_discount">Category Description</label>
+                      <textarea name="description" id="description" cols="30" rows="10" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                      <label for="category_discount">Category URL</label>
+                      <input type="text" class="form-control" @if(!empty($category['category_discount'])) value="{{ $category['category_discount'] }}" @else value="{{ old('category_discount')}}" @endif id="category_discount" placeholder="Enter Category URL" name="category_discount" require>
                     </div>
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                     <button class="btn btn-light">Cancel</button>
