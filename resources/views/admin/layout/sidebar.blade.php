@@ -31,7 +31,7 @@
             </a>
             <div class="collapse" id="ui-settings">
                 <ul class="nav flex-column sub-menu" >
-                    <li class="nav-item"> <a @if(Session::get("page")=="update_admin_password") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @else style="background: #fff !important; color:hsl(353deg 100% 78%) !important;" @endif class="nav-link" href="{{ url('admin/update-admin-password') }}">Update Password</a></li>
+                    <li class="nav-item"> <a @if(Session::get("page")=="update_admin_password") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @else style="background: #fff !important; color: hsl(353deg 100% 78%) !important;" @endif class="nav-link" href="{{ url('admin/update-admin-password') }}">Update Password</a></li>
                     <li class="nav-item"> <a  @if(Session::get("page")=="update_admin_details") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @else style="background: #fff !important; color: hsl(353deg 100% 78%) !important;" @endif class="nav-link" href="{{ url('admin/update-admin-details') }}">Update Details</a></li>
                 </ul>
             </div>
@@ -52,7 +52,7 @@
             </div>
         </li>
         <li class="nav-item">
-            <a @if(Session::get("page")=="sections") || Session::get('page')=="categories") || Session::get('page')=="products") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @endif class="nav-link" data-toggle="collapse" href="#ui-catalogue" aria-expanded="false" aria-controls="ui-catalogue">
+            <a @if(Session::get("page")=="sections") || Session::get("page")=="categories") || Session::get("page")=="products") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @endif class="nav-link" data-toggle="collapse" href="#ui-catalogue" aria-expanded="false" aria-controls="ui-catalogue">
             <i class="icon-layout menu-icon"></i>
             <span class="menu-title">Catalogue Management</span>
             <i class="menu-arrow"></i>
@@ -60,8 +60,8 @@
             <div class="collapse" id="ui-catalogue">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a @if(Session::get('page')=="sections") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @else style="background: #fff !important; color:hsl(353deg 100% 78%) !important;"  @endif class="nav-link" href="{{ url('admin/sections') }}">Sections</a></li>
-                    <li class="nav-item"> <a  @if(Session::get('page')=="categories") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @else style="background: #fff !important; color:hsl(353deg 100% 78%) !important;" @endif class="nav-link" href="{{ url('admin/categories') }}">Categories</a></li>
-                    <li class="nav-item"> <a @if(Session::get('page')=="products") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @else style="background: #fff !important; color:hsl(353deg 100% 78%) !important;" @endif class="nav-link" href="{{ url('admin/products') }}">Products</a></li>
+                    <li class="nav-item"> <a   @if(Session::get('page')=="categories") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @else style="background: #fff !important; color:hsl(353deg 100% 78%) !important;"  @endif class="nav-link" href="{{ url('admin/categories') }}">Categories</a></li>
+                    <li class="nav-item"> <a @if(Session::get('page')=="products") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @else style="background: #fff !important; color:hsl(353deg 100% 78%) !important;"  @endif class="nav-link" href="{{ url('admin/products') }}">Products</a></li>
                 </ul>
             </div>
         </li>

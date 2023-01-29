@@ -33,7 +33,6 @@
                 <div class="card-body">
                   <h4 class="card-title">{{ $title }}</h4>
                   @if ($errors->any())
-
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
@@ -58,7 +57,7 @@
                     </div>
                     <div class="form-group">
                       <label for="section_id">Select Section</label>
-                      <select name="section_id" id="section_id" class="form-control">
+                      <select name="section_id" id="section_id" class="form-control select-color">
                         <option value="">Select</option>
                         @foreach($getSections as $section)
                         <option value="{{ $section['id'] }}" @if(!empty($category['section_id']) && $category['section_id'] ==$section['id']) selected @endif>{{ $section['name'] }}</option>
