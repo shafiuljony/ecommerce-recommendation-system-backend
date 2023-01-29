@@ -37,11 +37,12 @@ class CategoryController extends Controller
             //add Category function
             $title = "Add Category";
             $category = new Category;
+            $getCategories = Category::where(['parent_id'=>0,'section_id'=>$category['section_id']])->get();
             $message = "Category added successfully";
         }else{
             //Edit Category function
             $title = "Edit Category";
-            $category = find($id);
+            $category = Category::find($id);
             $message = "Category Updated successfully";
 
         }
@@ -85,6 +86,6 @@ class CategoryController extends Controller
         // Get all the section function
         $getSections = Section::get()->toArray();
 
-        return view('admin.categories.add_edit_category')->with(compact('title','category','getSections'));
+        return view('admin.categories.add_edit_category')->with(compact('title','category','getSections','getCategories'));
     }
 }

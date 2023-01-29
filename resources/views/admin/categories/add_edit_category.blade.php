@@ -54,22 +54,20 @@
                   <form class="forms-sample" @if(empty($category['id'])) action="{{ url('admin/add-edit-category') }}" @else action="{{ url('admin/add-edit-category/'.$category['id']) }}" @endif method="post" enctype="multipart/form-data">@csrf
                     <div class="form-group">
                       <label for="category_name">Category Name</label>
-                      <input type="text" class="form-control" @if(!empty($category['name'])) value="{{ $category['name'] }}" @else value="{{ old('category_name')}}" @endif id="category_name" placeholder="Enter your category Name" name="category_name" require>
+                      <input type="text" class="form-control" @if(!empty($category['category_name'])) value="{{ $category['category_name'] }}" @else value="{{ old('category_name')}}" @endif id="category_name" placeholder="Enter your category Name" name="category_name" require>
                     </div>
                     <div class="form-group">
                       <label for="section_id">Select Section</label>
                       <select name="section_id" id="section_id" class="form-control">
                         <option value="">Select</option>
                         @foreach($getSections as $section)
-                        <option value="{{ $section['id'] }}">{{ $section['name'] }}</option>
+                        <option value="{{ $section['id'] }}" @if(!empty($category['section_id']) && $category['section_id'] ==$section['id']) selected @endif>{{ $section['name'] }}</option>
                         @endforeach
                       </select>
                     </div>
-                    <div class="form-group">
-                      <label for="parent_id">Select Category Level</label>
-                      <select name="parent_id" id="parent_id" class="form-control">
-                        <option value="0">Main Category</option>
-                      </select>
+                    
+                    <div id="appendCategoriesLevel">
+                        @include('admin.categories.append_categories_level')
                     </div>
                     <div class="form-group">
                       <label for="category_image">Category Image</label>
@@ -80,7 +78,7 @@
                       <input type="text" class="form-control" @if(!empty($category['category_discount'])) value="{{ $category['category_discount'] }}" @else value="{{ old('category_discount')}}" @endif id="category_discount" placeholder="Enter your category Discount" name="category_discount" require>
                     </div>
                     <div class="form-group">
-                      <label for="category_discount">Category Description</label>
+                      <label for="description">Category Description</label>
                       <textarea name="description" id="description" cols="30" rows="10" class="form-control"></textarea>
                     </div>
                     <div class="form-group">
