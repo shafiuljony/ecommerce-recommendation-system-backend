@@ -53,6 +53,10 @@ class CategoryController extends Controller
             $data = $request->all();
             // echo "<pre>"; print_r($data); die;
 
+            if($data['category_discount']==""){
+                $data['category_discount'] =0;
+            }
+
             // Upload Category Image
 
             if($request->hasFile('category_image')){
