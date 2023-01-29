@@ -8,7 +8,7 @@
         </li>
         @if(Auth::guard('admin')->user()->type=="vendor")
         <li class="nav-item">
-            <a @if(Session::get("page")=="update_personal_details") || Session::get('page')=="update_business_details") || Session::get('page')=="update_bank_details")
+            <a @if(Session::get("page")=="update_personal_details" || Session::get('page')=="update_business_details" || Session::get('page')=="update_bank_details")
             style="background:hsl(353deg 100% 78%)!important; color:#fff !important;" @endif class="nav-link" data-toggle="collapse" href="#ui-vendors" aria-expanded="false" aria-controls="ui-vendors">
             <i class="icon-layout menu-icon"></i>
             <span class="menu-title">Vendor Details</span>
@@ -24,7 +24,7 @@
         </li>
         @else
         <li class="nav-item">
-            <a @if(Session::get("page")=="update_admin_password") || Session::get('page')=="update_admin_details") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @endif class="nav-link" data-toggle="collapse" href="#ui-settings" aria-expanded="false" aria-controls="ui-settings">
+            <a @if(Session::get("page")=="update_admin_password" || Session::get('page')=="update_admin_details") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @endif class="nav-link" data-toggle="collapse" href="#ui-settings" aria-expanded="false" aria-controls="ui-settings">
             <i class="icon-layout menu-icon"></i>
             <span class="menu-title">Settings</span>
             <i class="menu-arrow"></i>
@@ -37,7 +37,7 @@
             </div>
         </li>
         <li class="nav-item">
-            <a @if(Session::get("page")=="view_admins") || Session::get('page')=="view_subadmins") || Session::get('page')=="view_vendors") || Session::get('page')=="view_all") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @endif class="nav-link" data-toggle="collapse" href="#ui-admins" aria-expanded="false" aria-controls="ui-admins">
+            <a @if(Session::get("page")=="view_admins" || Session::get('page')=="view_subadmins" || Session::get('page')=="view_vendors" || Session::get('page')=="view_all") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @endif class="nav-link" data-toggle="collapse" href="#ui-admins" aria-expanded="false" aria-controls="ui-admins">
             <i class="icon-layout menu-icon"></i>
             <span class="menu-title">Admin Management</span>
             <i class="menu-arrow"></i>
@@ -52,7 +52,7 @@
             </div>
         </li>
         <li class="nav-item">
-            <a @if(Session::get("page")=="sections") || Session::get("page")=="categories") || Session::get("page")=="products") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @endif class="nav-link" data-toggle="collapse" href="#ui-catalogue" aria-expanded="false" aria-controls="ui-catalogue">
+            <a @if(Session::get("page")=="sections" || Session::get("page")=="categories" || Session::get("page")=="products") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @endif class="nav-link" data-toggle="collapse" href="#ui-catalogue" aria-expanded="false" aria-controls="ui-catalogue">
             <i class="icon-layout menu-icon"></i>
             <span class="menu-title">Catalogue Management</span>
             <i class="menu-arrow"></i>
