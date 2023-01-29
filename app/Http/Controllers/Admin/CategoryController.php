@@ -53,6 +53,21 @@ class CategoryController extends Controller
             $data = $request->all();
             // echo "<pre>"; print_r($data); die;
 
+            $rules =[
+                'category_name' => 'required|regex:/^[\pL\s\-]+$/u',
+                'section_id' => 'required',
+                'url' => 'required',
+            ];
+
+            $customMessages = [
+                'category_name.required' => 'Category Name is Required',
+                'category_name.regex' => 'Valid Category Name Is Required',
+                'section_id.required' => 'Section Is Required',
+                'url.required' => 'Category URL Is Required',
+            ];
+
+            $this->validate($request,$rules,$customMessages);
+
             if($data['category_discount']==""){
                 $data['category_discount'] =0;
             }
