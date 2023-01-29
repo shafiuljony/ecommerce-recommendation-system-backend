@@ -31,7 +31,7 @@ class CategoryController extends Controller
         }
     }
 
-    public function addEditCategory($id=null){
+    public function addEditCategory(Request $request,$id=null){
         Session::put('page','categories');
         if($id==""){
             //add Category function
@@ -44,6 +44,42 @@ class CategoryController extends Controller
             $category = find($id);
             $message = "Category Updated successfully";
 
+        }
+
+        if($request->isMethod('post')){
+            $data = $request->all();
+            // echo "<pre>"; print_r($data); die;
+
+            // Upload Category Image
+
+            if($request->hasFile('category_image')){
+                $image_tmp = $request->file('category_image');
+                if($image_tmp->isValid()){
+                    //Get Image Extension
+                    $extension = $image_tmp->getClientOriginalExtension();
+                    //Generate New Image Name
+                    $imageName = rand(111,99999).'.'.$extension;
+                    $imagePath = 'admin/images/category_images/'.$imageName;
+                    //upload the image
+                    Image::make($image_tmp)->save($imagePath);
+                    $category->category_image = $imageName;
+                }
+            }else{
+                $category->category_image = "";
+            }
+            $category->section_id = $data['section_id'];
+            $category->parent_id = $data['parent_id'];
+            $category->category_name = $data['category_name'];
+            $category->category_discount = $data['category_discount'];
+            $category->description = $data['description'];
+            $category->url = $data['url'];
+            $category->meta_title = $data['meta_title'];
+            $category->meta_description = $data['meta_description'];
+            $category->meta_keywords = $data['meta_keywords'];
+            $category->status = 1;
+            $category->save();
+
+            return redirect('admin/categories')->with('success_message',$message);
         }
 
         // Get all the section function

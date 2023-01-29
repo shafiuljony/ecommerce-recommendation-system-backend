@@ -8,7 +8,7 @@
                     <div class="card-body">
                         <h4 class="card-title">Categories</h4>
 
-                        <a href="{{ url('admin/add-edit-category')}}" class="btn btn-block btn-primary add-btn">Add category</a>
+                        <a href="{{ url('admin/add-edit-category')}}" class="btn btn-block btn-primary add-btn mt-10">Add category</a>
                         @if(Session::has('success_message'))
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
                             <strong>Success: </strong> {{ Session::get('success_message')}}
