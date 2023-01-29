@@ -58,8 +58,6 @@
                     </div>
                     <div class="form-group">
                       <label for="section_id">Select Section</label>
-                      <!-- <input type="text" class="form-control" @if(!empty($category['name'])) value="{{ $category['name'] }}" @else value="{{ old('section_id')}}" @endif id="section_id" placeholder="Enter your category Name" name="section_id" require> -->
-
                       <select name="section_id" id="section_id" class="form-control">
                         <option value="">Select</option>
                         @foreach($getSections as $section)
@@ -86,8 +84,20 @@
                       <textarea name="description" id="description" cols="30" rows="10" class="form-control"></textarea>
                     </div>
                     <div class="form-group">
-                      <label for="category_discount">Category URL</label>
-                      <input type="text" class="form-control" @if(!empty($category['category_discount'])) value="{{ $category['category_discount'] }}" @else value="{{ old('category_discount')}}" @endif id="category_discount" placeholder="Enter Category URL" name="category_discount" require>
+                      <label for="url">Category URL</label>
+                      <input type="text" class="form-control" @if(!empty($category['url'])) value="{{ $category['url'] }}" @else value="{{ old('url')}}" @endif id="url" placeholder="Enter Category URL" name="url" require>
+                    </div>
+                    <div class="form-group">
+                      <label for="meta_title">Category Meta Title</label>
+                      <input type="text" class="form-control" @if(!empty($category['meta_title'])) value="{{ $category['meta_title'] }}" @else value="{{ old('meta_title')}}" @endif id="meta_title" placeholder="Category Meta Title" name="meta_title" require>
+                    </div>
+                    <div class="form-group">
+                      <label for="meta_description">Category Meta Description</label>
+                      <input type="text" class="form-control" @if(!empty($category['meta_description'])) value="{{ $category['meta_description'] }}" @else value="{{ old('meta_description')}}" @endif id="meta_description" placeholder="Category Meta Description" name="meta_description" require>
+                    </div>
+                    <div class="form-group">
+                      <label for="meta_keywords">Category Meta Keywords</label>
+                      <input type="text" class="form-control" @if(!empty($category['meta_keywords'])) value="{{ $category['meta_keywords'] }}" @else value="{{ old('meta_keywords')}}" @endif id="meta_keywords" placeholder="Category Meta Keywords" name="meta_keywords" require>
                     </div>
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                     <button class="btn btn-light">Cancel</button>
