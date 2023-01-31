@@ -131,8 +131,12 @@
                       <input type="text" class="form-control" @if(!empty($product['meta_description'])) value="{{ $product['meta_description'] }}" @else value="{{ old('meta_description')}}" @endif id="meta_description" placeholder="Meta Description" name="meta_description" require>
                     </div>
                     <div class="form-group">
-                      <label for="meta_keywords">product Meta Keywords</label>
+                      <label for="meta_keywords">Meta Keywords</label>
                       <input type="text" class="form-control" @if(!empty($product['meta_keywords'])) value="{{ $product['meta_keywords'] }}" @else value="{{ old('meta_keywords')}}" @endif id="meta_keywords" placeholder="product Meta Keywords" name="meta_keywords" require>
+                    </div>
+                    <div class="form-group">
+                      <label for="is_featured">Featured Item</label>
+                      <input type="checkbox" name="is_featured" id="is_featured" value="Yes" @if(!empty($product['is_featured']) && $product['is_featured']=="Yes") checked @endif>
                     </div>
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                     <button class="btn btn-light">Cancel</button>
