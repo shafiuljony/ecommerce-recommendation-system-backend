@@ -11,7 +11,12 @@ class ProductsController extends Controller
 {
     public function products(){
         Session::put('page','products');
-        $products = Product::get()->toArray();
+        $products = Product::with(['section'=>function($query){
+            //subquery
+            $query->select('id','name');
+        },'category'=>function($query){
+            $query->select('id','category_name');
+        }])->get()->toArray();
         // dd($products);
         return view('admin.products.products')->with(compact('products'));
     }
@@ -33,5 +38,13 @@ class ProductsController extends Controller
         Product::where('id',$id)->delete();
         $message = 'Product has been deleted successfully!';
         return redirect()->back()->with('success_message',$message);
+    }
+    public function addEditProduct(Request $request,$id=null){
+        if($id==""){
+            $title= "Add Product";
+        }else{
+            $title = "Edit Product";
+        }
+        return view('admin.products.add_edit_product')->with(compact('title'));
     }
 }

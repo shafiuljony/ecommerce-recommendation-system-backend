@@ -6,8 +6,7 @@
         <div class="col-md-12 grid-margin">
             <div class="row">
                 <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                    <h4 class="card-title">Catalogue Management</h3>
-                    <h6 class="font-weight-normal mb-0">Categories</h6>
+                    <h4 class="card-title">Products</h3>
                 </div>
                 <div class="col-12 col-xl-4">
                     <div class="justify-content-end d-flex">
@@ -50,57 +49,50 @@
                       </button>
                     </div>
                   @endif
-                  <form class="forms-sample" @if(empty($category['id'])) action="{{ url('admin/add-edit-category') }}" @else action="{{ url('admin/add-edit-category/'.$category['id']) }}" @endif method="post" enctype="multipart/form-data">@csrf
-                    <div class="form-group">
-                      <label for="category_name">Category Name</label>
-                      <input type="text" class="form-control" @if(!empty($category['category_name'])) value="{{ $category['category_name'] }}" @else value="{{ old('category_name')}}" @endif id="category_name" placeholder="Enter your category Name" name="category_name" require>
-                    </div>
-                    <div class="form-group">
-                      <label for="section_id">Select Section</label>
-                      <select name="section_id" id="section_id" class="form-control select-color">
+                  <form class="forms-sample" @if(empty($product['id'])) action="{{ url('admin/add-edit-product') }}" @else action="{{ url('admin/add-edit-product/'.$product['id']) }}" @endif method="post" enctype="multipart/form-data">@csrf
+                  <div class="form-group">
+                      <label for="category_id">Select Category</label>
+                      <select name="category_id" id="category_id" class="form-control select-color">
                         <option value="">Select</option>
-                        @foreach($getSections as $section)
-                        <option value="{{ $section['id'] }}" @if(!empty($category['section_id']) && $category['section_id'] ==$section['id']) selected @endif>{{ $section['name'] }}</option>
-                        @endforeach
                       </select>
                     </div>
-                    
-                    <div id="appendCategoriesLevel">
-                        @include('admin.categories.append_categories_level')
+                    <div class="form-group">
+                      <label for="product_name">Product Name</label>
+                      <input type="text" class="form-control" @if(!empty($product['product_name'])) value="{{ $product['product_name'] }}" @else value="{{ old('product_name')}}" @endif id="product_name" placeholder="Enter your product Name" name="product_name" require>
                     </div>
                     <div class="form-group">
-                      <label for="category_image">Category Image</label>
-                      <input type="file" class="form-control" id="category_image"  name="category_image">
-                      @if(!empty($category['category_image']))
-                        <a target="_blank" href="{{ url('front/images/category_images/'.$category['category_image'])}}">View Image</a>&nbsp;|&nbsp;
-                        <a  class="confirmDelete" href="javascript:void(0)" module="category-image" moduleid="{{ $category['id'] }}">
+                      <label for="product_image">Product Image</label>
+                      <input type="file" class="form-control" id="product_image"  name="product_image">
+                      @if(!empty($product['product_image']))
+                        <a target="_blank" href="{{ url('front/images/product_images/'.$product['product_image'])}}">View Image</a>&nbsp;|&nbsp;
+                        <a  class="confirmDelete" href="javascript:void(0)" module="product-image" moduleid="{{ $product['id'] }}">
                           Delete Image
                         </a> 
                       @endif  
                     </div>
                     <div class="form-group">
-                      <label for="category_discount">Category Discount</label>
-                      <input type="text" class="form-control" @if(!empty($category['category_discount'])) value="{{ $category['category_discount'] }}" @else value="{{ old('category_discount')}}" @endif id="category_discount" placeholder="Enter your category Discount" name="category_discount" require>
+                      <label for="product_discount">Product Discount</label>
+                      <input type="text" class="form-control" @if(!empty($product['product_discount'])) value="{{ $product['product_discount'] }}" @else value="{{ old('product_discount')}}" @endif id="product_discount" placeholder="Enter your product Discount" name="product_discount" require>
                     </div>
                     <div class="form-group">
-                      <label for="description">Category Description</label>
+                      <label for="description">Description</label>
                       <textarea name="description" id="description" cols="30" rows="10" class="form-control"></textarea>
                     </div>
                     <div class="form-group">
-                      <label for="url">Category URL</label>
-                      <input type="text" class="form-control" @if(!empty($category['url'])) value="{{ $category['url'] }}" @else value="{{ old('url')}}" @endif id="url" placeholder="Enter Category URL" name="url" require>
+                      <label for="url">product URL</label>
+                      <input type="text" class="form-control" @if(!empty($product['url'])) value="{{ $product['url'] }}" @else value="{{ old('url')}}" @endif id="url" placeholder="Enter product URL" name="url" require>
                     </div>
                     <div class="form-group">
-                      <label for="meta_title">Category Meta Title</label>
-                      <input type="text" class="form-control" @if(!empty($category['meta_title'])) value="{{ $category['meta_title'] }}" @else value="{{ old('meta_title')}}" @endif id="meta_title" placeholder="Category Meta Title" name="meta_title" require>
+                      <label for="meta_title">product Meta Title</label>
+                      <input type="text" class="form-control" @if(!empty($product['meta_title'])) value="{{ $product['meta_title'] }}" @else value="{{ old('meta_title')}}" @endif id="meta_title" placeholder="product Meta Title" name="meta_title" require>
                     </div>
                     <div class="form-group">
-                      <label for="meta_description">Category Meta Description</label>
-                      <input type="text" class="form-control" @if(!empty($category['meta_description'])) value="{{ $category['meta_description'] }}" @else value="{{ old('meta_description')}}" @endif id="meta_description" placeholder="Category Meta Description" name="meta_description" require>
+                      <label for="meta_description">product Meta Description</label>
+                      <input type="text" class="form-control" @if(!empty($product['meta_description'])) value="{{ $product['meta_description'] }}" @else value="{{ old('meta_description')}}" @endif id="meta_description" placeholder="product Meta Description" name="meta_description" require>
                     </div>
                     <div class="form-group">
-                      <label for="meta_keywords">Category Meta Keywords</label>
-                      <input type="text" class="form-control" @if(!empty($category['meta_keywords'])) value="{{ $category['meta_keywords'] }}" @else value="{{ old('meta_keywords')}}" @endif id="meta_keywords" placeholder="Category Meta Keywords" name="meta_keywords" require>
+                      <label for="meta_keywords">product Meta Keywords</label>
+                      <input type="text" class="form-control" @if(!empty($product['meta_keywords'])) value="{{ $product['meta_keywords'] }}" @else value="{{ old('meta_keywords')}}" @endif id="meta_keywords" placeholder="product Meta Keywords" name="meta_keywords" require>
                     </div>
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                     <button class="btn btn-light">Cancel</button>
