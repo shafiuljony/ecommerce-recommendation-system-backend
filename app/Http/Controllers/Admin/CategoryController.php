@@ -119,7 +119,7 @@ class CategoryController extends Controller
         }    
      }
      public function deleteCategory($id){
-        //delete section
+        //delete category
         Category::where('id',$id)->delete();
         $message = 'Category has been deleted successfully!';
         return redirect()->back()->with('success_message',$message);
