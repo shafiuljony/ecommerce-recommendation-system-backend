@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\Product;
+use App\Models\Section;
 use Illuminate\Http\Request;
 use Session;
 
@@ -45,6 +47,14 @@ class ProductsController extends Controller
         }else{
             $title = "Edit Product";
         }
-        return view('admin.products.add_edit_product')->with(compact('title'));
+
+        //Get sections with categories and subcategories
+        $categories = Section::with('categories')->get()->toArray();
+
+        //Get All the brand
+        $brands = Brand::where('status',1)->get()->toArray();
+        // dd($categories);
+
+        return view('admin.products.add_edit_product')->with(compact('title','categories','brands'));
     }
 }

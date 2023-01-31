@@ -50,15 +50,53 @@
                     </div>
                   @endif
                   <form class="forms-sample" @if(empty($product['id'])) action="{{ url('admin/add-edit-product') }}" @else action="{{ url('admin/add-edit-product/'.$product['id']) }}" @endif method="post" enctype="multipart/form-data">@csrf
-                  <div class="form-group">
+                    <div class="form-group">
                       <label for="category_id">Select Category</label>
                       <select name="category_id" id="category_id" class="form-control select-color">
                         <option value="">Select</option>
+                        @foreach($categories as $section)
+                          <optgroup label="{{ $section['name'] }}"></optgroup>
+                          @foreach($section['categories'] as $category)
+                            <option value="{{ $category['category_name']}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;{{ $category['category_name']}}</option>
+                              @foreach($category['subcategories'] as $subcategory)
+                              <option value="{{ $subcategory['category_name']}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;{{ $subcategory['category_name']}}</option>
+                              @endforeach
+                          @endforeach
+                        @endforeach
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="brand_id">Select Brand</label>
+                      <select name="brand_id" id="brand_id" class="form-control select-color">
+                        <option value="">Select</option>
+                        @foreach($brands as $brand)
+                          <option value="{{ $brand['id']}}">{{ $brand['name']}}</option>  
+                        @endforeach
                       </select>
                     </div>
                     <div class="form-group">
                       <label for="product_name">Product Name</label>
-                      <input type="text" class="form-control" @if(!empty($product['product_name'])) value="{{ $product['product_name'] }}" @else value="{{ old('product_name')}}" @endif id="product_name" placeholder="Enter your product Name" name="product_name" require>
+                      <input type="text" class="form-control" @if(!empty($product['product_name'])) value="{{ $product['product_name'] }}" @else value="{{ old('product_name')}}" @endif id="product_name" placeholder="Product Name" name="product_name" require>
+                    </div>
+                    <div class="form-group">
+                      <label for="product_code">Product Code</label>
+                      <input type="text" class="form-control" @if(!empty($product['product_code'])) value="{{ $product['product_code'] }}" @else value="{{ old('product_code')}}" @endif id="product_code" placeholder="Product Code" name="product_code" require>
+                    </div>
+                    <div class="form-group">
+                      <label for="product_color">Product Color</label>
+                      <input type="text" class="form-control" @if(!empty($product['product_color'])) value="{{ $product['product_color'] }}" @else value="{{ old('product_color')}}" @endif id="product_color" placeholder="Product Color" name="product_color" require>
+                    </div>
+                    <div class="form-group">
+                      <label for="product_price">Product Price</label>
+                      <input type="text" class="form-control" @if(!empty($product['product_price'])) value="{{ $product['product_price'] }}" @else value="{{ old('product_price')}}" @endif id="product_price" placeholder="Product Price" name="product_price" require>
+                    </div>
+                    <div class="form-group">
+                      <label for="product_discount">Product Discount</label>
+                      <input type="text" class="form-control" @if(!empty($product['product_discount'])) value="{{ $product['product_discount'] }}" @else value="{{ old('product_discount')}}" @endif id="product_discount" placeholder="Product Discount" name="product_discount" require>
+                    </div>
+                    <div class="form-group">
+                      <label for="product_weight">Product Weight</label>
+                      <input type="text" class="form-control" @if(!empty($product['product_weight'])) value="{{ $product['product_weight'] }}" @else value="{{ old('product_weight')}}" @endif id="product_weight" placeholder="Product Weight" name="product_weight" require>
                     </div>
                     <div class="form-group">
                       <label for="product_image">Product Image</label>
@@ -71,24 +109,26 @@
                       @endif  
                     </div>
                     <div class="form-group">
-                      <label for="product_discount">Product Discount</label>
-                      <input type="text" class="form-control" @if(!empty($product['product_discount'])) value="{{ $product['product_discount'] }}" @else value="{{ old('product_discount')}}" @endif id="product_discount" placeholder="Enter your product Discount" name="product_discount" require>
+                      <label for="product_video">Product Video</label>
+                      <input type="file" class="form-control" id="product_video"  name="product_video">
+                      @if(!empty($product['product_video']))
+                        <a target="_blank" href="{{ url('front/videos/product_videos/'.$product['product_video'])}}">View Video</a>&nbsp;|&nbsp;
+                        <a  class="confirmDelete" href="javascript:void(0)" module="product-video" moduleid="{{ $product['id'] }}">
+                          Delete Video
+                        </a> 
+                      @endif  
                     </div>
                     <div class="form-group">
                       <label for="description">Description</label>
                       <textarea name="description" id="description" cols="30" rows="10" class="form-control"></textarea>
                     </div>
                     <div class="form-group">
-                      <label for="url">product URL</label>
-                      <input type="text" class="form-control" @if(!empty($product['url'])) value="{{ $product['url'] }}" @else value="{{ old('url')}}" @endif id="url" placeholder="Enter product URL" name="url" require>
+                      <label for="meta_title">Meta Title</label>
+                      <input type="text" class="form-control" @if(!empty($product['meta_title'])) value="{{ $product['meta_title'] }}" @else value="{{ old('meta_title')}}" @endif id="meta_title" placeholder="Meta Title" name="meta_title" require>
                     </div>
                     <div class="form-group">
-                      <label for="meta_title">product Meta Title</label>
-                      <input type="text" class="form-control" @if(!empty($product['meta_title'])) value="{{ $product['meta_title'] }}" @else value="{{ old('meta_title')}}" @endif id="meta_title" placeholder="product Meta Title" name="meta_title" require>
-                    </div>
-                    <div class="form-group">
-                      <label for="meta_description">product Meta Description</label>
-                      <input type="text" class="form-control" @if(!empty($product['meta_description'])) value="{{ $product['meta_description'] }}" @else value="{{ old('meta_description')}}" @endif id="meta_description" placeholder="product Meta Description" name="meta_description" require>
+                      <label for="meta_description"> Meta Description</label>
+                      <input type="text" class="form-control" @if(!empty($product['meta_description'])) value="{{ $product['meta_description'] }}" @else value="{{ old('meta_description')}}" @endif id="meta_description" placeholder="Meta Description" name="meta_description" require>
                     </div>
                     <div class="form-group">
                       <label for="meta_keywords">product Meta Keywords</label>
