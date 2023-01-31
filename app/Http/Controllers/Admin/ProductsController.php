@@ -44,8 +44,37 @@ class ProductsController extends Controller
     public function addEditProduct(Request $request,$id=null){
         if($id==""){
             $title= "Add Product";
+            $product = new Product;
         }else{
             $title = "Edit Product";
+        }
+
+        if($request->isMethod('post')){
+            $data = $request->all();
+            // echo "<pre>"; print_r($data); die;   
+            
+            $rules =[
+                'category_id' => 'required',
+                'product_name' => 'required|regex:/^[\pL\s\-]+$/u',
+                'product_code' => 'required|regex:/^\w+$/',
+                'product_color' => 'required',
+                'product_price' => 'required',
+                '' => 'required',
+            ];
+
+            $customMessages = [
+                'category_id.required' => 'Category is required',
+                'product_name.required' => 'Product name is required',
+                'product_name.regex' => 'Valid Product name is required',
+                'product_code.required' => 'Product Code is required',
+                'product_code.regex' => 'Valid Product Code is required',
+                'product_price.required' => 'Product Price is required',
+                'product_price.regex' => 'Valid Product Price is required',
+                'product_color.required' => 'Product Color is required',
+                'product_color.regex' => 'Valid Product Color is required',
+            ];
+
+            $this->validate($request,$rules,$customMessages);
         }
 
         //Get sections with categories and subcategories
