@@ -102,6 +102,26 @@ class ProductsController extends Controller
                     //Insert image name in products table
                     $product->product_image = $imageName;
                 }
+
+                
+            }
+
+            //Upload Product Video
+
+            if($request->hasFile('product_video')){
+                $video_tmp = $request->file('product_video');
+
+                if($video_tmp->isValid()){
+
+                    //Upload Video in videos folder
+                    $extension = $video_tmp->getClientOriginalExtension();
+                    $videoName = rand(111,99999).'.'.$extension;
+                    $videoPath = 'front/videos/product_videos/';
+                    $video_tmp->move($videoPath,$videoName);
+
+                    //Insert video name in product table
+                    $product->product_video = $videoName;
+                }
             }
 
              //Save Product details in products table
