@@ -52,7 +52,7 @@
                   <form class="forms-sample" @if(empty($product['id'])) action="{{ url('admin/add-edit-product') }}" @else action="{{ url('admin/add-edit-product/'.$product['id']) }}" @endif method="post" enctype="multipart/form-data">@csrf
                     <div class="form-group">
                       <label for="category_id">Select Category</label>
-                      <select name="category_id" id="category_id" class="form-control select-color">
+                      <select name="category_id" id="category_id" class="form-control text-dark">
                         <option value="">Select</option>
                         @foreach($categories as $section)
                           <optgroup label="{{ $section['name'] }}"></optgroup>
@@ -67,7 +67,7 @@
                     </div>
                     <div class="form-group">
                       <label for="brand_id">Select Brand</label>
-                      <select name="brand_id" id="brand_id" class="form-control select-color">
+                      <select name="brand_id" id="brand_id" class="form-control text-dark">
                         <option value="">Select</option>
                         @foreach($brands as $brand)
                           <option value="{{ $brand['id']}}">{{ $brand['name']}}</option>  

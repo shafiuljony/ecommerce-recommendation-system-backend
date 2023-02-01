@@ -75,7 +75,7 @@
                     <div class="form-group">
                       <label for="vendor_country">Country</label>
                       <!-- <input type="text" class="form-control" value="{{ $vendorDetails['country'] }}" id="vendor_country" placeholder="Enter your country Name" name="vendor_country" require> -->
-                     <select id="vendor_country" class="form-control select-color" name="vendor_country">
+                     <select id="vendor_country" class="form-control text-dark" name="vendor_country">
                       <option value="">Select Country</option>
                         @foreach($countries as $country)
                           <option value="{{ $country['country_name']}}" @if($country['country_name']==$vendorDetails['country']) selected @endif>{{ $country['country_name']}}</option>
@@ -156,7 +156,7 @@
                     <div class="form-group">
                       <label for="shop_country"> Shop Country</label>
                       <!-- <input type="text" class="form-control" value="{{ $vendorDetails['shop_country'] }}" id="shop_country" placeholder="Enter your  Shop country Name" name="shop_country" require> -->
-                      <select id="shop_country" class="form-control select-color" name="shop_country">
+                      <select id="shop_country" class="form-control text-dark" name="shop_country">
                       <option value="">Select Country</option>
                         @foreach($countries as $country)
                           <option value="{{ $country['country_name']}}" @if($country['country_name']==$vendorDetails['shop_country']) selected @endif>{{ $country['country_name']}}</option>
@@ -189,7 +189,7 @@
                     </div>
                     <div class="form-group">
                       <label for="address_proof">Address Proof</label>
-                      <select name="address_proof" class="form-control select-color" id="address_proof"> 
+                      <select name="address_proof" class="form-control text-dark" id="address_proof"> 
                         <option value="Passport" @if($vendorDetails['address_proof']=="Passport") selected @endif>Passport</option>
                         <option value="Nid" @if($vendorDetails['address_proof']=="National Id") selected @endif>National Id</option>
                         <option value="Tread lisence" @if($vendorDetails['address_proof']=="Tread lisence") selected @endif>Tread lisence</option>
