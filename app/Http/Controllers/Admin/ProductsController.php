@@ -58,20 +58,20 @@ class ProductsController extends Controller
             
             $rules =[
                 'category_id' => 'required',
-                'product_name' => 'required|regex:/^[\pL\s\-]+$/u',
+                'product_name' => 'required',
                 'product_code' => 'required|regex:/^\w+$/',
-                'product_color' => 'required',
+                'product_color' => 'required|regex:/^\w+$/',
                 'product_price' => 'required',
             ];
 
             $customMessages = [
                 'category_id.required' => 'Category is required',
                 'product_name.required' => 'Product name is required',
-                'product_name.regex' => 'Valid Product name is required',
+                // 'product_name.regex' => 'Valid Product name is required',
                 'product_code.required' => 'Product Code is required',
                 'product_code.regex' => 'Valid Product Code is required',
                 'product_price.required' => 'Product Price is required',
-                'product_price.regex' => 'Valid Product Price is required',
+                'product_price.numeric' => 'Valid Product Price is required',
                 'product_color.required' => 'Product Color is required',
                 'product_color.regex' => 'Valid Product Color is required',
             ];
@@ -80,14 +80,13 @@ class ProductsController extends Controller
 
              //Save Product details in products table
             $categoryDetails = Category::find($data['category_id']);
-
             $product->section_id = $categoryDetails['section_id'];
-            $product->category_id = $categoryDetails['category_id'];
-            $product->brand_id = $categoryDetails['brand_id'];
+            $product->category_id = $data['category_id'];
+            $product->brand_id = $data['brand_id'];
 
             $adminType = Auth::guard('admin')->user()->type;
             $vendor_id = Auth::guard('admin')->user()->vendor_id;
-            $admin_id = Auth::guard('admin')->user()->admin_id;
+            $admin_id = Auth::guard('admin')->user()->id;
 
             $product->admin_type = $adminType;
             $product->admin_id = $admin_id;
