@@ -10,6 +10,7 @@ use App\Models\Section;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Session;
+use Image;
 
 class ProductsController extends Controller
 {
@@ -77,6 +78,31 @@ class ProductsController extends Controller
             ];
 
             $this->validate($request,$rules,$customMessages);
+
+            //upload image after resize Small: 250x250 Medium: 500x500 Large: 1000x1000
+
+            if($request->hasFile('product_image')){
+                $image_tmp = $request->file('product_image');
+                if($image_tmp->isValid()){
+                    
+                    //Get Image Extension
+                    $extension = $image_tmp->getClientOriginalExtension();
+                    
+                    //Generate New Image Name
+                    $imageName = rand(111,99999).'.'.$extension;
+                    $largeImagePath = 'front/images/product_images/large/'.$imageName;
+                    $mediumImagePath = 'front/images/product_images/medium/'.$imageName;
+                    $smallImagePath = 'front/images/product_images/small/'.$imageName;
+                    
+                    //Upload Large, Medium & small images after resize
+                    Image::make($image_tmp)->resize(1000,1000)->save($largeImagePath);
+                    Image::make($image_tmp)->resize(500,500)->save($mediumImagePath);
+                    Image::make($image_tmp)->resize(250,250)->save($smallImagePath);
+                    
+                    //Insert image name in products table
+                    $product->product_image = $imageName;
+                }
+            }
 
              //Save Product details in products table
             $categoryDetails = Category::find($data['category_id']);

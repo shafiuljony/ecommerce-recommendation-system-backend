@@ -91,7 +91,7 @@
                       <input type="text" class="form-control" @if(!empty($product['product_price'])) value="{{ $product['product_price'] }}" @else value="{{ old('product_price')}}" @endif id="product_price" placeholder="Product Price" name="product_price" require>
                     </div>
                     <div class="form-group">
-                      <label for="product_discount">Product Discount</label>
+                      <label for="product_discount">Product Discount (%)</label>
                       <input type="text" class="form-control" @if(!empty($product['product_discount'])) value="{{ $product['product_discount'] }}" @else value="{{ old('product_discount')}}" @endif id="product_discount" placeholder="Product Discount" name="product_discount" require>
                     </div>
                     <div class="form-group">
@@ -99,7 +99,7 @@
                       <input type="text" class="form-control" @if(!empty($product['product_weight'])) value="{{ $product['product_weight'] }}" @else value="{{ old('product_weight')}}" @endif id="product_weight" placeholder="Product Weight" name="product_weight" require>
                     </div>
                     <div class="form-group">
-                      <label for="product_image">Product Image</label>
+                      <label for="product_image">Product Image (Recommended Size: 1000x1000)</label>
                       <input type="file" class="form-control" id="product_image"  name="product_image">
                       @if(!empty($product['product_image']))
                         <a target="_blank" href="{{ url('front/images/product_images/'.$product['product_image'])}}">View Image</a>&nbsp;|&nbsp;
@@ -109,7 +109,7 @@
                       @endif  
                     </div>
                     <div class="form-group">
-                      <label for="product_video">Product Video</label>
+                      <label for="product_video">Product Video (Recommended Size: 2MB)</label>
                       <input type="file" class="form-control" id="product_video"  name="product_video">
                       @if(!empty($product['product_video']))
                         <a target="_blank" href="{{ url('front/videos/product_videos/'.$product['product_video'])}}">View Video</a>&nbsp;|&nbsp;
