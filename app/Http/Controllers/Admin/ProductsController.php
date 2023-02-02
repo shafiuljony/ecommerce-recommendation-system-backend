@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductsAttributes;
 use App\Models\Section;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -236,10 +237,23 @@ class ProductsController extends Controller
 
         if($request->isMethod('post')){
             $data = $request->all();
-            echo "<pre>"; print_r($data); die;
+            // echo "<pre>"; print_r($data); die;
+
+            foreach ($data['sku'] as $key => $value) {
+                if(!empty($value)){
+                    $attribute = new ProductsAttributes;
+
+                    $attribute->product_id = $id;
+                    $attribute->sku = $value;
+                    $attribute->size = $data['size'][$key];
+                    $attribute->price = $data['price'][$key];
+                    $attribute->stock = $data['stock'][$key];
+                    $attribute->status = 1;
+                    $attribute->save();
+                }
+            }
+            return redirect()->back()->with('success_message','Product Attributes has been added Successfully!');
         }
         return view('admin.attributes.add_edit_attributes')->with(compact('product'));
-
-
     }
 }
