@@ -120,16 +120,14 @@
                     </div>
                     <div class="form-group">
                       <label for="description">Description</label>
-                      <textarea name="description" id="description" cols="30" rows="10" class="form-control">
-                        {{ $product['description'] }}
-                      </textarea>
+                      <textarea name="description" id="description" rows="3" class="form-control">{{ $product['description'] }}</textarea>
                     </div>
                     <div class="form-group">
                       <label for="meta_title">Meta Title</label>
                       <input type="text" class="form-control" @if(!empty($product['meta_title'])) value="{{ $product['meta_title'] }}" @else value="{{ old('meta_title')}}" @endif id="meta_title" placeholder="Meta Title" name="meta_title" require>
                     </div>
                     <div class="form-group">
-                      <label for="meta_description"> Meta Description</label>
+                      <label for="meta_description">Meta Description</label>
                       <input type="text" class="form-control" @if(!empty($product['meta_description'])) value="{{ $product['meta_description'] }}" @else value="{{ old('meta_description')}}" @endif id="meta_description" placeholder="Meta Description" name="meta_description" require>
                     </div>
                     <div class="form-group">

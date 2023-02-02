@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use Session;
 use Image;
 
+use function PHPUnit\Framework\fileExists;
+
 class ProductsController extends Controller
 {
     public function products(){
@@ -176,5 +178,55 @@ class ProductsController extends Controller
         // dd($categories);
 
         return view('admin.products.add_edit_product')->with(compact('title','categories','brands','product'));
+    }
+    public function deleteProductImage($id)
+    {
+        //Get the Product Image
+        $productImage = Product::select('product_image')->where('id',$id)->first();
+        
+        //Get Product Image Paths
+        $small_image_path = 'front/images/product_images/small/';
+        $medium_image_path = 'front/images/product_images/medium/';
+        $large_image_path = 'front/images/product_images/large/';
+
+        //Delete Small Product Image If Image exist in the folder
+
+        if(file_Exists($small_image_path.$productImage->product_image)){
+            unlink($small_image_path.$productImage->product_image);
+        }
+
+        //Delete Medium Product Image If Image exist in the folder
+        if(file_Exists($medium_image_path.$productImage->product_image)){
+            unlink($medium_image_path.$productImage->product_image);
+        }
+
+        //Delete Large Product Image If Image exist in the folder
+        if(file_Exists($large_image_path.$productImage->product_image)){
+            unlink($large_image_path.$productImage->product_image);
+        }
+
+        //Detete Product From Product Table
+        Product::where('id',$id)->update(['product_image'=>'']);
+        $message = 'Product Images has been deleted successfully!';
+        return redirect()->back()->with('success_message',$message);
+    }
+    public function deleteProductVideo($id)
+    {
+        //Get the Product  Video
+        $productVideo = Product::select('product_video')->where('id',$id)->first();
+        
+        //Get Product Video Paths
+        $product_video_path = 'front/videos/product_videos/';
+
+        //Delete Product Video If Video exist in the folder
+
+        if(file_Exists($product_video_path.$productVideo->product_video)){
+            unlink($product_video_path.$productVideo->product_video);
+        }
+
+        //Detete Product Video From Product Table
+        Product::where('id',$id)->update(['product_video'=>'']);
+        $message = 'Product Video has been deleted successfully!';
+        return redirect()->back()->with('success_message',$message);
     }
 }
