@@ -70,7 +70,7 @@
                       @if(!empty($product['product_image']))
                         <img class="product-image-size" src="{{ url('front/images/product_images/large/'.$product['product_image'])}}">
                       @else
-                        <img class="product-image-size" src="{{ url('front/images/product_images/small/no-image.png'">
+                        <img class="product-image-size" src="{{ url('front/images/product_images/small/no-image.png')}}">
                       @endif  
                     </div>
                     <div class="form-group">
@@ -87,6 +87,59 @@
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                     <button class="btn btn-light">Cancel</button>
                   </form>
+                  <br> <h4 class="card-title">Product Attributes</h4> <br>
+                  <table class="table table-bordered" id="products">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            ID
+                                        </th>
+                                        <th>
+                                            Size
+                                        </th>
+                                        <th>
+                                            SKU
+                                        </th>
+                                        <th>
+                                            Price
+                                        </th>
+                                        <th>
+                                            Stock
+                                        </th>
+                                        <th>
+                                            Status
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($product['attributes'] as $attribute)
+                                    <tr>
+                                        <td>
+                                            {{ $attribute['id'] }}
+                                        </td>
+                                        <td>
+                                            {{ $attribute['size'] }}
+                                        </td>
+                                        <td>
+                                            {{ $attribute['sku']}}
+                                        </td>
+                                        <td>
+                                            {{ $attribute['price'] }}
+                                        </td>
+                                        <td>
+                                            {{ $attribute['stock'] }}
+                                        </td>
+                                        <td>
+                                            @if($product['status']==1)
+                                                <a  class="updateProductStatus" id="product-{{ $product['id'] }}" product_id="{{ $product['id'] }}" href="javascript:void(0)"><i class="mdi mdi-bookmark-check" style="font-size: 25px;" status="Active"></i></a>
+                                            @else
+                                            <a  class="updateproductStatus" id="product-{{ $product['id'] }}" product_id="{{ $product['id'] }}" href="javascript:void(0)"><i class="mdi mdi-bookmark-outline" style="font-size: 25px;" status="Inactive"></i></a>
+                                            @endif        
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                 </div>
               </div>
         </div>

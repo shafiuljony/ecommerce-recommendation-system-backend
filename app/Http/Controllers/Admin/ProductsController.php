@@ -233,7 +233,7 @@ class ProductsController extends Controller
 
     public function addAttributes(Request $request,$id)
     {
-        $product = Product::find($id);
+        $product = Product::select('id','product_name','product_code','product_color','product_price','product_image')->with('attributes')->find($id);
 
         if($request->isMethod('post')){
             $data = $request->all();
