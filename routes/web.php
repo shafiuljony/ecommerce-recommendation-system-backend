@@ -105,6 +105,20 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::get('delete-category/{id}','CategoryController@deleteCategory');
         Route::get('delete-category-image/{id}','CategoryController@deleteCategoryImage');
 
+        //products
+
+        Route::get('products','ProductsController@products');
+        //update product status
+
+        Route::post('update-product-status','ProductsController@updateProductStatus');
+        Route::get('delete-product/{id}','ProductsController@deleteProduct');
+        Route::match(['get','post'],'add-edit-product/{id?}','ProductsController@addEditProduct');
+        Route::get('delete-product-image/{id}','ProductsController@deleteProductImage');
+        Route::get('delete-product-video/{id}','ProductsController@deleteProductVideo');
+
+        //Products Attributes 
+
+        Route::match(['get','post'],'add-edit-attributes/{id}','ProductsController@addAttributes');
        
     });   
 });

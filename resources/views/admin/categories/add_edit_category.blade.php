@@ -57,7 +57,7 @@
                     </div>
                     <div class="form-group">
                       <label for="section_id">Select Section</label>
-                      <select name="section_id" id="section_id" class="form-control select-color">
+                      <select name="section_id" id="section_id" class="form-control text-dark">
                         <option value="">Select</option>
                         @foreach($getSections as $section)
                         <option value="{{ $section['id'] }}" @if(!empty($category['section_id']) && $category['section_id'] ==$section['id']) selected @endif>{{ $section['name'] }}</option>
