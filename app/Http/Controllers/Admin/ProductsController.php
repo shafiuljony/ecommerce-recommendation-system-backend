@@ -51,6 +51,8 @@ class ProductsController extends Controller
             $message ="Product Added Successfully!";
         }else{
             $title = "Edit Product";
+            $product = Product::find($id);
+            $message = "Product Updated Successfully!";
         }
 
         if($request->isMethod('post')){
@@ -60,7 +62,7 @@ class ProductsController extends Controller
             $rules =[
                 'category_id' => 'required',
                 'product_name' => 'required',
-                'product_code' => 'required|regex:/^\w+$/',
+                'product_code' => 'required',
                 'product_color' => 'required|regex:/^\w+$/',
                 'product_price' => 'required',
             ];
@@ -69,7 +71,7 @@ class ProductsController extends Controller
                 'category_id.required' => 'Category is required',
                 'product_name.required' => 'Product name is required',
                 // 'product_name.regex' => 'Valid Product name is required',
-                'product_code.required' => 'Product Code is required',
+                //'product_code.required' => 'Product Code is required',
                 'product_code.regex' => 'Valid Product Code is required',
                 'product_price.required' => 'Product Price is required',
                 'product_price.numeric' => 'Valid Product Price is required',
@@ -173,6 +175,6 @@ class ProductsController extends Controller
         $brands = Brand::where('status',1)->get()->toArray();
         // dd($categories);
 
-        return view('admin.products.add_edit_product')->with(compact('title','categories','brands'));
+        return view('admin.products.add_edit_product')->with(compact('title','categories','brands','product'));
     }
 }

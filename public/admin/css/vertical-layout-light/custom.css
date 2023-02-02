@@ -2,9 +2,6 @@
     background:#fff !important; 
     color: hsl(353deg 100% 78%) !important;
 }
-.select-color{
-    color: #495057 !important;
-}
 .add-btn{
     max-width: 150px;
     margin-bottom: 10px;
