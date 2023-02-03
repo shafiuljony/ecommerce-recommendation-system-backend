@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductsAttributes;
 use App\Models\Section;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -230,16 +231,84 @@ class ProductsController extends Controller
         return redirect()->back()->with('success_message',$message);
     }
 
-    public function addAttributes(Request $request,$id)
-    {
-        $product = Product::find($id);
+    // public function addAttributes(Request $request,$id)
+    // {
+    //     $product = Product::select('id','product_name','product_code','product_color','product_price','product_image')->with('attributes')->find($id);
 
+    //     if($request->isMethod('post')){
+    //         $data = $request->all();
+    //         // echo "<pre>"; print_r($data); die;
+
+    //         foreach ($data['sku'] as $key => $value) {
+    //             if(!empty($value)){
+
+    //                 //SKU duplicate check
+    //                 $skuCount = ProductsAttributes::where('sku',$value)->count();
+    //                 if($skuCount > 0){
+    //                     return redirect()->back()->with('error_message','SKU Already Exists! Please Add Another SKU!');
+    //                 }
+
+    //                 //size duplicate check
+
+    //                 $sizeCount = ProductsAttributes::where(['product_id'=>$id,'size'=>$data['size'][$key]])->count();
+    //                 if($sizeCount > 0){
+    //                     return redirect()->back()->with('error_message','Size Already Exists! Please Add Another Size!');
+    //                 }
+
+    //                 $attribute = new ProductsAttributes;
+    //                 $attribute->product_id = $id;
+    //                 $attribute->sku = $value;
+    //                 $attribute->size = $data['size'][$key];
+    //                 $attribute->price = $data['price'][$key];
+    //                 $attribute->stock = $data['stock'][$key];
+    //                 $attribute->status = 1;
+    //                 $attribute->save();
+    //             }
+    //         }
+    //         return redirect()->back()->with('success_message','Product Attributes has been added Successfully!');
+    //     }
+    //     return view('admin.attributes.add_edit_attributes')->with(compact('product'));
+    // }
+    public function addAttributes(Request $request, $id){
+        Session::put('page','products');
+        $product = Product::select('id','product_name','product_code','product_color','product_price','product_image')->with('attributes')->find($id);
+        /*$product = json_decode(json_encode($product),true);
+        dd($product);*/
         if($request->isMethod('post')){
             $data = $request->all();
-            echo "<pre>"; print_r($data); die;
+            /*echo "<pre>"; print_r($data); die;*/
+
+            foreach ($data['sku'] as $key => $value) {
+                if(!empty($value)){
+
+                    // SKU duplicate check
+                    $skuCount = ProductsAttributes::where('sku',$value)->count();
+                    if($skuCount>0){
+                        return redirect()->back()->with('error_message','SKU already exists! Please add another SKU!');    
+                    }
+
+                    // Size duplicate check
+                    $sizeCount = ProductsAttributes::where(['product_id'=>$id,'size'=>$data['size'][$key]])->count();
+                    if($sizeCount>0){
+                        return redirect()->back()->with('error_message','Size already exists! Please add another Size!');    
+                    }
+
+                    $attribute = new ProductsAttributes;
+                    $attribute->product_id = $id;
+                    $attribute->sku = $value;
+                    $attribute->size = $data['size'][$key];
+                    $attribute->price = $data['price'][$key];
+                    $attribute->stock = $data['stock'][$key];
+                    $attribute->status = 1;
+                    $attribute->save();
+                }
+            }
+
+            return redirect()->back()->with('success_message','Product Attributes has been added successfully!');
         }
+
         return view('admin.attributes.add_edit_attributes')->with(compact('product'));
-
-
     }
+
+
 }
