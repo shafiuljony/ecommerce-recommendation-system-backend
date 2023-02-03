@@ -13,3 +13,9 @@
 .attributes-input{
     width: 120px;
 }
+.attribute-tableinput{
+    width: 80px;
+}
+.d-n{
+    display: none;
+}

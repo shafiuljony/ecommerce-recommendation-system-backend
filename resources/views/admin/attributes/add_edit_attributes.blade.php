@@ -78,8 +78,8 @@
                           <div>
                               <input type="text" name="size[]" placeholder="Size" class="attributes-input" require/>
                               <input type="text" name="sku[]" placeholder="SKU" class="attributes-input" require/>
-                              <input type="text" name="price[]" placeholder="Price" class="attributes-input" require/>
-                              <input type="text" name="stock[]" placeholder="Stock" class="attributes-input" require/>
+                              <input type="number" name="price[]" placeholder="Price" class="attributes-input" require/>
+                              <input type="number" name="stock[]" placeholder="Stock" class="attributes-input" require/>
                               <a href="javascript:void(0);" class="add_button" title="Add Attributes">Add</a>
                           </div>
                       </div>
@@ -88,7 +88,8 @@
                     <button class="btn btn-light">Cancel</button>
                   </form>
                   <br> <h4 class="card-title">Product Attributes</h4> <br>
-                  <table class="table table-bordered" id="products">
+                    <form method="post" action="{{ url('admin/edit-attributes/'.$product['id']) }}">@csrf
+                        <table class="table table-bordered" id="products">
                                 <thead>
                                     <tr>
                                         <th>
@@ -113,33 +114,39 @@
                                 </thead>
                                 <tbody>
                                     @foreach($product['attributes'] as $attribute)
-                                    <tr>
-                                        <td>
-                                            {{ $attribute['id'] }}
-                                        </td>
-                                        <td>
-                                            {{ $attribute['size'] }}
-                                        </td>
-                                        <td>
-                                            {{ $attribute['sku']}}
-                                        </td>
-                                        <td>
-                                            {{ $attribute['price'] }}
-                                        </td>
-                                        <td>
-                                            {{ $attribute['stock'] }}
-                                        </td>
-                                        <td>
-                                            @if($product['status']==1)
-                                                <a  class="updateProductStatus" id="product-{{ $product['id'] }}" product_id="{{ $product['id'] }}" href="javascript:void(0)"><i class="mdi mdi-bookmark-check" style="font-size: 25px;" status="Active"></i></a>
-                                            @else
-                                            <a  class="updateproductStatus" id="product-{{ $product['id'] }}" product_id="{{ $product['id'] }}" href="javascript:void(0)"><i class="mdi mdi-bookmark-outline" style="font-size: 25px;" status="Inactive"></i></a>
-                                            @endif        
-                                        </td>
-                                    </tr>
+                                    <input type="text"  name="attributeId[]"
+                                                class="attribute-tableinput d-n"value="{{ $attribute['id'] }}" require>
+                                        <tr>
+                                            <td>
+                                                {{ $attribute['id'] }}
+                                            </td>
+                                            <td>
+                                                {{ $attribute['size'] }}
+                                            </td>
+                                            <td>
+                                                {{ $attribute['sku']}}
+                                            </td>
+                                            <td>
+                                                <input type="number"name="price[]"
+                                                class="attribute-tableinput" value="{{ $attribute['price']}}" require>
+                                            </td>
+                                            <td>
+                                                <input type="number" name="stock[]"
+                                                class="attribute-tableinput" value="{{ $attribute['stock'] }}" require>
+                                            </td>
+                                            <td>
+                                                @if($attribute['status']==1)
+                                                    <a  class="updateAttributeStatus" id="attribute-{{ $attribute['id'] }}" attribute_id="{{ $attribute['id'] }}" href="javascript:void(0)"><i class="mdi mdi-bookmark-check" style="font-size: 25px;" status="Active"></i></a>
+                                                @else
+                                                <a  class="updateAttributeStatus" id="attribute-{{ $attribute['id'] }}" attribute_id="{{ $attribute['id'] }}" href="javascript:void(0)"><i class="mdi mdi-bookmark-outline" style="font-size: 25px;" status="Inactive"></i></a>
+                                                @endif        
+                                            </td>
+                                        </tr>
                                     @endforeach
                                 </tbody>
-                            </table>
+                        </table>
+                        <button type="submit" class="btn btn-primary mr-2">Update Attributes</button>
+                    </form>    
                 </div>
               </div>
         </div>

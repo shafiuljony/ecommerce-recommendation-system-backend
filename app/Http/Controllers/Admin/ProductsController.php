@@ -230,45 +230,6 @@ class ProductsController extends Controller
         $message = 'Product Video has been deleted successfully!';
         return redirect()->back()->with('success_message',$message);
     }
-
-    // public function addAttributes(Request $request,$id)
-    // {
-    //     $product = Product::select('id','product_name','product_code','product_color','product_price','product_image')->with('attributes')->find($id);
-
-    //     if($request->isMethod('post')){
-    //         $data = $request->all();
-    //         // echo "<pre>"; print_r($data); die;
-
-    //         foreach ($data['sku'] as $key => $value) {
-    //             if(!empty($value)){
-
-    //                 //SKU duplicate check
-    //                 $skuCount = ProductsAttributes::where('sku',$value)->count();
-    //                 if($skuCount > 0){
-    //                     return redirect()->back()->with('error_message','SKU Already Exists! Please Add Another SKU!');
-    //                 }
-
-    //                 //size duplicate check
-
-    //                 $sizeCount = ProductsAttributes::where(['product_id'=>$id,'size'=>$data['size'][$key]])->count();
-    //                 if($sizeCount > 0){
-    //                     return redirect()->back()->with('error_message','Size Already Exists! Please Add Another Size!');
-    //                 }
-
-    //                 $attribute = new ProductsAttributes;
-    //                 $attribute->product_id = $id;
-    //                 $attribute->sku = $value;
-    //                 $attribute->size = $data['size'][$key];
-    //                 $attribute->price = $data['price'][$key];
-    //                 $attribute->stock = $data['stock'][$key];
-    //                 $attribute->status = 1;
-    //                 $attribute->save();
-    //             }
-    //         }
-    //         return redirect()->back()->with('success_message','Product Attributes has been added Successfully!');
-    //     }
-    //     return view('admin.attributes.add_edit_attributes')->with(compact('product'));
-    // }
     public function addAttributes(Request $request, $id){
         Session::put('page','products');
         $product = Product::select('id','product_name','product_code','product_color','product_price','product_image')->with('attributes')->find($id);
@@ -308,6 +269,33 @@ class ProductsController extends Controller
         }
 
         return view('admin.attributes.add_edit_attributes')->with(compact('product'));
+    }
+
+    public function updateAttributeStatus(Request $request){
+        if($request->ajax()){
+            $data = $request->all();
+            // echo "<pre>"; print_r($data); die;
+            if($data['status']=="Active"){
+                $status = 0;
+            }else{
+                $status = 1;
+            }
+            ProductsAttributes::where('id',$data['attribute_id'])->update(['status'=>$status]);
+            return response()->json(['status'=>$status,'attribute_id'=>$data['attribute_id']]);
+        }
+    }
+
+    public function editAttributes(Request $request){
+        if($request->isMethod('post')){
+            $data = $request->all();
+            // echo "<pre>"; print_r($data); die;
+            foreach ($data['attributeId'] as $key => $attribute) {
+                if (!empty($attribute)) {
+                    ProductsAttributes::where(['id'=>$data['attributeId'][$key]])->update(['price'=>$data['price'][$key],'stock'=>$data['stock'][$key]]);
+                }
+            }
+            return redirect()->back()->with('success_message','Product Attributes has been Updated successfully!');
+        }
     }
 
 
