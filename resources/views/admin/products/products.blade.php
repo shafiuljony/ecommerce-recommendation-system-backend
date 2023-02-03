@@ -95,13 +95,13 @@
                                             @endif        
                                         </td>
                                         <td>
-                                            <a title="Add Edit Products" href="{{ url('admin/add-edit-product/'.$product['id']) }}">
+                                            <a title="Edit Product" href="{{ url('admin/add-edit-product/'.$product['id']) }}">
                                                  <i style="font-size: 25px;" class="mdi mdi-pencil-box"></i>
                                             </a>
-                                            <a title="Add Edit Attributes" href="{{ url('admin/add-edit-attributes/'.$product['id']) }}">
+                                            <a title="Add Attributes" href="{{ url('admin/add-edit-attributes/'.$product['id']) }}">
                                                  <i style="font-size: 25px;" class="mdi mdi-plus-box"></i>
                                             </a>
-                                            <a title="Add Multipule Images" href="{{ url('admin/add-images/'.$product['id']) }}">
+                                            <a title="Add Images" href="{{ url('admin/add-images/'.$product['id']) }}">
                                                  <i style="font-size: 25px;" class="mdi mdi-library-plus"></i>
                                             </a>
                                             <a title="Delete Product" class="confirmDelete" href="javascript:void(0)" module="product" moduleid="{{ $product['id'] }}">
