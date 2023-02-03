@@ -124,7 +124,7 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
        Route::match(['get','post'],'edit-attributes/{id}','ProductsController@editAttributes');
 
         // Multipule Product Images
-       Route::match(['get','post'],'edit-attributes/{id}','ProductsController@editAttributes');
+       Route::match(['get','post'],'add-images/{id}','ProductsController@addImages');
     });   
 });
 

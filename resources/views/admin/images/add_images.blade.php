@@ -49,7 +49,7 @@
                       </button>
                     </div>
                   @endif
-                  <form class="forms-sample" action="{{ url('admin/add-edit-attributes/'.$product['id']) }}" method="post">@csrf
+                  <form class="forms-sample" action="{{ url('admin/add-images/'.$product['id']) }}" method="post" enctype="form-data">@csrf
                     <div class="form-group">
                       <label for="product_name">Product Name</label>
                       &nbsp; {{ $product['product_name']}}
@@ -81,8 +81,7 @@
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                     <button class="btn btn-light">Cancel</button>
                   </form>
-                  <br> <h4 class="card-title">Product Attributes</h4> <br>
-                    <form method="post" action="{{ url('admin/edit-attributes/'.$product['id']) }}">@csrf
+                  <br> <h4 class="card-title">Product images</h4> <br>
                         <table class="table table-bordered" id="products">
                                 <thead>
                                     <tr>
@@ -92,7 +91,6 @@
                                         <th>
                                             Image
                                         </th>
-                                        <th>
                                         <th>
                                             Action
                                         </th>
@@ -105,32 +103,19 @@
                                                 {{ $image['id'] }}
                                             </td>
                                             <td>
-                                                {{ $attribute['size'] }}
+                                                <img class="product-image-size" src="{{ url('front/images/product_images/small/'.$image['image'])}}">
                                             </td>
                                             <td>
-                                                {{ $attribute['sku']}}
-                                            </td>
-                                            <td>
-                                                <input type="number"name="price[]"
-                                                class="attribute-tableinput" value="{{ $attribute['price']}}" require>
-                                            </td>
-                                            <td>
-                                                <input type="number" name="stock[]"
-                                                class="attribute-tableinput" value="{{ $attribute['stock'] }}" require>
-                                            </td>
-                                            <td>
-                                                @if($attribute['status']==1)
-                                                    <a  class="updateAttributeStatus" id="attribute-{{ $attribute['id'] }}" attribute_id="{{ $attribute['id'] }}" href="javascript:void(0)"><i class="mdi mdi-bookmark-check" style="font-size: 25px;" status="Active"></i></a>
+                                                @if($image['status']==1)
+                                                    <a  class="updateImageStatus" id="image-{{ $image['id'] }}" image_id="{{ $image['id'] }}" href="javascript:void(0)"><i class="mdi mdi-bookmark-check" style="font-size: 25px;" status="Active"></i></a>
                                                 @else
-                                                <a  class="updateAttributeStatus" id="attribute-{{ $attribute['id'] }}" attribute_id="{{ $attribute['id'] }}" href="javascript:void(0)"><i class="mdi mdi-bookmark-outline" style="font-size: 25px;" status="Inactive"></i></a>
+                                                <a  class="updateimageStatus" id="image-{{ $image['id'] }}" image_id="{{ $image['id'] }}" href="javascript:void(0)"><i class="mdi mdi-bookmark-outline" style="font-size: 25px;" status="Inactive"></i></a>
                                                 @endif        
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
-                        </table>
-                        <button type="submit" class="btn btn-primary mr-2">Update Attributes</button>
-                    </form>    
+                        </table>    
                 </div>
               </div>
         </div>
