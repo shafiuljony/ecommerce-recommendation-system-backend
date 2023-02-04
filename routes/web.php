@@ -135,6 +135,10 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
 
 Route::namespace('App\Http\Controllers\Front')->group(function(){
     Route::get('/','IndexController@index');
+
+
+    //Vendor Login/Registation Route
+     Route::get('/vendor/login-register','VendorController@loginRegister');
 });
 
 
