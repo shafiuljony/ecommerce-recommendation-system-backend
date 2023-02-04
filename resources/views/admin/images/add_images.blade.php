@@ -110,7 +110,11 @@
                                                     <a  class="updateImageStatus" id="image-{{ $image['id'] }}" image_id="{{ $image['id'] }}" href="javascript:void(0)"><i class="mdi mdi-bookmark-check" style="font-size: 25px;" status="Active"></i></a>
                                                 @else
                                                 <a  class="updateimageStatus" id="image-{{ $image['id'] }}" image_id="{{ $image['id'] }}" href="javascript:void(0)"><i class="mdi mdi-bookmark-outline" style="font-size: 25px;" status="Inactive"></i></a>
-                                                @endif        
+                                                @endif 
+                                                &nbsp;
+                                                <a title="Delete Image" class="confirmDelete" href="javascript:void(0)" module="image" moduleid="{{ $image['id'] }}">
+                                                 <i style="font-size: 25px;" class="mdi mdi-delete"></i>
+                                            </a>        
                                             </td>
                                         </tr>
                                     @endforeach

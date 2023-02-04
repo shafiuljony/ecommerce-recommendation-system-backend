@@ -355,5 +355,36 @@ class ProductsController extends Controller
             return response()->json(['status'=>$status,'image_id'=>$data['image_id']]);
         }
     }
+    public function deleteImage($id)
+    {
+        //Get the Product Image
+        $productImage = ProductsImage::select('image')->where('id',$id)->first();
+        
+        //Get Product Image Paths
+        $small_image_path = 'front/images/product_images/small/';
+        $medium_image_path = 'front/images/product_images/medium/';
+        $large_image_path = 'front/images/product_images/large/';
+
+        //Delete Small Product Image If Image exist in the folder
+
+        if(file_Exists($small_image_path.$productImage->image)){
+            unlink($small_image_path.$productImage->image);
+        }
+
+        //Delete Medium Product Image If Image exist in the folder
+        if(file_Exists($medium_image_path.$productImage->image)){
+            unlink($medium_image_path.$productImage->image);
+        }
+
+        //Delete Large Product Image If Image exist in the folder
+        if(file_Exists($large_image_path.$productImage->image)){
+            unlink($large_image_path.$productImage->image);
+        }
+
+        //Detete Product From Product Table
+        ProductsImage::where('id',$id)->delete();
+        $message = 'Product Images has been deleted successfully!';
+        return redirect()->back()->with('success_message',$message);
+    }
 
 }
