@@ -56,7 +56,7 @@
                       <input type="text" class="form-control" @if(!empty($section['name'])) value="{{ $section['name'] }}" @else value="{{ old('section_name')}}" @endif id="section_name" placeholder="Enter your Section Name" name="section_name" require>
                     </div>
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                    <button class="btn btn-light">Cancel</button>
+                    <button type="reset" class="btn btn-light">Cancel</button>
                   </form>
                 </div>
               </div>
