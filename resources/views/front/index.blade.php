@@ -3,24 +3,14 @@
 <!-- Main-Slider -->
 <div class="default-height ph-item">
     <div class="slider-main owl-carousel">
+        @foreach($banners as $banner)
         <div class="bg-image">
             <div class="slide-content">
-                <h1><img src="{{ asset('front/images/banners/banner-1.jpg')}}"></h1>
-                <h2>Spring Collection</h2>
+                <h1><a @if(!empty($banner['link'])) herf="{{ url($banner['link']) }}" @else href="javascript:;" @endif><img src="{{ asset('front/images/banner_images/'.$banner['image']) }}" title="{{ $banner['title'] }}" alt="{{ $banner['alt']}}"></a></h1>
+                <h2{{ $banner['title'] }}</h2>
             </div>
         </div>
-        <div class="bg-image">
-            <div class="slide-content">
-                <h1><img src="{{ asset('front/images/banners/banner-2.jpg')}}"></h1>
-                <h2>Spring Collection</h2>
-            </div>
-        </div>
-        <div class="bg-image">
-            <div class="slide-content">
-                <h1><img src="{{ asset('front/images/banners/banner-3.jpg')}}"></h1>
-                <h2>Spring Collection</h2>
-            </div>
-        </div>
+        @endforeach
     </div>
 </div>
 <!-- Main-Slider /- -->
