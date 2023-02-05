@@ -119,8 +119,17 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         //Products Attributes 
 
         Route::match(['get','post'],'add-edit-attributes/{id}','ProductsController@addAttributes');
+
+
        
-    });   
+       
+    });
+    
+    // Vendor Login/Register
+    Route::get('vendors/login-register','VendorController@loginRegister');
+
+     
 });
+
 
 
