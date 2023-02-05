@@ -119,18 +119,6 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         //Products Attributes 
 
         Route::match(['get','post'],'add-edit-attributes/{id}','ProductsController@addAttributes');
-<<<<<<< HEAD
-
-
-       
-       
-    });
-    
-    // Vendor Login/Register
-    Route::get('vendors/login-register','VendorController@loginRegister');
-
-     
-=======
         Route::post('update-attribute-status','ProductsController@updateAttributeStatus');
         Route::get('delete-attribute/{id}','ProductsController@deleteAttribute');
        Route::match(['get','post'],'edit-attributes/{id}','ProductsController@editAttributes');
@@ -151,7 +139,6 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
 
     //Vendor Login/Registation Route
      Route::get('/vendor/login-register','VendorController@loginRegister');
->>>>>>> 51b15c5b38e7ce1cd61b16370660860b278bc22b
 });
 
 
