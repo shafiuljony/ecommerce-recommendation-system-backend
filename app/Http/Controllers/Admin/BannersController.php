@@ -26,4 +26,22 @@ class BannersController extends Controller
             return response()->json(['status'=>$status,'banner_id'=>$data['banner_id']]);
         }
     }
+    public function deleteBanner($id){
+        //Get Banner Image
+        $bannerImage = Banner::where('id',$id)->first();
+        
+        // Get Banner Image Path 
+        $banner_iamge_path = 'front/images/banner_images/';
+        
+        //Delete Banner Images if not exists in folder 
+        if(file_exists($banner_iamge_path.$bannerImage->imagr)){
+            unlink($banner_iamge_path.$bannerImage->image);
+        }
+
+        //Delete Banner Image from banner table
+        Banner::where('id',$id)->delete();
+
+        $message ="Banner Deleted Succefully";
+        return redirect('admin/banners')->with('success_message',$message);
+     }
 }
