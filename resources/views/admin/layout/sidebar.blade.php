@@ -67,6 +67,19 @@
             </div>
         </li>
         <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-banners" aria-expanded="false" aria-controls="ui-banners">
+            <i class="icon-layout menu-icon"></i>
+            <span class="menu-title">Banner Management</span>
+            <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-banners">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a style="background: #fff !important; color:hsl(353deg 100% 78%) !important;" class="nav-link" href="{{ url('admin/banners') }}">Slider Banners</a></li>
+                    
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#ui-users" aria-expanded="false" aria-controls="ui-users">
             <i class="icon-layout menu-icon"></i>
             <span class="menu-title">User Management</span>
