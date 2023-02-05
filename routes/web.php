@@ -119,6 +119,7 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         //Products Attributes 
 
         Route::match(['get','post'],'add-edit-attributes/{id}','ProductsController@addAttributes');
+<<<<<<< HEAD
 
 
        
@@ -129,6 +130,28 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
     Route::get('vendors/login-register','VendorController@loginRegister');
 
      
+=======
+        Route::post('update-attribute-status','ProductsController@updateAttributeStatus');
+        Route::get('delete-attribute/{id}','ProductsController@deleteAttribute');
+       Route::match(['get','post'],'edit-attributes/{id}','ProductsController@editAttributes');
+
+        // Multipule Product Images
+       Route::match(['get','post'],'add-images/{id}','ProductsController@addImages');
+       Route::post('update-image-status','ProductsController@updateImageStatus');
+       Route::get('delete-image/{id}','ProductsController@deleteImage');
+
+    });   
+
+
+});
+
+Route::namespace('App\Http\Controllers\Front')->group(function(){
+    Route::get('/','IndexController@index');
+
+
+    //Vendor Login/Registation Route
+     Route::get('/vendor/login-register','VendorController@loginRegister');
+>>>>>>> 51b15c5b38e7ce1cd61b16370660860b278bc22b
 });
 
 

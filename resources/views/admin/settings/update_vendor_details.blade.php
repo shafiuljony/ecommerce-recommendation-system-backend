@@ -101,7 +101,7 @@
                       @endif
                     </div>
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                    <button class="btn btn-light">Cancel</button>
+                    <button type="reset" class="btn btn-light">Cancel</button>
                   </form>
                 </div>
               </div>
@@ -206,7 +206,7 @@
                       @endif
                     </div>
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                    <button class="btn btn-light">Cancel</button>
+                    <button type="reset" class="btn btn-light">Cancel</button>
                   </form>
                 </div>
               </div>
@@ -260,7 +260,7 @@
                       <input type="text" class="form-control" value="{{ $vendorDetails['bank_ifsc_code'] }}" id="bank_ifsc_code" placeholder="Enter your Shop  Mobile Number" name="bank_ifsc_code" require maxlength="10" >
                     </div>
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                    <button class="btn btn-light">Cancel</button>
+                    <button type="reset" class="btn btn-light">Cancel</button>
                   </form>
                 </div>
               </div>
