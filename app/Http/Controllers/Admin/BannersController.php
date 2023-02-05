@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Banner;
 use Illuminate\Http\Request;
 use Session;
+use Image;
 
 class BannersController extends Controller
 {
@@ -61,7 +62,30 @@ class BannersController extends Controller
         }
         if($request->isMethod('post')){
             $data = $request->all();
-            echo "<pre>"; print_r($data); die;
+            // echo "<pre>"; print_r($data); die;
+
+            $banner->link = $data['link'];
+            $banner->title = $data['title'];
+            $banner->alt = $data['alt'];
+            $banner->status = 1;
+
+            // Upload Banner Image
+
+            if($request->hasFile('image')){
+                $image_tmp = $request->file('image');
+                if($image_tmp->isValid()){
+                    //Get Image Extension
+                    $extension = $image_tmp->getClientOriginalExtension();
+                    //Generate New Image Name
+                    $imageName = rand(111,99999).'.'.$extension;
+                    $imagePath = 'front/images/banner_images/'.$imageName;
+                    //upload the image
+                    Image::make($image_tmp)->resize(1920,720)->save($imagePath);
+                    $banner->image = $imageName;
+                }
+            }
+            $banner->save();
+            return redirect('admin/banners')->with('success_message',$message);
         }
         return view('admin.banners.add_edit_banner')->with(compact('title','banner'));
      }
