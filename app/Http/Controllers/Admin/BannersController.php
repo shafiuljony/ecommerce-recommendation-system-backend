@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
 use Illuminate\Http\Request;
+use Session;
 
 class BannersController extends Controller
 {
     public function banners(){
+        Session::put('page','banners');
         $banners = Banner::get()->toArray();
         // dd($banners); die;
         return view('admin.banners.banners')->with(compact('banners'));
@@ -43,5 +45,24 @@ class BannersController extends Controller
 
         $message ="Banner Deleted Succefully";
         return redirect('admin/banners')->with('success_message',$message);
+     }
+     public function addEditBanner(Request $request,$id=null){
+        Session::put('page','banners');
+        if($id==''){
+            //Add Banner
+            $banner = new Banner;
+            $title = "Add Banner Image";
+            $message = "Banner Created Successfully!";
+        }else{
+            //Update Banner
+            $banner = Banner::find($id);
+            $title = "Edit Banner";
+            $message = "Banner Updated Successfully";
+        }
+        if($request->isMethod('post')){
+            $data = $request->all();
+            echo "<pre>"; print_r($data); die;
+        }
+        return view('admin.banners.add_edit_banner')->with(compact('title','banner'));
      }
 }
