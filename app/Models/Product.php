@@ -34,9 +34,10 @@ class Product extends Model
 
          if($proDetails['product_discount']>0){
             //if product discount added from the admin panel then calculate
+            $discounted_price = $proDetails['product_price'] - ( $proDetails['product_price'] * $proDetails['product_discount'] / 100);
          }else if($catDetails['category_discount']>0){
             //If Product discount is not added but category discount added from the admin panel
-
+            $discounted_price = $proDetails['product_price'] - ( $proDetails['product_price'] * $catDetails['category_discount'] / 100);
          }else{
             $discounted_price = 0;
          }

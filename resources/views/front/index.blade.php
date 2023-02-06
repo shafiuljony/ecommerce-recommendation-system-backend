@@ -1,3 +1,4 @@
+<?php use App\Models\Product; ?>
 @extends('front.layout.layout')
 @section('content')
 <!-- Main-Slider -->
@@ -278,14 +279,23 @@
                                                 <span>(0)</span>
                                             </div>
                                         </div>
+                                        <?php $discountPrice = Product::discountPrice($product['id']) ?>
+                                        @if($discountPrice > 0)
                                         <div class="price-template">
                                             <div class="item-new-price">
-                                            ৳ {{ $product['product_price'] }}
+                                            ৳ {{ $discountPrice }}
                                             </div>
                                             <div class="item-old-price">
-                                            ৳ 1320.00
+                                            ৳ {{ $product['product_price'] }}
                                             </div>
                                         </div>
+                                        @else
+                                        <div class="price-template">
+                                            <div class="item-new-price">
+                                                ৳ {{ $product['product_price'] }}
+                                            </div>
+                                        </div>
+                                        @endif
                                     </div>
                                     <div class="tag new">
                                         <span>NEW</span>
