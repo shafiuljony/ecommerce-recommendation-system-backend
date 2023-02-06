@@ -6,8 +6,8 @@
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Banners</h4>
-                        <a href="{{ url('admin/add-edit-banner')}}" class="btn btn-block btn-primary add-btn mt-10">Add banner</a>
+                        <h4 class="card-title">Home Page Banners</h4>
+                        <a href="{{ url('admin/add-edit-banner')}}" class="btn btn-block btn-primary add-btn mt-10">Add Banner</a>
                         @if(Session::has('success_message'))
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
                             <strong>Success: </strong> {{ Session::get('success_message')}}
@@ -25,6 +25,9 @@
                                         </th>
                                         <th>
                                             Image
+                                        </th>
+                                        <th>
+                                            Type
                                         </th>
                                         <th>
                                             Link
@@ -51,6 +54,9 @@
                                         </td>
                                         <td>
                                             <img src="{{ asset('front/images/banner_images/'.$banner['image']) }}" class="bannerImgAdmin" alt="">
+                                        </td>
+                                        <td>
+                                            {{ $banner['type']}}
                                         </td>
                                         <td>
                                             {{ $banner['link']}}
