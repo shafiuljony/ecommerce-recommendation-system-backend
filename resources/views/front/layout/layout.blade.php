@@ -11,7 +11,7 @@
     <meta name="author" content="">
     <title>Anon | Ecommerce Home</title>
     <!-- Standard Favicon -->
-    <link href="favicon.ico" rel="shortcut icon">
+    <link href="{{ url('front/images/main-logo/favicon.ico') }}" rel="shortcut icon">
     <!-- Base Google Font for Web-app -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
     <!-- Google Fonts for Banners only -->

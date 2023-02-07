@@ -67,15 +67,27 @@
             </div>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-users" aria-expanded="false" aria-controls="ui-users">
+            <a @if(Session::get("page")=="banners") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @endif class="nav-link" data-toggle="collapse" href="#ui-banners" aria-expanded="false" aria-controls="ui-banners">
+            <i class="icon-layout menu-icon"></i>
+            <span class="menu-title">Banner Management</span>
+            <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-banners">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a @if(Session::get('page')=="banners") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @else style="background: #fff !important; color:hsl(353deg 100% 78%) !important;"  @endif class="nav-link" href="{{ url('admin/banners') }}">Home Page Banners</a></li> 
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a @if(Session::get("page")=="users" || Session::get("page")=="subscribers" ) style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @endif class="nav-link" data-toggle="collapse" href="#ui-users" aria-expanded="false" aria-controls="ui-users">
             <i class="icon-layout menu-icon"></i>
             <span class="menu-title">User Management</span>
             <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="ui-users">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="{{ url('admin/users') }}">Users</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ url('admin/subscribers') }}">Subscribers</a></li>
+                    <li class="nav-item"> <a @if(Session::get('page')=="users") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @else style="background: #fff !important; color:hsl(353deg 100% 78%) !important;"  @endif class="nav-link" href="{{ url('admin/users') }}">Users</a></li>
+                    <li class="nav-item"> <a @if(Session::get('page')=="subscribers") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @else style="background: #fff !important; color:hsl(353deg 100% 78%) !important;"  @endif class="nav-link" href="{{ url('admin/subscribers') }}">Subscribers</a></li>
                 </ul>
             </div>
         </li>

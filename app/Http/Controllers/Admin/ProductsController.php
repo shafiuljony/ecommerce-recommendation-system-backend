@@ -130,6 +130,11 @@ class ProductsController extends Controller
                 }
             }
 
+            if(empty($data['brand_id'])){
+                $data['brand_id'] = 0;
+            }
+
+
              //Save Product details in products table
             $categoryDetails = Category::find($data['category_id']);
             $product->section_id = $categoryDetails['section_id'];
@@ -149,6 +154,13 @@ class ProductsController extends Controller
                 $product->vendor_id = 0;
             }
 
+            if(empty($data['product_discount'])){
+                $data['product_discount'] = 0;
+            }
+            if(empty($data['product_weight'])){
+                $data['product_weight'] = 0;
+            }
+           
             $product->product_name = $data['product_name'];
             $product->product_code = $data['product_code'];
             $product->product_color = $data['product_color'];
@@ -163,6 +175,11 @@ class ProductsController extends Controller
                 $product->is_featured = $data['is_featured'];
             }else{
                 $product->is_featured = "No";
+            }
+            if(!empty($data['is_bestseller'])){
+                $product->is_bestseller = $data['is_bestseller'];
+            }else{
+                $product->is_bestseller = "No";
             }
             
             $product->status = 1;

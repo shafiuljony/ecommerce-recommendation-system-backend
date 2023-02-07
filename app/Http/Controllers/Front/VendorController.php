@@ -9,7 +9,6 @@ class VendorController extends Controller
 {
 
     Public function loginRegister(){
-        // echo "test"; die;
         return view('front.vendors.login_register');
     }
 }
