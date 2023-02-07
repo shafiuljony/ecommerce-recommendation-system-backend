@@ -109,8 +109,11 @@
                                             <li class="has-separator">
                                                 <a href="shop-v1-root-category.html">{{ $product['product_code']}}</a>
                                             </li>
+                                            <li class="has-separator">
+                                                <a  href="listing.html">{{ $product['product_color']}}</a>
+                                            </li>
                                             <li>
-                                                <a href="listing.html">{{ $product['product_color']}}</a>
+                                                <a href="listing.html">{{ $product['brand']['name'] }}</a>
                                             </li>
                                         </ul>
                                         <h6 class="item-title">
@@ -151,6 +154,7 @@
                         </div>
                     @endforeach
                 </div>
+                <div>{{ $categoryDetails['categoryDetails']['description']}}</div>
                 <!-- Row-of-Product-Container /- -->
             </div>
             <!-- Shop-Right-Wrapper /- -->
