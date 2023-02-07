@@ -476,20 +476,20 @@
                                         </div>
                                         <?php $discountPrice = Product::discountPrice($product['id']) ?>
                                         @if($discountPrice > 0)
-                                        <div class="price-template">
-                                            <div class="item-new-price">
-                                            ৳ {{ $discountPrice }}
-                                            </div>
-                                            <div class="item-old-price">
-                                            ৳ {{ $product['product_price'] }}
-                                            </div>
-                                        </div>
-                                        @else
-                                        <div class="price-template">
-                                            <div class="item-new-price">
+                                            <div class="price-template">
+                                                <div class="item-new-price">
+                                                ৳ {{ $discountPrice }}
+                                                </div>
+                                                <div class="item-old-price">
                                                 ৳ {{ $product['product_price'] }}
+                                                </div>
                                             </div>
-                                        </div>
+                                        @else
+                                            <div class="price-template">
+                                                <div class="item-new-price">
+                                                    ৳ {{ $product['product_price'] }}
+                                                </div>
+                                            </div>
                                         @endif
                                     </div>
                                     <div class="tag new">
