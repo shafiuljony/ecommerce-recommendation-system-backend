@@ -8,8 +8,8 @@
         <div class="bg-image">
             <div class="slide-content">
                 <h1><a @if(!empty($banner['link'])) herf="{{ url($banner['link']) }}" @else href="javascript:;" @endif><img src="{{ asset('front/images/banner_images/'.$banner['image']) }}" title="{{ $banner['title'] }}" alt="{{ $banner['alt']}}"></a></h1>
-                <h2>{{ $banner['title'] }}</h2>
-                <div class="banner-content">
+                <!-- <h2>{{ $banner['title'] }}</h2> -->
+                <!-- <div class="banner-content">
   
                     <p class="banner-subtitle">Trending item</p>
     
@@ -21,7 +21,7 @@
     
                     <a href="#" class="banner-btn">Shop now</a>
   
-                </div>
+                </div> -->
             </div>
         </div>
         @endforeach
