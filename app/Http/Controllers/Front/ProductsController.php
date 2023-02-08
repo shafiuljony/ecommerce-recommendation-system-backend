@@ -17,10 +17,19 @@ class ProductsController extends Controller
         if($categoryCount >0){
             //Get Category Details
             $categoryDetails = Category::categoryDetails($url);
-            
-            $categoryProducts = Product::with('brand')->whereIn('category_id',$categoryDetails['catIds'])->where('status',1)->paginate(3);
+            $categoryProducts = Product::with('brand')->whereIn('category_id',$categoryDetails['catIds'])->where('status',1);
+
+            //Check for Sort
+            if(isset($_GET['sort']) && !empty($_GET['sort'])){
+                if($_GET['sort'] == "product_latest"){
+                    $categoryProducts->orderby('products.id','Desc');
+                }
+            }
+
+             $categoryProducts = $categoryProducts->paginate(3);
             // dd($categoryDetails);
             // echo "category existis"; die;
+            //Checking for sort
 
             return view('front.products.listing')->with(compact('categoryDetails','categoryProducts'));
 

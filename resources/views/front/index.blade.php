@@ -297,9 +297,12 @@
                                         </div>
                                         @endif
                                     </div>
-                                    <div class="tag new">
-                                        <span>NEW</span>
-                                    </div>
+                                    <?php $isProductNew = Product::isProductNew($product['id']); ?>
+                                    @if($isProductNew=="Yes")
+                                        <div class="tag new">
+                                            <span>NEW</span>
+                                        </div>
+                                    @endif
                                 </div>
                                 @endforeach
                             </div>
@@ -362,9 +365,12 @@
                                         </div>
                                         @endif
                                     </div>
-                                    <div class="tag new">
-                                        <span>NEW</span>
-                                    </div>
+                                    <?php $isProductNew = Product::isProductNew($product['id']); ?>
+                                    @if($isProductNew=="Yes")
+                                        <div class="tag new">
+                                            <span>NEW</span>
+                                        </div>
+                                    @endif
                                 </div>
                                 @endforeach
                             </div>
@@ -427,9 +433,12 @@
                                         </div>
                                         @endif
                                     </div>
-                                    <div class="tag new">
-                                        <span>NEW</span>
-                                    </div>
+                                    <?php $isProductNew = Product::isProductNew($product['id']); ?>
+                                    @if($isProductNew=="Yes")
+                                        <div class="tag new">
+                                            <span>NEW</span>
+                                        </div>
+                                    @endif
                                 </div>
                                 @endforeach
                             </div>
@@ -492,9 +501,12 @@
                                             </div>
                                         @endif
                                     </div>
-                                    <div class="tag new">
-                                        <span>NEW</span>
-                                    </div>
+                                    <?php $isProductNew = Product::isProductNew($product['id']); ?>
+                                    @if($isProductNew=="Yes")
+                                        <div class="tag new">
+                                            <span>NEW</span>
+                                        </div>
+                                    @endif
                                 </div>
                                 @endforeach
                             </div>
