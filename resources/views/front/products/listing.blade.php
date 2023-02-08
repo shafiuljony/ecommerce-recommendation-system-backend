@@ -159,12 +159,13 @@
                         </div>
                     @endforeach
                 </div>
+                <div class="mt-5 mb-5 ">{{$categoryProducts->links()}}</div>
                 <div>{{ $categoryDetails['categoryDetails']['description']}}</div>
                 <!-- Row-of-Product-Container /- -->
             </div>
             <!-- Shop-Right-Wrapper /- -->
             <!-- Shop-Pagination -->
-            <div class="pagination-area">
+            <!-- <div class="pagination-area">
                 <div class="pagination-number">
                     <ul>
                         <li style="display: none">
@@ -194,7 +195,7 @@
                         </li>
                     </ul>
                 </div>
-            </div>
+            </div> -->
             <!-- Shop-Pagination /- -->
         </div>
     </div>
