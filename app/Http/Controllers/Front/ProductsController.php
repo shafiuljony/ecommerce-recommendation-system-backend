@@ -23,6 +23,14 @@ class ProductsController extends Controller
             if(isset($_GET['sort']) && !empty($_GET['sort'])){
                 if($_GET['sort'] == "product_latest"){
                     $categoryProducts->orderby('products.id','Desc');
+                }else if($_GET['sort']=="price_lowest"){
+                    $categoryProducts->orderby('products.product_price','Asc');
+                }else if($_GET['sort']=="price_height"){
+                    $categoryProducts->orderby('products.product_price','Desc');
+                }else if($_GET['sort']=="name_a_z"){
+                    $categoryProducts->orderby('products.product_name','Asc');
+                }else if($_GET['sort']=="name_z_a"){
+                    $categoryProducts->orderby('products.product_name','Desc');
                 }
             }
 

@@ -54,11 +54,11 @@
                                 <select name="sort" id="sort" class="select-box" >
                                     <option value="" selected>Select</option>
                                     <!-- <option selected="selected" value="">Sort By: Best Selling</option> -->
-                                    <option value="product_latest">Sort By: Latest</option>
-                                    <option value="price_lowest">Sort By: Lowest Price</option>
-                                    <option value="price_height">Sort By: Highest Price</option>
-                                    <option value="name_a_z">Sort By: Name A - Z</option>
-                                    <option value="name_z_a">Sort By: Name Z - A</option>
+                                    <option value="product_latest" @if(isset($_GET['sort']) && $_GET['sort']=="product_latest") selected @endif>Sort By: Latest</option>
+                                    <option value="price_lowest"  @if(isset($_GET['sort']) && $_GET['sort']=="price_lowest") selected @endif>Sort By: Lowest Price</option>
+                                    <option value="price_height" @if(isset($_GET['sort']) && $_GET['sort']=="price_height") selected @endif>Sort By: Highest Price</option>
+                                    <option value="name_a_z" @if(isset($_GET['sort']) && $_GET['sort']=="name_a_z") selected @endif>Sort By: Name A - Z</option>
+                                    <option value="name_z_a" @if(isset($_GET['sort']) && $_GET['sort']=="name_z_a") selected @endif>Sort By: Name Z - A</option>
                                     <!-- <option value="">Sort By: Best Rating</option> -->
                                 </select>
                             </div>
@@ -164,7 +164,11 @@
                         </div>
                     @endforeach
                 </div>
+                @if(isset($_GET['sort']))
+                    <div class="mt-5 mb-5 ">{{ $categoryProducts->appends(['sort'=>$_GET['sort']])->links() }}</div>
+                @else
                 <div class="mt-5 mb-5 ">{{$categoryProducts->links()}}</div>
+                @endif
                 <div>{{ $categoryDetails['categoryDetails']['description']}}</div>
                 <!-- Row-of-Product-Container /- -->
             </div>
