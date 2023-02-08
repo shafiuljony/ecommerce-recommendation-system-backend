@@ -19,7 +19,7 @@ class ProductsController extends Controller
             $categoryDetails = Category::categoryDetails($url);
             
             $categoryProducts = Product::with('brand')->whereIn('category_id',$categoryDetails['catIds'])->where('status',1)->get()->toArray();
-            // dd($categoryProducts);
+            // dd($categoryDetails);
             // echo "category existis"; die;
 
             return view('front.products.listing')->with(compact('categoryDetails','categoryProducts'));
