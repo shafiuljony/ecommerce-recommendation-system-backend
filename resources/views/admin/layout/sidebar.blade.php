@@ -52,7 +52,7 @@
             </div>
         </li>
         <li class="nav-item">
-            <a @if(Session::get("page")=="sections" || Session::get("page")=="categories" || Session::get("page")=="brands" || Session::get("page")=="products") Session::get("page")=="filters") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @endif class="nav-link" data-toggle="collapse" href="#ui-catalogue" aria-expanded="false" aria-controls="ui-catalogue">
+            <a @if(Session::get("page")=="sections" || Session::get("page")=="categories" || Session::get("page")=="brands" || Session::get("page")=="products") || Session::get("page")=="filters") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @endif class="nav-link" data-toggle="collapse" href="#ui-catalogue" aria-expanded="false" aria-controls="ui-catalogue">
             <i class="icon-layout menu-icon"></i>
             <span class="menu-title">Catalogue Management</span>
             <i class="menu-arrow"></i>

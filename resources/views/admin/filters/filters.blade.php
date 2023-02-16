@@ -9,7 +9,7 @@
                     <div class="card-body">
                         <h4 class="card-title">Filters</h4>
 
-                        <a href="{{ url('admin/filter')}}" class="btn btn-block btn-primary add-btn filter-valueBtn">Add Filter Columns</a>
+                        <a href="{{ url('admin/add-edit-filter')}}" class="btn btn-block btn-primary add-btn filter-valueBtn">Add Filter Columns</a>
                         <a href="{{ url('admin/filters-values')}}" class="btn btn-block btn-primary add-btn float-right filter-valueBtn">View Filter Value</a>
                         @if(Session::has('success_message'))
                             <div class="alert alert-success alert-dismissible fade show" role="alert">

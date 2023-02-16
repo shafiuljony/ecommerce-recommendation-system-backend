@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\ProductsFilter;
 use App\Models\ProductsFiltersValues;
+use App\Models\Section;
 use Illuminate\Http\Request;
 use Session;
 
@@ -47,5 +48,37 @@ class FilterController extends Controller
             ProductsFiltersValues::where('id',$data['filter_id'])->update(['status'=>$status]);
             return response()->json(['status'=>$status,'filter_id'=>$data['filter_id']]);
         }
+    }
+    public function addEditFilter(Request $request,$id=null){
+        Session::put('page','filters');
+        if($id==""){
+            $title="Add Filter Columns";
+            $filter = new ProductsFilter;
+            $message = "Filter Added Successfully!";
+        }else{
+            $title="Edit Filter Columns";
+            $filter = ProductsFilter::find($id);
+            $message = "Filter Updated Successfully!";
+        }
+
+        if($request->isMethod('post')){
+            $data = $request->all();
+            // echo "<pre>"; print_r($data); die;
+
+            $cat_ids = implode(',',$data['cat_ids']);
+
+            //Save Filter Column Details In Products Filters Table
+            $filter->cat_ids = $cat_ids;
+            $filter->filter_name = $data['filter_name'];
+            $filter->filter_column = $data['filter_column'];
+            $filter->filter_column = 1;
+            $filter->save();
+
+        }
+
+        //Get sections with categories and subcategories
+        $categories = Section::with('categories')->get()->toArray();
+
+        return view('admin.filters.add_edit_filter')->with(compact('title','categories','filter'));
     }
 }
