@@ -7,6 +7,7 @@ $(document).ready(function(){
     $('#brands').DataTable();
     $('#products').DataTable();
     $('#banners').DataTable();
+    $('#filters').DataTable();
 
     $(".nav-item").removeClass("active");
     $(".nav-link").removeClass("active");
