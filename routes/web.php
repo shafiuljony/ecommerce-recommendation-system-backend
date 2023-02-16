@@ -126,6 +126,9 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
 
        //Filters
        Route::get('filters','FilterController@filters');
+       Route::get('filters-values','FilterController@filtersValues');
+       Route::post('update-filter-status','FilterController@updateFilterStatus');
+       Route::post('update-filter-value-status','FilterController@updateFilterValueStatus');
 
         // Multipule Product Images
        Route::match(['get','post'],'add-images/{id}','ProductsController@addImages');

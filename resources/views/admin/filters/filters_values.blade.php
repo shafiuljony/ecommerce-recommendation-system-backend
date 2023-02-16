@@ -1,4 +1,3 @@
-<?php use App\Models\Category; ?>
 @extends('admin.layout.layout')
 @section('content')
 <div class="main-panel">
@@ -7,10 +6,10 @@
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Filters</h4>
+                        <h4 class="card-title">Filters Values</h4>
 
-                        <a href="{{ url('admin/filter')}}" class="btn btn-block btn-primary add-btn filter-valueBtn">Add Filter Columns</a>
-                        <a href="{{ url('admin/filters-values')}}" class="btn btn-block btn-primary add-btn float-right filter-valueBtn">View Filter Value</a>
+                        <a href="{{ url('admin/add-edit-filter-value')}}" class="btn btn-block btn-primary add-btn filter-valueBtn">Add Filter Values</a>
+                        <a href="{{ url('admin/filters')}}" class="btn btn-block btn-primary add-btn float-right filter-valueBtn">View Filter</a>
                         @if(Session::has('success_message'))
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
                             <strong>Success: </strong> {{ Session::get('success_message')}}
@@ -27,13 +26,13 @@
                                             ID
                                         </th>
                                         <th>
+                                            Filter ID
+                                        </th>
+                                        <th>
                                             Filter Name
                                         </th>
                                         <th>
-                                            Filter Column
-                                        </th>
-                                        <th>
-                                            Categories
+                                            Filter Value
                                         </th>
                                         <th>
                                             Status
@@ -44,31 +43,25 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($filters as $filter)
+                                    @foreach($filters_values as $filter)
                                     <tr>
                                         <td>
                                             {{ $filter['id'] }}
                                         </td>
                                         <td>
-                                            {{ $filter['filter_name'] }}
+                                            {{ $filter['filter_id'] }}
                                         </td>
                                         <td>
-                                            {{ $filter['filter_column'] }}
+                                            {{ $filter['filter_id'] }}
                                         </td>
                                         <td>
-                                            <?php
-
-                                            $catIds = explode(",",$filter['cat_ids']);
-                                            foreach ($catIds as $key => $catId) {
-                                              $category_name = Category::getCategoryName($catId);
-                                              echo $category_name. " ";
-                                            }?>
+                                            {{ $filter['filter_value'] }}
                                         </td>
                                         <td>
                                             @if($filter['status']==1)
-                                                <a  class="updateFilterStatus" id="filter-{{ $filter['id'] }}" filter_id="{{ $filter['id'] }}" href="javascript:void(0)"><i class="mdi mdi-bookmark-check" style="font-size: 25px;" status="Active"></i></a>
+                                                <a  class="updateFilterValueStatus" id="filter_value-{{ $filter['id'] }}" filter_id="{{ $filter['id'] }}" href="javascript:void(0)"><i class="mdi mdi-bookmark-check" style="font-size: 25px;" status="Active"></i></a>
                                             @else
-                                            <a  class="updateFilterStatus" id="filter-{{ $filter['id'] }}" filter_id="{{ $filter['id'] }}" href="javascript:void(0)"><i class="mdi mdi-bookmark-outline" style="font-size: 25px;" status="Inactive"></i></a>
+                                            <a  class="updateFilterValueStatus" id="filter_value-{{ $filter['id'] }}" filter_id="{{ $filter['id'] }}" href="javascript:void(0)"><i class="mdi mdi-bookmark-outline" style="font-size: 25px;" status="Inactive"></i></a>
                                             @endif        
                                         </td>
                                         <td>
