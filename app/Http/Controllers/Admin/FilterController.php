@@ -86,4 +86,34 @@ class FilterController extends Controller
 
         return view('admin.filters.add_edit_filter')->with(compact('title','categories','filter'));
     }
+    public function addEditFilterValue(Request $request,$id=null){
+        Session::put('page','filters');
+        if($id==""){
+            $title="Add Filter Value";
+            $filter = new ProductsFiltersValues;
+            $message = "Filter Value Added Successfully!";
+        }else{
+            $title="Edit Filter Value";
+            $filter = ProductsFiltersValues::find($id);
+            $message = "Filter Value Updated Successfully!";
+        }
+
+        if($request->isMethod('post')){
+            $data = $request->all();
+            // echo "<pre>"; print_r($data); die;
+
+            //Save Filter Values Details In Products Filters values Table
+            $filter->filter_id = $data['filter_id'];
+            $filter->filter_value = $data['filter_value'];
+            $filter->status = 1;
+            $filter->save();
+
+            return redirect('admin/filters-values')->with('success_message',$message);
+        }
+
+        //Get Filters
+        $filters = ProductsFilter::where('status',1)->get()->toArray();
+
+        return view('admin.filters.add_edit_filter_value')->with(compact('title','filter','filters'));
+    }
 }
