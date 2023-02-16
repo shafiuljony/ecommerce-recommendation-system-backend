@@ -7,6 +7,7 @@ use App\Models\ProductsFilter;
 use App\Models\ProductsFiltersValues;
 use App\Models\Section;
 use Illuminate\Http\Request;
+use DB;
 use Session;
 
 class FilterController extends Controller
@@ -71,9 +72,13 @@ class FilterController extends Controller
             $filter->cat_ids = $cat_ids;
             $filter->filter_name = $data['filter_name'];
             $filter->filter_column = $data['filter_column'];
-            $filter->filter_column = 1;
+            $filter->status = 1;
             $filter->save();
 
+            //Add FIlter Column in Products Table
+            DB::statement('Alter table products add '.$data['filter_column'].' varchar(255) after description');
+
+            return redirect('admin/filters')->with('success_message',$message);
         }
 
         //Get sections with categories and subcategories
