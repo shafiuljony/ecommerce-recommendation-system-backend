@@ -66,7 +66,7 @@
                       </select>
                     </div>
                     <div class="form-group">
-                      <label for="filter_name">Fabric Name</label>
+                      <label for="filter_name">Filter Name</label>
                       <input type="text" class="form-control" @if(!empty($filter['filter_name'])) value="{{ $filter['filter_name'] }}" @else value="{{ old('filter_name')}}" @endif id="filter_name" placeholder="Filter Name" name="filter_name" require>
                     </div>
                     <div class="form-group">
