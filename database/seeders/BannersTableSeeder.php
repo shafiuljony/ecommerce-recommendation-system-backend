@@ -16,8 +16,8 @@ class BannersTableSeeder extends Seeder
     public function run()
     {
         $bannerRecords = [
-            ['id'=>1,'image'=>'banner-1.jpg','link'=>'tranding-glasses','title'=>'Tranding Glasses','alt'=>'Tranding Glasses','status'=>1],
-            ['id'=>2,'image'=>'banner-2.jpg','link'=>'tops','title'=>'Tops','alt'=>'Tops','status'=>1],
+            ['id'=>1,'image'=>'banner-1.jpg','type' => 'banner','link'=>'tranding-glasses','title'=>'Tranding Glasses','alt'=>'Tranding Glasses','status'=>1],
+            ['id'=>2,'image'=>'banner-2.jpg','type' => 'banner','link'=>'tops','title'=>'Tops','alt'=>'Tops','status'=>1],
         ];
         Banner::insert($bannerRecords);
     }

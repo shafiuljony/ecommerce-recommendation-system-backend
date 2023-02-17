@@ -94,7 +94,7 @@ class AdminController extends Controller
 
             Admin::where('id', Auth::guard('admin')->user()->id)->update(['name'=>$data['admin_name'], 'mobile'=>$data['admin_mobile'], 'image'=>$imageName]);
 
-            return redirect()->back()->with('success_message', 'Admin details updated');
+            return redirect()->back()->with('success_message', 'Admin details updated successfully');
         }
         return view('admin.settings.update_admin_details');
     }
@@ -110,17 +110,17 @@ class AdminController extends Controller
                     'vendor_name' => 'required|regex:/^[\pL\s\-]+$/u',
                     'vendor_mobile' => 'required|numeric',
                 ];
-    
+
                 $customMessages = [
                     'vendor_name.required' => 'Name is required',
                     'vendor_name.regex' => 'Valid Name Is required',
                     'vendor_mobile.numeric' => 'Valid number Is required',
                 ];
-    
+
                 $this->validate($request,$rules,$customMessages);
-    
-                // Upload Admin Photo
-    
+
+                // Upload Vendor Photo
+
                 if($request->hasFile('vendor_image')){
                     $image_tmp = $request->file('vendor_image');
                     if($image_tmp->isValid()){
@@ -138,17 +138,17 @@ class AdminController extends Controller
                     $imageName ="";
                 }
                 //update in Admin table
-    
+
                 Admin::where('id', Auth::guard('admin')->user()->id)->update(['name'=>$data['vendor_name'], 'mobile'=>$data['vendor_mobile'], 'image'=>$imageName]);
 
-                //update in vendor table
+                //update in Vendor table
 
                 Vendor::where('id', Auth::guard('admin')->user()->vendor_id)->update(['name'=>$data['vendor_name'],'address'=>$data['vendor_address'],'city'=>$data['vendor_city'],'state'=>$data['vendor_state'],'country'=>$data['vendor_country'],'pincode'=>$data['vendor_pincode'],'mobile'=>$data['vendor_mobile']]);
-    
+
                 return redirect()->back()->with('success_message', 'Vendor details updated successfully');
             }
             $vendorDetails = Vendor::where('id', Auth::guard('admin')->user()->vendor_id)->first()->toArray();
-               
+
         }elseif($slug=="business"){
             //business
             Session::put('page','update_business_details');
@@ -162,19 +162,19 @@ class AdminController extends Controller
                     'shop_mobile' => 'required|numeric',
                     'address_proof' => 'required'
                 ];
-    
+
                 $customMessages = [
                     'shop_name.required' => 'Name is required',
                     'shop_name.regex' => 'Valid Name Is required',
                     'shop_city.required' => 'Valid number Is required',
                     'shop_mobile.required' => 'Valid number Is required',
-                    'shop_mobile.numeric' => 'Vali Address Proof Image Is required',
+                    'shop_mobile.numeric' => 'Valid Address Proof Image Is required',
                 ];
-    
+
                 $this->validate($request,$rules,$customMessages);
-    
+
                 // Upload Admin Photo
-    
+
                 if($request->hasFile('address_proof_image')){
                     $image_tmp = $request->file('address_proof_image');
                     if($image_tmp->isValid()){
@@ -191,7 +191,7 @@ class AdminController extends Controller
                 }else{
                     $imageName ="";
                 }
-                
+
 
                 //update in vendors business details table
 
@@ -202,7 +202,7 @@ class AdminController extends Controller
                 'business_license_number'=>$data['business_license_number'],
                 'gst_number'=>$data['gst_number'],
                 'pan_number'=>$data['pan_number']]);
-    
+
                 return redirect()->back()->with('success_message', 'Vendor details updated successfully');
             }
 
@@ -221,7 +221,7 @@ class AdminController extends Controller
                     'account_number' => 'required|numeric',
                     'bank_ifsc_code' => 'required'
                 ];
-    
+
                 $customMessages = [
                     'account_holder_name.required' => 'Account Holder Name Is required',
                     'account_holder_name.regex' => 'Valid Account Holder Name Is required',
@@ -229,13 +229,13 @@ class AdminController extends Controller
                     'account_number.numeric' => 'Valid Account number Is required',
                     'bank_ifsc_code.require' => 'Bank Ifsc Code Is required',
                 ];
-    
+
                 $this->validate($request,$rules,$customMessages);
-                
+
                 //update in vendors bank details table
 
                 VendorsBankDetails::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->update(['account_holder_name'=>$data['account_holder_name'],'bank_name'=>$data['bank_name'],'account_number'=>$data['account_number'],'bank_ifsc_code'=>$data['bank_ifsc_code']]);
-    
+
                 return redirect()->back()->with('success_message', 'Vendor details updated successfully');
             }
 
@@ -246,11 +246,11 @@ class AdminController extends Controller
         $countries = Country::where('status',1)->get()->toArray();
 
         return view('admin.settings.update_vendor_details')->with(compact('slug','vendorDetails','countries'));
-        
+
     }
 
     public function admins($type=null){
-        
+
         $admins = Admin::query();
         if(!empty($type)){
             $admins = $admins->where('type',$type);
@@ -290,34 +290,32 @@ class AdminController extends Controller
 
         if($request->isMethod('post')){
             $data = $request->all();
-            // echo "<pre>"; print_r($data); die;
 
-            // $validated = $request->validate([
 
-            //     // larabel error message
-            //     'email' => 'required|email|max:255', 
-            //     'password' => 'required',
-            // ]);
-    
+
             $rules = [
                 'email' => 'required|email|max:255',
                 'password' => 'required',
             ];
-    
+
             $customMessages =[
-                // adding custom message 
+                // adding custom message
                 'email.required' => 'Email is Address required!',
                 'email.email' => 'Valid Email is Address required',
                 'password.required' => 'Password is required',
             ];
-    
+
             $this->validate($request,$rules,$customMessages);
 
 
-            // auth guard attempt 
-
-            if(Auth::guard('admin')->attempt(['email'=>$data['email'], 'password'=>$data['password'],'status'=> 1])){
-                return redirect('admin/dashboard');
+            if(Auth::guard('admin')->attempt(['email'=>$data['email'], 'password'=>$data['password']])){
+                if(Auth::guard('admin')->user()->type=="vendor" && Auth::guard('admin')->user()->confirm=="No"){
+                    return redirect()->back()->with('error_message', 'Please confirm your email to activate your Vendor Account');
+                }  else if(Auth::guard('admin')->user()->type!="vendor" && Auth::guard('admin')->user()->status==0){
+                    return redirect()->back()->with('error_message','Your admin account is not active');
+                }else{
+                    return redirect('admin/dashboard');
+                }
             }else{
                 return redirect()->back()->with('error_message', 'Invalid Email or Password');
             }
@@ -329,5 +327,5 @@ class AdminController extends Controller
         return redirect('admin/logout');
     }
 
-    
+
 }
