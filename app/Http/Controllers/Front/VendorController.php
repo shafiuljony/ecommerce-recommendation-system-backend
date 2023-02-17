@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Models\Vendor;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use App\Models\Admin;
-use App\models\Vendor;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
 use Symfony\Contracts\Service\Attribute\Required;
@@ -27,7 +27,7 @@ class VendorController extends Controller
             $rules = [
                 "name" => "required",
                 "email" => "required|email|unique:admins|unique:vendors",
-                "mobile" => "required|min:11|numeric|unique:admins|unique:vendors", 
+                "mobile" => "required|min:11|numeric|unique:admins|unique:vendors",
                 "accept" => "required"
             ];
             $customMessages = [
@@ -42,7 +42,7 @@ class VendorController extends Controller
             if($validator->fails()){
                 return Redirect::back()->withErrors($validator);
             }
-            
+
             DB::beginTransaction();
             // Create vendor Account
 
