@@ -290,14 +290,8 @@ class AdminController extends Controller
 
         if($request->isMethod('post')){
             $data = $request->all();
-            echo "<pre>"; print_r($data); die;
 
-            // $validated = $request->validate([
 
-            //     // larabel error message
-            //     'email' => 'required|email|max:255',
-            //     'password' => 'required',
-            // ]);
 
             $rules = [
                 'email' => 'required|email|max:255',
@@ -314,26 +308,17 @@ class AdminController extends Controller
             $this->validate($request,$rules,$customMessages);
 
 
-            // auth guard attempt
-
-            /*if(Auth::guard('admin')->attempt(['email'=>$data['email'], 'password'=>$data['password'],'status'=> 1])){
-                return redirect('admin/dashboard');
-            }else{
-                return redirect()->back()->with('error_message', 'Invalid Email or Password');
-            }*/
-
-            if(Auth::guard('admin')->attempt(['email'=>$data['email'], 'password'=>$data['password'],])){
+            if(Auth::guard('admin')->attempt(['email'=>$data['email'], 'password'=>$data['password']])){
                 if(Auth::guard('admin')->user()->type=="vendor" && Auth::guard('admin')->user()->confirm=="No"){
                     return redirect()->back()->with('error_message', 'Please confirm your email to activate your Vendor Account');
+                }  else if(Auth::guard('admin')->user()->type!="vendor" && Auth::guard('admin')->user()->status==0){
+                    return redirect()->back()->with('error_message','Your admin account is not active');
+                }else{
+                    return redirect('admin/dashboard');
                 }
-                else if(Auth::guard('admin')->user()->type!="vendor" && Auth::guard('admin')->user()->status==0)
-                return redirect()->back()->with('error_message','Your admin account is not active');
             }else{
-                //return redirect('admin/dashboard');
-                return "ok";
+                return redirect()->back()->with('error_message', 'Invalid Email or Password');
             }
-        }else{
-            return redirect()->back()->with('error_message', 'Invalid Email or Password');
         }
         return view('admin.login');
     }
