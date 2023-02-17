@@ -33,14 +33,14 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function(){
-    
+
     // Admin Login  route
 
     Route::match(['get', 'post'],'login', 'AdminController@login');
 
     Route::group(['middleware'=>['admin']],function(){
 
-       // admin dashboard route  
+       // admin dashboard route
         Route::get('dashboard', 'AdminController@dashboard');
 
         //update admin password
@@ -71,24 +71,24 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         // admin logout
         Route::get('logout', 'AdminController@logout');
 
-        
-        
-        // Section 
+
+
+        // Section
 
         Route::get('sections','SectionController@sections');
         //update Section status
         Route::post('update-section-status','SectionController@updateSectionStatus');
-        //delete Section 
+        //delete Section
         Route::get('delete-section/{id}','SectionController@deleteSection');
         Route::match(['get','post'],'add-edit-section/{id?}','SectionController@addEditSection');
 
 
         // Brand
-                        
+
         Route::get('brands','BrandController@brands');
         //update Brand status
         Route::post('update-brand-status','BrandController@updateBrandStatus');
-        //delete Brand 
+        //delete Brand
         Route::get('delete-brand/{id}','BrandController@deleteBrand');
         Route::match(['get','post'],'add-edit-brand/{id?}','BrandController@addEditBrand');
 
@@ -117,7 +117,7 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::get('delete-product-image/{id}','ProductsController@deleteProductImage');
         Route::get('delete-product-video/{id}','ProductsController@deleteProductVideo');
 
-        //Products Attributes 
+        //Products Attributes
 
         Route::match(['get','post'],'add-edit-attributes/{id}','ProductsController@addAttributes');
         Route::post('update-attribute-status','ProductsController@updateAttributeStatus');
@@ -129,13 +129,13 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
        Route::post('update-image-status','ProductsController@updateImageStatus');
        Route::get('delete-image/{id}','ProductsController@deleteImage');
 
-       //Banner 
+       //Banner
        Route::get('banners','BannersController@banners');
        Route::post('update-banner-status','BannersController@updateBannerStatus');
        Route::get('delete-banner/{id}','BannersController@deleteBanner');
        Route::match(['get','post'],'add-edit-banner/{id?}','BannersController@addEditBanner');
 
-    });   
+    });
 
 
 
@@ -147,7 +147,7 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
     $catUrls = Category::select('url')->where('status',1)->get()->pluck('url')->toArray();
     // dd($catUrls); die;
     foreach ($catUrls as $key => $url){
-        ROute::get('/'.$url,'ProductsController@listing');
+        Route::get('/'.$url,'ProductsController@listing');
     }
 
 

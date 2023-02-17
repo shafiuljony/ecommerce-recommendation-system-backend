@@ -32,7 +32,7 @@ return new class extends Migration
             $table->string('meta_title');
             $table->string('meta_keyword');
             $table->string('meta_description');
-            $table->enum('is_feature',['No','Yes']);
+            $table->enum('is_featured',['No','Yes']);
             $table->tinyInteger('status');
             $table->timestamps();
         });
