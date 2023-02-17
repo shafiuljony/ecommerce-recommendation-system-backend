@@ -1,6 +1,5 @@
 <?php use App\Models\ProductsFilter; 
     $productFilters = ProductsFilter::productFilters();
-    // dd($productFilters);
 ?>
 <!-- Shop-Left-Side-Bar-Wrapper -->
 <div class="col-lg-3 col-md-3 col-sm-12">
@@ -181,8 +180,8 @@
                 <form class="facet-form" action="#" method="post">
                     <div class="associate-wrapper">
                         @foreach($filter['filter_values'] as $value)
-                            <input type="checkbox" class="check-box" id="cbs-21">
-                            <label class="label-text" for="cbs-21">{{$value['filter_value']}}
+                            <input type="checkbox" class="check-box" id="{{$value['filter_value']}}">
+                            <label class="label-text" for="{{$value['filter_value']}}">{{ ucwords($value['filter_value']) }}
                                 <!-- <span class="total-fetch-items">(0)</span> -->
                             </label>
                         @endforeach
