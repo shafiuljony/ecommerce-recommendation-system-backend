@@ -152,7 +152,14 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
 
 
     //Vendor Login/Registation Route
-     Route::get('/vendor/login-register','VendorController@loginRegister');
+     Route::get('vendor/login-register','VendorController@loginRegister');
+
+     //Vendor Register
+     Route::post('vendor/register', 'VendorController@vendorRegister');
+
+     //Confirm Vendor Account
+     Route::get('vendor/confirm/{code}', 'VendorController@confirmVendor');
 });
+
 
 
