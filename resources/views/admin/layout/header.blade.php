@@ -72,7 +72,9 @@
                 <a class="nav-link dropdown-toggle" href="{{ url('admin/update-admin-details') }}" data-toggle="dropdown" id="profileDropdown">
                 @if(!empty(Auth::guard('admin')->user()->image))
                       <img src="{{ url('admin/images/photos/'.Auth::guard('admin')->user()->image)}}" alt="profile">
-                      @endif
+                @else
+                    <img src="{{ url('admin/images/photos/no-image.png'.Auth::guard('admin')->user()->image)}}" alt="profile">
+                @endif
                 </a>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                     <a href="{{ url('admin/update-admin-details') }}" class="dropdown-item">

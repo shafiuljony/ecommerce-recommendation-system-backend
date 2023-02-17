@@ -94,7 +94,7 @@ class AdminController extends Controller
 
             Admin::where('id', Auth::guard('admin')->user()->id)->update(['name'=>$data['admin_name'], 'mobile'=>$data['admin_mobile'], 'image'=>$imageName]);
 
-            return redirect()->back()->with('success_message', 'Admin details updated');
+            return redirect()->back()->with('success_message', 'Admin details updated successfully');
         }
         return view('admin.settings.update_admin_details');
     }
@@ -119,7 +119,7 @@ class AdminController extends Controller
     
                 $this->validate($request,$rules,$customMessages);
     
-                // Upload Admin Photo
+                // Upload Vendor Photo
     
                 if($request->hasFile('vendor_image')){
                     $image_tmp = $request->file('vendor_image');
@@ -141,7 +141,7 @@ class AdminController extends Controller
     
                 Admin::where('id', Auth::guard('admin')->user()->id)->update(['name'=>$data['vendor_name'], 'mobile'=>$data['vendor_mobile'], 'image'=>$imageName]);
 
-                //update in vendor table
+                //update in Vendor table
 
                 Vendor::where('id', Auth::guard('admin')->user()->vendor_id)->update(['name'=>$data['vendor_name'],'address'=>$data['vendor_address'],'city'=>$data['vendor_city'],'state'=>$data['vendor_state'],'country'=>$data['vendor_country'],'pincode'=>$data['vendor_pincode'],'mobile'=>$data['vendor_mobile']]);
     
@@ -168,7 +168,7 @@ class AdminController extends Controller
                     'shop_name.regex' => 'Valid Name Is required',
                     'shop_city.required' => 'Valid number Is required',
                     'shop_mobile.required' => 'Valid number Is required',
-                    'shop_mobile.numeric' => 'Vali Address Proof Image Is required',
+                    'shop_mobile.numeric' => 'Valid Address Proof Image Is required',
                 ];
     
                 $this->validate($request,$rules,$customMessages);
@@ -290,7 +290,7 @@ class AdminController extends Controller
 
         if($request->isMethod('post')){
             $data = $request->all();
-            // echo "<pre>"; print_r($data); die;
+            //echo "<pre>"; print_r($data); die;
 
             // $validated = $request->validate([
 
@@ -316,11 +316,24 @@ class AdminController extends Controller
 
             // auth guard attempt 
 
-            if(Auth::guard('admin')->attempt(['email'=>$data['email'], 'password'=>$data['password'],'status'=> 1])){
+            /*if(Auth::guard('admin')->attempt(['email'=>$data['email'], 'password'=>$data['password'],'status'=> 1])){
                 return redirect('admin/dashboard');
             }else{
                 return redirect()->back()->with('error_message', 'Invalid Email or Password');
+            }*/
+
+            if(Auth::guard('admin')->attempt(['email'=>$data['email'], 'password'=>$data['password'],])){
+                if(Auth::guard('admin')->user()->type=="vendor" && Auth::guard('admin')->user()->confirm=="No"){
+                    return redirect()->back()->with('error_message', 'Please confirm your email to activate your Vendor Account');
+                }
+                else if(Auth::guard('admin')->user()->type!="vendor" && Auth::guard('admin')->user()->status==0)
+                return redirect()->back()->with('error_message','Your admin account is not active');
+            }else{
+                //return redirect('admin/dashboard');
+                return "ok";
             }
+        }else{
+            return redirect()->back()->with('error_message', 'Invalid Email or Password');
         }
         return view('admin.login');
     }
