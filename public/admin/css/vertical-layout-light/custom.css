@@ -19,3 +19,8 @@
 .d-n{
     display: none;
 }
+.bannerImgAdmin{
+    height: 150px !important;
+    width: 180px !important;
+    border-radius: 0 !important;
+}

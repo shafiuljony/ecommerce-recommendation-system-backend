@@ -30,5 +30,9 @@ class DatabaseSeeder extends Seeder
         // $this->call(BrandsTableSeeder::class);
         // $this->call(ProductsTableSeeder::class);
         // $this->call(ProductsAttributesTableSeeder::class);
+<<<<<<< HEAD
+=======
+        $this->call(BannersTableSeeder::class);
+>>>>>>> 1cd99cac1c6b21a241f43cfb86d811db5af16504
     }
 }

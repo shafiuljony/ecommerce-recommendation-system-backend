@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Models\Category;
 
 /*
 |--------------------------------------------------------------------------
@@ -128,13 +129,26 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
        Route::post('update-image-status','ProductsController@updateImageStatus');
        Route::get('delete-image/{id}','ProductsController@deleteImage');
 
+       //Banner 
+       Route::get('banners','BannersController@banners');
+       Route::post('update-banner-status','BannersController@updateBannerStatus');
+       Route::get('delete-banner/{id}','BannersController@deleteBanner');
+       Route::match(['get','post'],'add-edit-banner/{id?}','BannersController@addEditBanner');
+
     });   
+
 
 
 });
 
 Route::namespace('App\Http\Controllers\Front')->group(function(){
     Route::get('/','IndexController@index');
+    //Listing Categories
+    $catUrls = Category::select('url')->where('status',1)->get()->pluck('url')->toArray();
+    // dd($catUrls); die;
+    foreach ($catUrls as $key => $url){
+        ROute::get('/'.$url,'ProductsController@listing');
+    }
 
 
     //Vendor Login/Registation Route
