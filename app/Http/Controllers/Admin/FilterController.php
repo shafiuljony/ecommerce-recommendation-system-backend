@@ -8,7 +8,7 @@ use App\Models\ProductsFiltersValues;
 use App\Models\Section;
 use Illuminate\Http\Request;
 use DB;
-use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\View;
 use Session;
 
 class FilterController extends Controller
