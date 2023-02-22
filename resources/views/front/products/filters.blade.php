@@ -48,6 +48,7 @@
     <!-- Fetch-Categories-from-Root-Category  /- -->
     <!-- Filters -->
     <!-- Filter-Size -->
+    <?php $getSizes = ProductsFilter::getSizes($url); ?>
     <div class="facet-filter-associates">
         <h3 class="title-name">Size</h3>
         <form class="facet-form" action="#" method="post">
