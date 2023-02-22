@@ -16,6 +16,9 @@ class Product extends Model
      {
         return $this->belongsTo('App\Models\Category','category_id');
      }
+     public function brand(){
+      return $this->belongsTo('App\Models\Brand','brand_id');
+     }
      public function attributes(){
          return $this->hasMany('App\Models\ProductsAttributes');
      }
@@ -42,5 +45,17 @@ class Product extends Model
             $discounted_price = 0;
          }
          return $discounted_price;
+     }
+     public static function isProductNew($product_id){
+         //Get Last 3 Product Added by the Admin/vendor
+         $productIds = Product::select('id')->where('status',1)->orderby('id','Desc')->limit(5)->pluck('id');
+         $productIds = json_decode(json_encode($productIds),true);
+         // dd($productIds);
+         if(in_array($product_id,$productIds)){
+            $isProductNew = "Yes";
+         }else{
+            $isProductNew = "No";
+         }
+         return $isProductNew;
      }
 }

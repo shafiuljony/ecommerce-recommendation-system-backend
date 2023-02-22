@@ -7,6 +7,7 @@ $(document).ready(function(){
     $('#brands').DataTable();
     $('#products').DataTable();
     $('#banners').DataTable();
+    $('#filters').DataTable();
 
     $(".nav-item").removeClass("active");
     $(".nav-link").removeClass("active");
@@ -232,6 +233,52 @@ $(document).ready(function(){
             }
         })
      })
+     //update Filter status
+     $(document).on("click",".updateFilterStatus",function(){
+        var status = $(this).children("i").attr("status");
+        var filter_id = $(this).attr("filter_id");
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type:'post',
+            url:'/admin/update-filter-status',
+            data:{status:status,filter_id:filter_id},
+            success:function(resp){
+                // alert(resp);
+                if(resp['status']==0){
+                    $("#filter-"+filter_id).html("<i class='mdi mdi-bookmark-outline' style='font-size: 25px;' status='Inactive'></i>");
+                }else if(resp['status']==1){
+                    $("#filter-"+filter_id).html("<i class='mdi mdi-bookmark-check' style='font-size: 25px;' status='Active'></i>");
+                }
+            },error:function(){
+                alert("Error");
+            }
+        })
+     })
+     //update Filter Value status
+     $(document).on("click",".updateFilterValueStatus",function(){
+        var status = $(this).children("i").attr("status");
+        var filter_id = $(this).attr("filter_id");
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type:'post',
+            url:'/admin/update-filter-value-status',
+            data:{status:status,filter_id:filter_id},
+            success:function(resp){
+                // alert(resp);
+                if(resp['status']==0){
+                    $("#filter_value-"+filter_id).html("<i class='mdi mdi-bookmark-outline' style='font-size: 25px;' status='Inactive'></i>");
+                }else if(resp['status']==1){
+                    $("#filter_value-"+filter_id).html("<i class='mdi mdi-bookmark-check' style='font-size: 25px;' status='Active'></i>");
+                }
+            },error:function(){
+                alert("Error");
+            }
+        })
+     })
      
      //Products Attributes Add/Remove Script
      
@@ -303,4 +350,21 @@ $(document).ready(function(){
             }
         })
      })
+
+     //Show Filters on Selections of Category
+     $("#category_id").on('change',function(){
+        var category_id = $(this).val();
+        // alert(category_id);
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type:'post',
+            url: 'category-filters',
+            data: {category_id:category_id},
+            success: function(resp){
+                $('.loadFilters').html(resp.view);
+            }
+        });
+     });
 });
