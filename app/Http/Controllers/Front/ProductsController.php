@@ -15,7 +15,7 @@ class ProductsController extends Controller
     public function listing(Request $request){
         if($request->ajax()){
             $data = $request->all();
-            echo "<pre>"; print_r($data); die;
+            // echo "<pre>"; print_r($data); die;
             $url = $data['url'];
             $_GET['sort'] = $data['sort'];
             $categoryCount = Category::where(['url'=>$url,'status'=>1])->count();
@@ -49,15 +49,27 @@ class ProductsController extends Controller
                     }
                 }
 
-                //CHecking for size 
+                //Checking for size 
                 if(isset($data['size']) && !empty($data['size'])){
                     $productIds = ProductsAttributes::select('product_id')->whereIn('size',$data['size'])->pluck('product_id')->toArray();
                     $categoryProducts->whereIn('id',$productIds);
                 }
-                //CHecking for color 
+                //Checking for color 
                 if(isset($data['color']) && !empty($data['color'])){
                     $productIds = Product::select('id')->whereIn('product_color',$data['color'])->pluck('id')->toArray();
                     $categoryProducts->whereIn('id',$productIds);
+                }
+
+                //Checking for Price
+
+                if(isset($data['price']) && !empty($data['price'])){
+                    foreach($data['price'] as $key => $price ){
+                        $priceArr = explode("-",$price);
+                        $productIds[] = Product::select('id')->whereBetween('product_price',[$priceArr[0],$priceArr[1]])->pluck('id')->toArray();
+                    }
+                    $productIds = call_user_func_array('array_merge',$productIds);
+                    // echo "<pre>"; print_r($productIds); die;
+                    $categoryProducts->whereIn('products.id',$productIds);
                 }
     
                  $categoryProducts = $categoryProducts->paginate(30);
