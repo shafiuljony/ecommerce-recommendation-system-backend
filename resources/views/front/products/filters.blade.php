@@ -104,6 +104,23 @@
         </form>
     </div>
     <!-- Filter-Brand /- -->
+    <!-- Filter-Price -->
+    <div class="facet-filter-associates">
+        <h3 class="title-name">Price</h3>
+        <form class="facet-form" action="#" method="post">
+            <div class="associate-wrapper">
+                <?php $prices = array('0-1000','1000-2000','2000-3000','3000-5000','5000-10000','10000-100000'); ?>
+
+                @foreach($prices as $key => $price)
+                    <input type="checkbox" class="check-box price" id="price{{ $key }}" name="price[]" value="{{ $price }}">
+                    <label class="label-text" for="price{{ $key }}">TK {{ $price }}
+                        <!-- <span class="total-fetch-items">(0৳)</span> -->
+                    </label>
+                @endforeach
+            </div>
+        </form>
+    </div>
+    <!-- Filter-price /- -->
     <!--Dynamic Filter -->
     @foreach($productFilters as $filter)
     <?php $filterAvailable = ProductsFilter::filterAvailable($filter['id'],$categoryDetails['categoryDetails']['id']) ?>
@@ -126,6 +143,7 @@
         @endif
     @endforeach
     <!-- Filter-Brand /- -->
+    <?php /*
     <!-- Filter-Price -->
     <div class="facet-filter-by-price">
         <h3 class="title-name">Price</h3>
@@ -212,6 +230,7 @@
         </div>
     </div>
     <!-- Filter-Rating -->
+    */ ?>
     <!-- Filters /- -->
 </div>
 <!-- Shop-Left-Side-Bar-Wrapper /- -->

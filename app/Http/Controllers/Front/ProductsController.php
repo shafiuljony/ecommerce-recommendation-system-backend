@@ -15,7 +15,7 @@ class ProductsController extends Controller
     public function listing(Request $request){
         if($request->ajax()){
             $data = $request->all();
-            // echo "<pre>"; print_r($data); die;
+            echo "<pre>"; print_r($data); die;
             $url = $data['url'];
             $_GET['sort'] = $data['sort'];
             $categoryCount = Category::where(['url'=>$url,'status'=>1])->count();
