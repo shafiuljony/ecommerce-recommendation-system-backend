@@ -71,6 +71,11 @@ class ProductsController extends Controller
                     // echo "<pre>"; print_r($productIds); die;
                     $categoryProducts->whereIn('products.id',$productIds);
                 }
+                //Checking for Brand 
+                if(isset($data['brand']) && !empty($data['brand'])){
+                    $productIds = Product::select('id')->whereIn('brand_id',$data['brand'])->pluck('id')->toArray();
+                    $categoryProducts->whereIn('id',$productIds);
+                }
     
                  $categoryProducts = $categoryProducts->paginate(30);
                 // dd($categoryDetails);

@@ -48,4 +48,12 @@ class ProductsFilter extends Model
         // echo "<pre>"; print_r($getColors); die;
         return $getProductColors;
     }
+    public static function getBrands($url){
+        $categoryDetails = Category::categoryDetails($url);
+        $getProductIds = Product::whereIn('category_id',$categoryDetails['catIds'])->pluck('id')->toArray();
+        $brandIds = Product::select('brand_id')->whereIn('id',$getProductIds)->groupBy('brand_id')->pluck('brand_id')->toArray();
+        $brandDetails = Brand::select('id','name')->whereIn('id',$brandIds)->get()->toArray();
+        // echo "<pre>"; print_r($brandDetails); die;
+        return $brandDetails;
+    }
 }
