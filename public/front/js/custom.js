@@ -10,7 +10,12 @@ $(document).ready(function(){
             data: { size:size, product_id:product_id},
             type: 'post',
             success: function(resp){
-                alert(resp['final_price']);
+                
+                if(resp['discount']>0){
+                    $(".getAttributePrice").html("<div class='price'><h4>৳ "+resp['final_price']+"</h4></div><div class='original-price'><span>Original Price:</span><span>৳ "+resp['product_price']+"</span></div>");
+                }else{
+                    $(".getAttributePrice").html("<div class='price'><h4>৳ "+resp['final_price']+"</h4></div>");
+                }
             },error:function(){
                 alert("Error");
             }
