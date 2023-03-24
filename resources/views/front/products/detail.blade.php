@@ -100,7 +100,11 @@
                         <h6 class="information-heading u-s-m-b-8">Sku Information:</h6>
                         <div class="availability">
                             <span>Availability:</span>
-                            <span>In Stock</span>
+                            @if($totalStock>0)
+                                <span>In Stock</span>
+                            @else
+                                <span class="danger">Out of Stock</span>
+                            @endif
                         </div>
                         <div class="left">
                             <span>Product Code:</span>
@@ -110,10 +114,12 @@
                             <span>Product Color:</span>
                             <span>{{ $productDetails['product_color'] }}</span>
                         </div>
-                        <div class="left">
-                            <span>Only:</span>
-                            <span>50 left</span>
-                        </div>
+                        @if($totalStock>0)
+                            <div class="left">
+                                <span>Only:</span>
+                                <span>{{$totalStock}} left</span>
+                            </div>
+                        @endif
                     </div>
                     <div class="section-5-product-variants u-s-p-y-14">
                         <h6 class="information-heading u-s-m-b-8">Product Variants:</h6>
