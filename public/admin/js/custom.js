@@ -83,6 +83,8 @@ $(document).ready(function(){
                 alert("Error");
             }
         })
+
+        
      })
 
      //Confirm Deletion simple javaScript 
@@ -303,4 +305,35 @@ $(document).ready(function(){
             }
         })
      })
+
+     // Register Form Validation
+     $("#registerForm").submit(function(){
+        var formdata = $(this).serialize();
+        
+        $.ajax({
+         url:"/user/register",
+         type:"POST",
+         data:formdata,
+         success:function(resp){
+             alart(resp.type);
+             if(resp.type=="error"){
+                $.each(resp.errors,function(i,error){
+                    $("#register-"+i).attr('style','color:red');
+                    $("#register-"+i).html(error);
+
+                setTimeout(function(){
+                    $("#register-"+i).css({'display':'none'});
+                },3000);
+            });
+             }else if(resp.type=="success"){
+                window.location.href = resp.url;
+             }
+             
+         },error:function(){
+             alart("Error");
+         }
+       });
+    });
+
+
 });
