@@ -125,7 +125,7 @@ class ProductsController extends Controller
        
     }
     public function detail($id){
-        $productDetails = Product::with('section','category','brand','attributes','images')->find($id)->toArray();
+        $productDetails = Product::with(['section','category','brand','attributes'=>function($query){$query->where('stock','>',0)->where('status', 1);},'images'])->find($id)->toArray();
         $categoryDetails = Category::categoryDetails($productDetails['category']['url']);
         // dd($categoryDetails);
         $totalStock = ProductsAttributes::where('product_id', $id)->sum('stock'); 
