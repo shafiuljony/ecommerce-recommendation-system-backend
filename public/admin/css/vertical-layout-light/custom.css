@@ -6,6 +6,12 @@
     max-width: 150px;
     margin-bottom: 10px;
 }
+.filter-valueBtn{
+    max-width: 172px !important;
+}
+.filter-category{
+    height: 200px !important;
+}
 .product-image-size{
     width: 100px !important;
     height: 100px !important;

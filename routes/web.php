@@ -124,6 +124,15 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::get('delete-attribute/{id}','ProductsController@deleteAttribute');
        Route::match(['get','post'],'edit-attributes/{id}','ProductsController@editAttributes');
 
+       //Filters
+       Route::get('filters','FilterController@filters');
+       Route::get('filters-values','FilterController@filtersValues');
+       Route::post('update-filter-status','FilterController@updateFilterStatus');
+       Route::post('update-filter-value-status','FilterController@updateFilterValueStatus');
+       Route::match(['get','post'],'add-edit-filter/{id?}','FilterController@addEditFilter');
+       Route::match(['get','post'],'add-edit-filter-value/{id?}','FilterController@addEditFilterValue');
+       Route::post('category-filters','FilterController@categoryFilters');
+
         // Multipule Product Images
        Route::match(['get','post'],'add-images/{id}','ProductsController@addImages');
        Route::post('update-image-status','ProductsController@updateImageStatus');
@@ -147,6 +156,7 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
     $catUrls = Category::select('url')->where('status',1)->get()->pluck('url')->toArray();
     // dd($catUrls); die;
     foreach ($catUrls as $key => $url){
+        Route::match(['get','post'],'/'.$url,'ProductsController@listing');
         Route::get('/'.$url,'ProductsController@listing');
     }
 

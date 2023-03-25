@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('image');
             $table->string('link');
             $table->string('title');
-            $table->string('alt');
+            $table->string('alt')->nullable();
             $table->tinyInteger('status');
             $table->timestamps();
         });

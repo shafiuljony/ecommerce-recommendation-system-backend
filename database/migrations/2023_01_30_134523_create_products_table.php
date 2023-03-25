@@ -31,7 +31,7 @@ return new class extends Migration
             $table->string('product_video')->nullable();
             $table->string('description')->nullable();
             $table->string('meta_title')->nullable();
-            $table->string('meta_keyword')->nullable();
+            $table->string('meta_keywords')->nullable();
             $table->string('meta_description')->nullable();
             $table->enum('is_featured',['No','Yes']);
             $table->tinyInteger('status');
