@@ -134,16 +134,19 @@ class ProductsController extends Controller
        $vendorProducts = Product::with('brand')->where('vendor_id',$vendorid)->where('status',1);
        $vendorProducts =$vendorProducts->paginate(30);
     //    dd($vendorProducts);
-    return view('front.products.vendor_listing')->where(compact('getVendorShop','vendorProducts'));
+    return view('front.products.vendor_listing')->with(compact('getVendorShop','vendorProducts'));
     }
     public function detail($id){
         $productDetails = Product::with(['section','category','vendor','brand','attributes'=>function($query){$query->where('stock','>',0)->where('status', 1);},'images'])->find($id)->toArray();
 
 
         $categoryDetails = Category::categoryDetails($productDetails['category']['url']);
-        // dd($productDetails);
+
+        //Get Similer Products
+        $similarProducts = Product::with('brand')->where('category_id',$productDetails['category']['id'])->where('id','!=',$id)->limit(6)->inRandomOrder()->get()->toArray();
+        // dd($similarProducts);
         $totalStock = ProductsAttributes::where('product_id', $id)->sum('stock'); 
-        return view('front.products.detail')->with(compact('productDetails','categoryDetails','totalStock'));
+        return view('front.products.detail')->with(compact('productDetails','categoryDetails','totalStock','similarProducts'));
     }
     public function getProductPrice(Request $request){
         if($request->ajax()){
