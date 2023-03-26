@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductsAttributes;
@@ -199,7 +200,24 @@ class ProductsController extends Controller
             $getProductStock = ProductsAttributes::getProductStock($data['product_id'],$data['size']);
             if($getProductStock<$data['quantity']){
                 return redirect()->back()->with('error_message','Required Quantity is not available');
+
             }
+
+            //Genarate Session Id if it dose not exists
+            $session_id = Session::get('session_id');
+            if(empty($session_id)){
+                $session_id = Session::getId();
+                Session::put('session_id',$session_id);
+            }
+
+            //Save Product Cart table
+            $item = new Cart;
+            $item->session_id = $session_id;
+            $item->product_id = $data['product_id'];
+            $item->size = $data['size'];
+            $item->quantity = $data['quantity'];
+            $item->save();
+            return redirect()->back()->with('success_message','Product has been Added in cart');
         }
     }
 }
