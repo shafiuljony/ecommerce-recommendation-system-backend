@@ -84,6 +84,8 @@ $(document).ready(function(){
                 alert("Error");
             }
         })
+
+        
      })
 
      //Confirm Deletion simple javaScript 

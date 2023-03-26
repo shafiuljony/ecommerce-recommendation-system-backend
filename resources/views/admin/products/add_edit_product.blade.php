@@ -102,6 +102,10 @@
                       <input type="text" class="form-control" @if(!empty($product['product_weight'])) value="{{ $product['product_weight'] }}" @else value="{{ old('product_weight')}}" @endif id="product_weight" placeholder="Product Weight" name="product_weight" require>
                     </div>
                     <div class="form-group">
+                      <label for="group_code">Group Code</label>
+                      <input type="text" class="form-control" @if(!empty($product['group_code'])) value="{{ $product['group_code'] }}" @else value="{{ old('group_code')}}" @endif id="group_code" placeholder="Group Code" name="group_code" require>
+                    </div>
+                    <div class="form-group">
                       <label for="product_image">Product Image (Recommended Size: 1000x1000)</label>
                       <input type="file" class="form-control" id="product_image"  name="product_image">
                       @if(!empty($product['product_image']))

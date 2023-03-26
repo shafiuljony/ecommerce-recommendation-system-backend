@@ -27,10 +27,10 @@
                         <h6>COMPANY</h6>
                         <ul>
                             <li>
-                                <a href="about.html">About Us</a>
+                                <a href="about.html">About us</a>
                             </li>
                             <li>
-                                <a href="contact.html">Contact Us</a>
+                                <a href="contact.html">Contact us</a>
                             </li>
                             <li>
                                 <a href="faq.html">FAQ</a>
@@ -76,7 +76,7 @@
                         <ul>
                             <li>
                                 <i class="fas fa-location-arrow u-s-m-r-9"></i>
-                                <span>GEC Chattogram Bangladesh</span>
+                                <span>GEC, Chattogram, Bangladesh</span>
                             </li>
                             <li>
                                 <a href="tel:+8801558947938">
@@ -138,8 +138,8 @@
                     </li>
                 </ul>
             </div>
-            <p class="copyright-text">Copyright &copy; 2022
-                <a target="_blank" rel="nofollow" href="https://youtube.com/stackdevelopers">Stack Developers</a> | All Right Reserved</p>
+            <p class="copyright-text">Copyright &copy; 2023
+                <a target="_blank" rel="nofollow" href="https://youtube.com/stackdevelopers">Anon Developers</a> | All Right Reserved</p>
         </div>
     </div>
     <!-- Bottom-Footer /- -->

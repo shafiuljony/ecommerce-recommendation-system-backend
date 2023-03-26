@@ -160,15 +160,32 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
         Route::get('/'.$url,'ProductsController@listing');
     }
 
+    //Vendor Products
+    Route::get('/products/{vendorid}', 'ProductsController@vendorListing');
+
+    //Product Detail Page
+    Route::get('/product/{id}', 'ProductsController@detail');
+    //Get Product Attributes Price
+    Route::post('get-product-price', 'ProductsController@getProductPrice');
 
     //Vendor Login/Registation Route
      Route::get('vendor/login-register','VendorController@loginRegister');
 
-     //Vendor Register
-     Route::post('vendor/register', 'VendorController@vendorRegister');
+    //Vendor Register
+     Route::post('vendor/register','VendorController@vendorRegister');
 
-     //Confirm Vendor Account
-     Route::get('vendor/confirm/{code}', 'VendorController@confirmVendor');
+    //Confirm Vendor Account
+     Route::get('vendor/confirm/{code}','VendorController@confirmVendor');
+
+    //User Login/Registation Route
+     Route::get('user/login-register','UserController@loginRegister');
+
+    //User Register
+    Route::post('user/register','UserController@userRegister');
+
+    //User Logout
+    Route::get('user/logout','UserController@userLougout');
+
 });
 
 
