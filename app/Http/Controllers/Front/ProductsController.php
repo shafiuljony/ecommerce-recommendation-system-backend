@@ -161,14 +161,17 @@ class ProductsController extends Controller
             DB::table('recently_viewed_products')->insert(['product_id'=>$id,'session_id'=>$session_id]);
         }
 
-        // Get Recently Viewed Products
+        // Get Recently Viewed Products ids
 
         $recentProductsIds = DB::table('recently_viewed_products')->select('product_id')->where('product_id','!=',$id)->where('session_id',$session_id)->inRandomOrder()->get()->take(4)->pluck('product_id');
         // dd($recentProductsIds);
 
-        
+        //Get Recently Viewed Products
+        $recentlyViewedProducts = Product::with('brand')->whereIn('id',$recentProductsIds)->get()->toArray();
+        // dd($recentlyViewedProducts);
+
         $totalStock = ProductsAttributes::where('product_id', $id)->sum('stock'); 
-        return view('front.products.detail')->with(compact('productDetails','categoryDetails','totalStock','similarProducts'));
+        return view('front.products.detail')->with(compact('productDetails','categoryDetails','totalStock','similarProducts','recentlyViewedProducts'));
     }
     public function getProductPrice(Request $request){
         if($request->ajax()){
