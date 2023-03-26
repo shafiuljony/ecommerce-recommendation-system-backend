@@ -193,8 +193,13 @@ class ProductsController extends Controller
     public function cartAdd(Request $request){
         if($request->isMethod('post')){
             $data = $request->all();
+            // echo "<pre>"; print_r($data); die;
 
-            echo "<pre>"; print_r($data); die;
+            //Check Product Stock is available or not
+            $getProductStock = ProductsAttributes::getProductStock($data['product_id'],$data['size']);
+            if($getProductStock<$data['quantity']){
+                return redirect()->back()->with('error_message','Required Quantity is not available');
+            }
         }
     }
 }

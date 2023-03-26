@@ -51,163 +51,181 @@
             <div class="col-lg-6 col-md-6 col-sm-12">
                 <!-- Product-details -->
                 <div class="all-information-wrapper">
-                    <div class="section-1-title-breadcrumb-rating">
-                        <div class="product-title">
-                            <h1>
-                                <a href="javascript::">{{ $productDetails['product_name'] }}</a>
-                            </h1>
-                        </div>
-                        <ul class="bread-crumb">
-                            <li class="has-separator">
-                                <i class="ion ion-md-home"></i>
-                                <a href="{{ url('/')}}">Home</a>
-                            </li>
-                            <li class="has-separator">
-                                <a href="javascript::">{{ $productDetails['section']['name'] }}</a>
-                            </li>
-                                <?php echo $categoryDetails["breadcrumbs"]; ?>
-                        </ul>
-                        <div class="product-rating">
-                            <div class='star' title="4.5 out of 5 - based on 23 Reviews">
-                                <span style='width:67px'></span>
-                            </div>
-                            <span>(23)</span>
-                        </div>
-                    </div>
-                    <div class="section-2-short-description u-s-p-y-14">
-                        <h6 class="information-heading u-s-m-b-8">Description:</h6>
-                        <p>{{ $productDetails['description'] }}
-                        </p>
-                    </div>
-                    <div class="section-3-price-original-discount u-s-p-y-14">
-                        <?php $discountPrice = Product::discountPrice($productDetails['id']); ?>
-                        <span class="getAttributePrice">
-                            @if($discountPrice > 0)
-                                <div class="price">
-                                    <h4>৳ {{ $discountPrice }}</h4>
-                                </div>
-                                <div class="original-price">
-                                    <span>Original Price:</span>
-                                    <span>৳ {{ $productDetails['product_price'] }}</span>
-                                </div>
-                            @else
-                                <div class="price">
-                                    <h4>৳ {{ $productDetails['product_price'] }}</h4>
-                                </div>
-                            @endif
-                        </span>    
-                        <!-- <div class="discount-price">
-                            <span>Discount:</span>
-                            <span>15%</span>
-                        </div>
-                        <div class="total-save">
-                            <span>Save:</span>
-                            <span>$20</span>
-                        </div> -->
-                    </div>
-                    <div class="section-4-sku-information u-s-p-y-14">
-                        <h6 class="information-heading u-s-m-b-8">Sku Information:</h6>
-                        <div class="availability">
-                            <span>Availability:</span>
-                            @if($totalStock>0)
-                                <span>In Stock</span>
-                            @else
-                                <span class="danger">Out of Stock</span>
-                            @endif
-                        </div>
-                        <div class="left">
-                            <span>Product Code:</span>
-                            <span>{{ $productDetails['product_code'] }}</span>
-                        </div>
-                        <div class="left">
-                            <span>Product Color:</span>
-                            <span>{{ $productDetails['product_color'] }}</span>
-                        </div>
-                        @if($totalStock>0)
-                            <div class="left">
-                                <span>Only:</span>
-                                <span>{{$totalStock}} left</span>
+                        <div class="section-1-title-breadcrumb-rating">
+                            
+                        @if (Session::has('error_message'))
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                               <strong>Error: </strong>{{ Session::get('error_message')}}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
                         @endif
-                    </div>
-                    @if(isset($productDetails['vendor']));
-                    <div>
-                        sold by <a href="/products/{{ $productDetails['vendor']['id'] }}">{{ $productDetails['vendorbusinessdetails']['shop_name'] }}</a> 
-                    </div>
-                    @endif
-                    
-                    <form action="{{ url('cart/add') }}" class="post-form" method="post">@csrf
-                        <input type="hidden" name="product_id" value="{{ $productDetails['id'] }}">
-                        <div class="section-5-product-variants u-s-p-y-14">
-                            @if(count($groupProducts)>0)
-                            <div>
-                                <div><strong>Product Colors</strong></div>
-                                <div class="mt-3">
-                                    @foreach($groupProducts as $product)
-                                    <a href="{{ url('product/'.$product['id']) }}">
-                                        <img src="{{ asset('front/images/product_images/small/'.$product['product_image']) }}" width="80" >
-                                    </a>
-                                    @endforeach
-                                </div>
+
+                        @if(Session::has('success_message'))
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Success: </strong> {{ Session::get('success_message')}}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
-                            @endif
-                            <div class="sizes u-s-m-b-11 mt-3">
-                                <span>Available Size:</span>
-                                <div class="size-variant select-box-wrapper">
-                                    <select name="size" id="getPrice" product-id="{{ $productDetails['id'] }}" class="select-box product-size" require>
-                                        <option value="">Select Size</option>
-                                        @foreach($productDetails['attributes'] as $attribute)
-                                            <option value="{{ $attribute['size'] }}">{{ $attribute['size'] }}</option>
-                                        @endforeach
-                                    </select>
+                        @endif
+                            <div class="product-title">
+                                <h1>
+                                    <a href="javascript::">{{ $productDetails['product_name'] }}</a>
+                                </h1>
+                            </div>
+                            <ul class="bread-crumb">
+                                <li class="has-separator">
+                                    <i class="ion ion-md-home"></i>
+                                    <a href="{{ url('/')}}">Home</a>
+                                </li>
+                                <li class="has-separator">
+                                    <a href="javascript::">{{ $productDetails['section']['name'] }}</a>
+                                </li>
+                                    <?php echo $categoryDetails["breadcrumbs"]; ?>
+                            </ul>
+                            <div class="product-rating">
+                                <div class='star' title="4.5 out of 5 - based on 23 Reviews">
+                                    <span style='width:67px'></span>
                                 </div>
+                                <span>(23)</span>
                             </div>
                         </div>
-                        <div class="section-6-social-media-quantity-actions u-s-p-y-14">
-                                <!-- <div class="quick-social-media-wrapper u-s-m-b-22">
-                                    <span>Share:</span>
-                                    <ul class="social-media-list">
-                                        <li>
-                                            <a href="#">
-                                                <i class="fab fa-facebook-f"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="fab fa-twitter"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="fab fa-google-plus-g"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="fas fa-rss"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="fab fa-pinterest"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div> -->
-                                <div class="quantity-wrapper u-s-m-b-22">
-                                    <span>Quantity:</span>
-                                    <div class="quantity">
-                                        <input type="number" class="quantity-text-field" name="quantity" value="1">
+                        <div class="section-2-short-description u-s-p-y-14">
+                            <h6 class="information-heading u-s-m-b-8">Description:</h6>
+                            <p>{{ $productDetails['description'] }}
+                            </p>
+                        </div>
+                        <div class="section-3-price-original-discount u-s-p-y-14">
+                            <?php $discountPrice = Product::discountPrice($productDetails['id']); ?>
+                            <span class="getAttributePrice">
+                                @if($discountPrice > 0)
+                                    <div class="price">
+                                        <h4>৳ {{ $discountPrice }}</h4>
+                                    </div>
+                                    <div class="original-price">
+                                        <span>Original Price:</span>
+                                        <span>৳ {{ $productDetails['product_price'] }}</span>
+                                    </div>
+                                @else
+                                    <div class="price">
+                                        <h4>৳ {{ $productDetails['product_price'] }}</h4>
+                                    </div>
+                                @endif
+                            </span>    
+                            <!-- <div class="discount-price">
+                                <span>Discount:</span>
+                                <span>15%</span>
+                            </div>
+                            <div class="total-save">
+                                <span>Save:</span>
+                                <span>$20</span>
+                            </div> -->
+                        </div>
+                        <div class="section-4-sku-information u-s-p-y-14">
+                            <h6 class="information-heading u-s-m-b-8">Sku Information:</h6>
+                            <div class="availability">
+                                <span>Availability:</span>
+                                @if($totalStock>0)
+                                    <span>In Stock</span>
+                                @else
+                                    <span class="danger">Out of Stock</span>
+                                @endif
+                            </div>
+                            <div class="left">
+                                <span>Product Code:</span>
+                                <span>{{ $productDetails['product_code'] }}</span>
+                            </div>
+                            <div class="left">
+                                <span>Product Color:</span>
+                                <span>{{ $productDetails['product_color'] }}</span>
+                            </div>
+                            @if($totalStock>0)
+                                <div class="left">
+                                    <span>Only:</span>
+                                    <span>{{$totalStock}} left</span>
+                                </div>
+                            @endif
+                        </div>
+                        @if(isset($productDetails['vendor']));
+                        <div>
+                            sold by <a href="/products/{{ $productDetails['vendor']['id'] }}">{{ $productDetails['vendorbusinessdetails']['shop_name'] }}</a> 
+                        </div>
+                        @endif
+                        
+                        <form action="{{ url('cart/add') }}" class="post-form" method="post">@csrf
+                            <input type="hidden" name="product_id" value="{{ $productDetails['id'] }}">
+                            <div class="section-5-product-variants u-s-p-y-14">
+                                @if(count($groupProducts)>0)
+                                <div>
+                                    <div><strong>Product Colors</strong></div>
+                                    <div class="mt-3">
+                                        @foreach($groupProducts as $product)
+                                        <a href="{{ url('product/'.$product['id']) }}">
+                                            <img src="{{ asset('front/images/product_images/small/'.$product['product_image']) }}" width="80" >
+                                        </a>
+                                        @endforeach
                                     </div>
                                 </div>
-                                <div>
-                                    <button class="button button-outline-secondary" type="submit">Add to cart</button>
-                                    <button class="button button-outline-secondary far fa-heart u-s-m-l-6"></button>
-                                    <button class="button button-outline-secondary far fa-envelope u-s-m-l-6"></button>
+                                @endif
+                                <div class="sizes u-s-m-b-11 mt-3">
+                                    <span>Available Size:</span>
+                                    <div class="size-variant select-box-wrapper">
+                                        <select name="size" id="getPrice" product-id="{{ $productDetails['id'] }}" class="select-box product-size" require>
+                                            <option value="">Select Size</option>
+                                            @foreach($productDetails['attributes'] as $attribute)
+                                                <option value="{{ $attribute['size'] }}">{{ $attribute['size'] }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
-                        </div>
-                    </form>
-                </div>
+                            </div>
+                            <div class="section-6-social-media-quantity-actions u-s-p-y-14">
+                                    <!-- <div class="quick-social-media-wrapper u-s-m-b-22">
+                                        <span>Share:</span>
+                                        <ul class="social-media-list">
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fab fa-facebook-f"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fab fa-twitter"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fab fa-google-plus-g"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fas fa-rss"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fab fa-pinterest"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div> -->
+                                    <div class="quantity-wrapper u-s-m-b-22">
+                                        <span>Quantity:</span>
+                                        <div class="quantity">
+                                            <input type="number" class="quantity-text-field" name="quantity" value="1">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <button class="button button-outline-secondary" type="submit">Add to cart</button>
+                                        <button class="button button-outline-secondary far fa-heart u-s-m-l-6"></button>
+                                        <button class="button button-outline-secondary far fa-envelope u-s-m-l-6"></button>
+                                    </div>
+                            </div>
+                        </form>
+                    </div>
                 <!-- Product-details /- -->
             </div>
         </div>
