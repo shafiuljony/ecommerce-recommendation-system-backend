@@ -180,6 +180,9 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
     //Add to Cart Route
     Route::post('cart/add','ProductsController@cartAdd');
 
+    //Cart Route
+    Route::get('/cart','ProductsController@cart');
+
     //User Login/Registation Route
      Route::get('user/login-register','UserController@loginRegister');
 
