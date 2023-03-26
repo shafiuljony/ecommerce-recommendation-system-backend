@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductsAttributes;
 use App\Models\ProductsFilter;
+use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -124,10 +125,23 @@ class ProductsController extends Controller
         }
        
     }
+    public function vendorListing($vendorid){
+        //Get Vendor Shop Name
+
+       $getVendorShop = Vendor::getVendorShop($vendorid); 
+
+       //Get Vendor Products 
+       $vendorProducts = Product::with('brand')->where('vendor_id',$vendorid)->where('status',1);
+       $vendorProducts =$vendorProducts->paginate(30);
+    //    dd($vendorProducts);
+    return view('front.products.vendor_listing')->where(compact('getVendorShop','vendorProducts'));
+    }
     public function detail($id){
-        $productDetails = Product::with(['section','category','brand','attributes'=>function($query){$query->where('stock','>',0)->where('status', 1);},'images'])->find($id)->toArray();
+        $productDetails = Product::with(['section','category','vendor','brand','attributes'=>function($query){$query->where('stock','>',0)->where('status', 1);},'images'])->find($id)->toArray();
+
+
         $categoryDetails = Category::categoryDetails($productDetails['category']['url']);
-        // dd($categoryDetails);
+        // dd($productDetails);
         $totalStock = ProductsAttributes::where('product_id', $id)->sum('stock'); 
         return view('front.products.detail')->with(compact('productDetails','categoryDetails','totalStock'));
     }
