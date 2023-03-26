@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Session;
 use DB;
+use Auth;
 
 class ProductsController extends Controller
 {
@@ -210,9 +211,21 @@ class ProductsController extends Controller
                 Session::put('session_id',$session_id);
             }
 
+            //Check Product if already exists in the user cart 
+            if(Auth::check()){
+                //User is Logged In 
+                $user_id = Auth::user()->id;
+                $countProducts = Cart::where(['product_id'=>$data['product_id'],'size'=>$data['size'],'user_id'=>$user_id])->count();
+            }else{
+                //User is not Logged In
+                $user_id = 0;
+                $countProducts = Cart::where(['product_id'=>$data['product_id'],'size'=>$data['size'],'session_id'=>$session_id])->count();
+            }
+
             //Save Product Cart table
             $item = new Cart;
             $item->session_id = $session_id;
+            $item->user_id = $user_id;
             $item->product_id = $data['product_id'];
             $item->size = $data['size'];
             $item->quantity = $data['quantity'];
