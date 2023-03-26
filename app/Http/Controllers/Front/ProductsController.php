@@ -170,8 +170,15 @@ class ProductsController extends Controller
         $recentlyViewedProducts = Product::with('brand')->whereIn('id',$recentProductsIds)->get()->toArray();
         // dd($recentlyViewedProducts);
 
+        //Get Group Products (Products Colors)
+        $groupProducts = array();
+        if(!empty($productDetails['group_code'])){
+            $groupProducts = Product::select('id','product_image')->where('id','!=',$id)->where(['group_code'=>$productDetails['group_code'],'status'=>1])->get()->toArray();
+            // dd($groupProducts);
+        }
+
         $totalStock = ProductsAttributes::where('product_id', $id)->sum('stock'); 
-        return view('front.products.detail')->with(compact('productDetails','categoryDetails','totalStock','similarProducts','recentlyViewedProducts'));
+        return view('front.products.detail')->with(compact('productDetails','categoryDetails','totalStock','similarProducts','recentlyViewedProducts','groupProducts'));
     }
     public function getProductPrice(Request $request){
         if($request->ajax()){

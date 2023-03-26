@@ -36,7 +36,7 @@
 				</a>
                     
                 </div>
-                <div class="thumbnails">
+                <div class="thumbnails mt-3">
                         <a href="{{ asset('front/images/product_images/large/'.$productDetails['product_image']) }}" data-standard="{{ asset('front/images/product_images/small/'.$productDetails['product_image']) }}">
                             <img height="150" width="150" src="{{ asset('front/images/product_images/small/'.$productDetails['product_image']) }}" alt="" />
                         </a>
@@ -147,7 +147,19 @@
                                 </select>
                             </div>
                         </div> -->
-                        <div class="sizes u-s-m-b-11">
+                        @if(count($groupProducts)>0)
+                        <div>
+                            <div><strong>Product Colors</strong></div>
+                            <div class="mt-3">
+                                @foreach($groupProducts as $product)
+                                <a href="{{ url('product/'.$product['id']) }}">
+                                    <img src="{{ asset('front/images/product_images/small/'.$product['product_image']) }}" width="80" >
+                                </a>
+                                @endforeach
+                            </div>
+                        </div>
+                        @endif
+                        <div class="sizes u-s-m-b-11 mt-3">
                             <span>Available Size:</span>
                             <div class="size-variant select-box-wrapper">
                                 <select name="size" id="getPrice" product-id="{{ $productDetails['id'] }}" class="select-box product-size">
