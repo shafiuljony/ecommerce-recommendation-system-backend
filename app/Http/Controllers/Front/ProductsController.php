@@ -10,6 +10,8 @@ use App\Models\ProductsFilter;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Session;
+use DB;
 
 class ProductsController extends Controller
 {
@@ -145,6 +147,26 @@ class ProductsController extends Controller
         //Get Similer Products
         $similarProducts = Product::with('brand')->where('category_id',$productDetails['category']['id'])->where('id','!=',$id)->limit(6)->inRandomOrder()->get()->toArray();
         // dd($similarProducts);
+
+        //Set Session For Recently Viewd Products 
+        if(empty(Session::get('session_id'))){
+            $session_id = md5(uniqid(rand(), true));
+        }else{
+            $session_id = Session::get('session_id');
+        }
+        Session::put('session_id',$session_id);
+        //Insert Product in Table If not already Exists
+        $countRecentlyViewedProducts = DB::table('recently_viewed_products')->where(['product_id'=>$id,'session_id'=>$session_id])->count();
+        if($countRecentlyViewedProducts==0){
+            DB::table('recently_viewed_products')->insert(['product_id'=>$id,'session_id'=>$session_id]);
+        }
+
+        // Get Recently Viewed Products
+
+        $recentProductsIds = DB::table('recently_viewed_products')->select('product_id')->where('product_id','!=',$id)->where('session_id',$session_id)->inRandomOrder()->get()->take(4)->pluck('product_id');
+        // dd($recentProductsIds);
+
+        
         $totalStock = ProductsAttributes::where('product_id', $id)->sum('stock'); 
         return view('front.products.detail')->with(compact('productDetails','categoryDetails','totalStock','similarProducts'));
     }
