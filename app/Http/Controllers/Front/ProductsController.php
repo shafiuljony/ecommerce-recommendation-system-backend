@@ -189,4 +189,12 @@ class ProductsController extends Controller
             return $getDiscountAttributePrice;
         }
     }
+
+    public function cartAdd(Request $request){
+        if($request->isMethod('post')){
+            $data = $request->all();
+
+            echo "<pre>"; print_r($data); die;
+        }
+    }
 }

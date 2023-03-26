@@ -135,87 +135,78 @@
                         sold by <a href="/products/{{ $productDetails['vendor']['id'] }}">{{ $productDetails['vendorbusinessdetails']['shop_name'] }}</a> 
                     </div>
                     @endif
-                    <div class="section-5-product-variants u-s-p-y-14">
-                        <!-- <h6 class="information-heading u-s-m-b-8">Product Variants:</h6>
-                        <div class="color u-s-m-b-11">
-                            <span>Available Color:</span>
-                            <div class="color-variant select-box-wrapper">
-                                <select class="select-box product-color">
-                                    <option value="1">Heather Grey</option>
-                                    <option value="3">Black</option>
-                                    <option value="5">White</option>
-                                </select>
-                            </div>
-                        </div> -->
-                        @if(count($groupProducts)>0)
-                        <div>
-                            <div><strong>Product Colors</strong></div>
-                            <div class="mt-3">
-                                @foreach($groupProducts as $product)
-                                <a href="{{ url('product/'.$product['id']) }}">
-                                    <img src="{{ asset('front/images/product_images/small/'.$product['product_image']) }}" width="80" >
-                                </a>
-                                @endforeach
-                            </div>
-                        </div>
-                        @endif
-                        <div class="sizes u-s-m-b-11 mt-3">
-                            <span>Available Size:</span>
-                            <div class="size-variant select-box-wrapper">
-                                <select name="size" id="getPrice" product-id="{{ $productDetails['id'] }}" class="select-box product-size">
-                                    <option value="">Select Size</option>
-                                    @foreach($productDetails['attributes'] as $attribute)
-                                        <option value="{{ $attribute['size'] }}">{{ $attribute['size'] }}</option>
+                    
+                    <form action="{{ url('cart/add') }}" class="post-form" method="post">@csrf
+                        <input type="hidden" name="product_id" value="{{ $productDetails['id'] }}">
+                        <div class="section-5-product-variants u-s-p-y-14">
+                            @if(count($groupProducts)>0)
+                            <div>
+                                <div><strong>Product Colors</strong></div>
+                                <div class="mt-3">
+                                    @foreach($groupProducts as $product)
+                                    <a href="{{ url('product/'.$product['id']) }}">
+                                        <img src="{{ asset('front/images/product_images/small/'.$product['product_image']) }}" width="80" >
+                                    </a>
                                     @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="section-6-social-media-quantity-actions u-s-p-y-14">
-                        <form action="#" class="post-form">
-                            <div class="quick-social-media-wrapper u-s-m-b-22">
-                                <span>Share:</span>
-                                <ul class="social-media-list">
-                                    <li>
-                                        <a href="#">
-                                            <i class="fab fa-facebook-f"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fab fa-twitter"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fab fa-google-plus-g"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fas fa-rss"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fab fa-pinterest"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="quantity-wrapper u-s-m-b-22">
-                                <span>Quantity:</span>
-                                <div class="quantity">
-                                    <input type="number" class="quantity-text-field" name="quantity" value="1">
                                 </div>
                             </div>
-                            <div>
-                                <button class="button button-outline-secondary" type="submit">Add to cart</button>
-                                <button class="button button-outline-secondary far fa-heart u-s-m-l-6"></button>
-                                <button class="button button-outline-secondary far fa-envelope u-s-m-l-6"></button>
+                            @endif
+                            <div class="sizes u-s-m-b-11 mt-3">
+                                <span>Available Size:</span>
+                                <div class="size-variant select-box-wrapper">
+                                    <select name="size" id="getPrice" product-id="{{ $productDetails['id'] }}" class="select-box product-size" require>
+                                        <option value="">Select Size</option>
+                                        @foreach($productDetails['attributes'] as $attribute)
+                                            <option value="{{ $attribute['size'] }}">{{ $attribute['size'] }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                        <div class="section-6-social-media-quantity-actions u-s-p-y-14">
+                                <!-- <div class="quick-social-media-wrapper u-s-m-b-22">
+                                    <span>Share:</span>
+                                    <ul class="social-media-list">
+                                        <li>
+                                            <a href="#">
+                                                <i class="fab fa-facebook-f"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fab fa-twitter"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fab fa-google-plus-g"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fas fa-rss"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fab fa-pinterest"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div> -->
+                                <div class="quantity-wrapper u-s-m-b-22">
+                                    <span>Quantity:</span>
+                                    <div class="quantity">
+                                        <input type="number" class="quantity-text-field" name="quantity" value="1">
+                                    </div>
+                                </div>
+                                <div>
+                                    <button class="button button-outline-secondary" type="submit">Add to cart</button>
+                                    <button class="button button-outline-secondary far fa-heart u-s-m-l-6"></button>
+                                    <button class="button button-outline-secondary far fa-envelope u-s-m-l-6"></button>
+                                </div>
+                        </div>
+                    </form>
                 </div>
                 <!-- Product-details /- -->
             </div>

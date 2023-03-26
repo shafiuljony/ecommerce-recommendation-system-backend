@@ -177,6 +177,9 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
     //Confirm Vendor Account
      Route::get('vendor/confirm/{code}','VendorController@confirmVendor');
 
+    //Add to Cart Route
+    Route::post('cart/add','ProductsController@cartAdd');
+
     //User Login/Registation Route
      Route::get('user/login-register','UserController@loginRegister');
 
