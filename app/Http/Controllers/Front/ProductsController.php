@@ -254,11 +254,20 @@ class ProductsController extends Controller
             $availableStock = ProductsAttributes::select('stock')->where(['product_id'=>$cartDetails['product_id'],'size'=>$cartDetails['size']])->first()->toArray();
             // echo "<pre>"; print_r($availableStock); die;
 
+            // Caheck the product stock available or not
             if($data['qty']>$availableStock['stock']){
                 $getCartItems = Cart::getCartItems();
                 return response()->json(['status'=>false,'message'=>'Product Stock is not Available','view'=>(string)View::make('front.products.cart_items')->with(compact('getCartItems'))]);
             }
 
+            //Check if size available or not
+            $availableSize = ProductsAttributes::where(['product_id'=>$cartDetails['product_id'],'size'=>$cartDetails['size'],'status'=>1])->count();
+            if($availableSize==0){
+                $getCartItems = Cart::getCartItems();
+                return response()->json(['status'=>false,'message'=>'Product Size is not Available. Please remove this Product and Choose another one!','view'=>(string)View::make('front.products.cart_items')->with(compact('getCartItems'))]);
+            }
+
+            //Update the qty
             Cart::where('id',$data['cartid'])->update(['quantity'=>$data['qty']]);
             $getCartItems = Cart::getCartItems();
             return response()->json(['status'=>true,'view'=>(string)View::make('front.products.cart_items')->with(compact('getCartItems'))]);
