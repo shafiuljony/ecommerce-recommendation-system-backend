@@ -12,6 +12,7 @@ use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Session;
+use View;
 use DB;
 use Auth;
 
@@ -244,7 +245,23 @@ class ProductsController extends Controller
     public function cartUpdate(Request $request){
         if($request->ajax()){
             $data = $request->all();
-            echo "<pre>"; print_r($data); die;
+            // echo "<pre>"; print_r($data); die;
+
+            // Get Cart Details 
+            $cartDetails = Cart::find($data['cartid']);
+
+            //Get Available Product Stock
+            $availableStock = ProductsAttributes::select('stock')->where(['product_id'=>$cartDetails['product_id'],'size'=>$cartDetails['size']])->first()->toArray();
+            // echo "<pre>"; print_r($availableStock); die;
+
+            if($data['qty']>$availableStock['stock']){
+                $getCartItems = Cart::getCartItems();
+                return response()->json(['status'=>false,'message'=>'Product Stock is not Available','view'=>(string)View::make('front.products.cart_items')->with(compact('getCartItems'))]);
+            }
+
+            Cart::where('id',$data['cartid'])->update(['quantity'=>$data['qty']]);
+            $getCartItems = Cart::getCartItems();
+            return response()->json(['status'=>true,'view'=>(string)View::make('front.products.cart_items')->with(compact('getCartItems'))]);
         }
     }
 }

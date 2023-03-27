@@ -31,7 +31,7 @@ $sections = Section::sections();
                         </a>
                         <ul class="g-dropdown" style="width:200px">
                             <li>
-                                <a href="cart.html">
+                                <a href="/cart">
                                     <i class="fas fa-cog u-s-m-r-9"></i>
                                     My Cart</a>
                             </li>
@@ -102,7 +102,7 @@ $sections = Section::sections();
             <div class="row clearfix align-items-center">
                 <div class="col-lg-3 col-md-9 col-sm-6">
                     <div class="brand-logo text-lg-center">
-                        <a href="index.html">
+                        <a href="/">
                             <img src="{{ asset('front/images/main-logo/logo.svg')}}" alt="ANON LOGO" class="app-brand-logo" width="120" height="36">
                         </a>
                     </div>
