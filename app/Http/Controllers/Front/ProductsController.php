@@ -235,6 +235,9 @@ class ProductsController extends Controller
     }
 
     public function cart(){
-        return view('front.products.cart');
+        $getCartItems = Cart::getCartItems();
+        // dd($getCartItems);
+
+        return view('front.products.cart')->with(compact('getCartItems'));
     }
 }
