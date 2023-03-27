@@ -1,3 +1,4 @@
+<?php use App\Models\Product; ?>
 @extends('front.layout.layout')
 @section('content')
 <!-- Page Introduction Wrapper -->
@@ -38,6 +39,10 @@
                             </thead>
                             <tbody>
                                 @foreach($getCartItems as $item)
+                                <?php
+                                    $getDiscountAttributePrice = Product::getDiscountAttributePrice($item['product_id'],$item['size']);
+                                    
+                                ?>
                                     <tr>
                                         <td>
                                             <div class="cart-anchor-image">
@@ -52,13 +57,28 @@
                                         </td>
                                         <td>
                                             <div class="cart-price">
-                                                $100.00
+                                                @if($getDiscountAttributePrice['discount'] > 0)
+                                                    <div class="price-template">
+                                                        <div class="item-new-price">
+                                                        ৳ {{ $getDiscountAttributePrice['final_price'] }}
+                                                        </div>
+                                                        <div class="item-old-price">
+                                                        ৳ {{ $getDiscountAttributePrice['product_price'] }}
+                                                        </div>
+                                                    </div>
+                                                @else
+                                                    <div class="price-template">
+                                                        <div class="item-new-price">
+                                                            ৳ {{ $getDiscountAttributePrice['final_price'] }}
+                                                        </div>
+                                                    </div>
+                                                @endif
                                             </div>
                                         </td>
                                         <td>
                                             <div class="cart-quantity">
                                                 <div class="quantity">
-                                                    <input type="text" class="quantity-text-field" value="1">
+                                                    <input type="text" class="quantity-text-field" value="{{ $item['quantity'] }}">
                                                     <a class="plus-a" data-max="1000">&#43;</a>
                                                     <a class="minus-a" data-min="1">&#45;</a>
                                                 </div>
@@ -66,7 +86,7 @@
                                         </td>
                                         <td>
                                             <div class="cart-price">
-                                                $100.00
+                                            {{ $getDiscountAttributePrice['final_price'] * $item['quantity'] }}
                                             </div>
                                         </td>
                                         <td>
