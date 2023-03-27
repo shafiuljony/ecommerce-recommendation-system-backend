@@ -181,7 +181,10 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
     Route::post('cart/add','ProductsController@cartAdd');
 
     //Cart Route
-    Route::get('/cart','ProductsController@cart');
+    Route::get('cart','ProductsController@cart');
+
+    //Update cart item qty
+    Route::post('cart/update','ProductsController@cartUpdate');
 
     //User Login/Registation Route
      Route::get('user/login-register','UserController@loginRegister');

@@ -43,8 +43,21 @@ $(document).ready(function(){
            
             //Increment qty by
              new_qty = parseInt(quantity - 1); 
-             alert(new_qty)
         }
+        var cartid = $(this).data('cartid');
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data:{cartid:cartid,qty:new_qty},
+            url: '/cart/update',
+            type: 'post',
+            success:function(resp){
+                alert(resp);
+            },error:function(){
+                alert("Error");
+            }
+        })
     });
 });
 
