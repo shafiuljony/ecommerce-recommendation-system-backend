@@ -62,6 +62,27 @@ $(document).ready(function(){
             }
         })
     });
+    //Delete cart items Qty
+    $(document).on('click','.deleteCartItem', function(){
+        var cartid = $(this).data('cartid');
+        var result = confirm("Want to Delete This Product")
+        if(result){
+          $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data:{cartid:cartid},
+            url:'/cart/delete',
+            type:'post',
+            success:function(resp){
+                $('#appendCartItems').html(resp.view);
+            },error:function(){
+                alert("Error");
+            }
+        })  
+        }
+        
+    });
 });
 
 function get_filter(class_name){
