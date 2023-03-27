@@ -12,7 +12,7 @@ use App\Models\ProductsImage;
 use App\Models\Section;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Session;
+use Illuminate\Support\Facades\Session;
 use Image;
 
 use function PHPUnit\Framework\fileExists;
@@ -21,12 +21,24 @@ class ProductsController extends Controller
 {
     public function products(){
         Session::put('page','products');
+        $adminType = Auth::guard('admin')->user()->type;
+        $vendor_id = Auth::guard('admin')->user()->vendor_id;
+        if($adminType=="vendor"){
+            $vendorStatus = Auth::guard('admin')->user()->status;
+            if($vendorStatus  == 0){
+                return redirect("admin/update-vendor-details/person")->with('error_message','Your Vendor Account is not approved yet. Please make sure to fill your valid personal, business and bank details');
+            }
+        }
         $products = Product::with(['section'=>function($query){
             //subquery
             $query->select('id','name');
         },'category'=>function($query){
             $query->select('id','category_name');
-        }])->get()->toArray();
+        }]);
+        if($adminType == "vendor"){
+            $products = $products->where('vendor_id',$vendor_id);
+        }
+        $products = $products->get()->toArray();
         // dd($products);
         return view('admin.products.products')->with(compact('products'));
     }
@@ -417,4 +429,10 @@ class ProductsController extends Controller
         return redirect()->back()->with('success_message',$message);
     }
 
+    public function cartAdd(Request $request){
+        if($request->isMethod('post')){
+            $data = $request->all();
+            echo "<pre>"; print_r($data); die;
+        }
+    }
 }

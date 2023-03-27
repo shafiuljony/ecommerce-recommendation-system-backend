@@ -53,10 +53,10 @@
                     <h6 class="account-h6 u-s-m-b-30">Welcome back! Sign in to your account.</h6>
                     <form action="{{ url('admin/login') }}" method="post">@csrf
                         <div class="u-s-m-b-30">
-                            <label for="vendor-email">Username or Email
+                            <label for="vendor-email">Email
                                 <span class="astk">*</span>
                             </label>
-                            <input type="email" name="email" id="evendor-email" class="text-field" placeholder="Vendor Email">
+                            <input type="email" name="email" id="vendor-email" class="text-field" placeholder="Vendor Email">
                         </div>
                         <div class="u-s-m-b-30">
                             <label for="vendor-password">Password

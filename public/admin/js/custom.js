@@ -368,5 +368,5 @@ $(document).ready(function(){
                 $('.loadFilters').html(resp.view);
             }
         });
-     });
+     });     
 });

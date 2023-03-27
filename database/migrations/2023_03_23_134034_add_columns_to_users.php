@@ -14,13 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('address')->after('name');
-            $table->string('city')->after('address');
-            $table->string('state')->after('city');
-            $table->string('country')->after('state');
-            $table->string('pincode')->after('country');
-            $table->string('mobile')->after('pincode');
-            $table->tinyInteger('status')->after('password');
+            $table->string('address')->after('name')->nullable();
+            $table->string('city')->after('address')->nullable();
+            $table->string('state')->after('city')->nullable();
+            $table->string('country')->after('state')->nullable();
+            $table->string('pincode')->after('country')->nullable();
+            $table->string('mobile')->after('pincode')->nullable();
+            $table->tinyInteger('status')->after('password')->nullable();
         });
     }
 

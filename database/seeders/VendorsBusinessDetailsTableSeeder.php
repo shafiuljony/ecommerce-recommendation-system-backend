@@ -17,7 +17,7 @@ class VendorsBusinessDetailsTableSeeder extends Seeder
     public function run()
     {
         $vendorRecords =[
-            ['id'=>2,'vendor_id'=>2,'shop_name'=>'sawrab Electronics store','shop_address'=>'boddarHat cda-124','shop_city'=>'Chattogram','shop_state'=>'chattogram','shop_country'=>'Bangladesh','shop_pincode'=>'4001','shop_mobile'=>'01558947938','shop_website'=>'examplesw.in',
+            ['id'=>2,'vendor_id'=>2,'shop_name'=>'Sawrab Electronics Store','shop_address'=>'BoddarHat cda-124','shop_city'=>'Chattogram','shop_state'=>'Chattogram','shop_country'=>'Bangladesh','shop_pincode'=>'4001','shop_mobile'=>'01558947938','shop_website'=>'examplesw.in',
             'shop_email'=>'sowrab@admin.com',
             'address_proof'=>'Voter ID',
             'address_proof_image'=>'voterid.jpg',
