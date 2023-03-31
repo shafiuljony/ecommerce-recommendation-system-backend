@@ -270,7 +270,11 @@ class ProductsController extends Controller
             //Update the qty
             Cart::where('id',$data['cartid'])->update(['quantity'=>$data['qty']]);
             $getCartItems = Cart::getCartItems();
-            return response()->json(['status'=>true,'view'=>(string)View::make('front.products.cart_items')->with(compact('getCartItems'))]);
+            $totalCartItems = totalCartItems();
+            return response()->json([
+                'status'=>true,
+                'totalCartItems'=>$totalCartItems,
+                'view'=>(string)View::make('front.products.cart_items')->with(compact('getCartItems'))]);
         }
     }
 
@@ -279,8 +283,11 @@ class ProductsController extends Controller
             $data = $request->all();
             // echo "<pre>"; print_r($data); die;
             Cart::where('id',$data['cartid'])->delete();
+            $totalCartItems = totalCartItems();
             $getCartItems = Cart::getCartItems();
-            return response()->json(['view'=>(string)View::make('front.products.cart_items')->with(compact('getCartItems'))]);
+            return response()->json([
+                'totalCartItems'=>$totalCartItems,
+                'view'=>(string)View::make('front.products.cart_items')->with(compact('getCartItems'))]);
 
         }
 
