@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 03, 2023 at 03:32 PM
+-- Generation Time: Mar 27, 2023 at 01:04 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -35,8 +35,9 @@ CREATE TABLE `admins` (
   `mobile` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `image` varchar(255) NOT NULL,
-  `status` tinyint(4) NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 0,
+  `confirm` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -45,10 +46,40 @@ CREATE TABLE `admins` (
 -- Dumping data for table `admins`
 --
 
-INSERT INTO `admins` (`id`, `name`, `type`, `vendor_id`, `mobile`, `email`, `password`, `image`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Shafiul Islam', 'superadmin', 0, '01558947938', 'admin@eduadmin.com', '$2y$10$WTchRn8DRzFgENmBLNHr2.3wkNPMlEMbAILK0ihE3ffRJesz4Cwxu', '97282.JPG', 1, NULL, '2023-01-26 10:01:16'),
-(2, 'Sadekul Islam', 'vendor', 1, '01839673550', 'sadeq@admin.com', '$2a$12$I59aps/86B/mZgYaZXGuOe6UL5BxSG73XSpxr6bLO/RymkCOjnW.C', '3968.jpg', 1, NULL, '2023-01-26 09:58:06'),
-(3, 'Sowrab Hasan', 'vendor', 2, '01611769787', 'sowrab@admin.com', '$2a$12$I59aps/86B/mZgYaZXGuOe6UL5BxSG73XSpxr6bLO/RymkCOjnW.C', '38253.JPG', 1, NULL, '2023-01-26 09:51:28');
+INSERT INTO `admins` (`id`, `name`, `type`, `vendor_id`, `mobile`, `email`, `password`, `image`, `status`, `confirm`, `created_at`, `updated_at`) VALUES
+(1, 'admin', 'superadmin', 1, '01558947938', 'admin@anon.com', '$2y$10$1IYwHMurZZCh84Xml42KbOiAO6TQ.gsg4WVanDUbDMAW8Np.P3lj6', '39399.jpg', 1, NULL, NULL, '2023-03-08 02:12:39'),
+(2, 'shafiul', 'vendor', 2, '01558947938', 'shafiuladmin@anon.com', '$2y$10$1IYwHMurZZCh84Xml42KbOiAO6TQ.gsg4WVanDUbDMAW8Np.P3lj6', '6776.png', 0, NULL, NULL, '2023-03-26 12:14:43'),
+(3, 'shafiul ', 'vendor', 3, '01558947938', 'shafiul@admin.com', '$2y$10$9EvvIVJaZjisQmer8EpjPeHmys.ljo5A46JmBeR4umjNH84m76qzG', NULL, 1, NULL, NULL, NULL),
+(7, 'Shafiul islam', 'vendor', 17, '01777063242', 'shafiuljony12@gmail.com', '$2y$10$Db/Ir/ZCY9Q.ddbeh6T/9Ov6TaykINkTnAAwxSmEWKHCDOK/5emhK', '96316.JPG', 0, 'Yes', '2023-03-26 06:03:18', '2023-03-26 00:05:25');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `banners`
+--
+
+CREATE TABLE `banners` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `link` varchar(255) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `alt` varchar(255) DEFAULT NULL,
+  `status` tinyint(4) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `banners`
+--
+
+INSERT INTO `banners` (`id`, `image`, `type`, `link`, `title`, `alt`, `status`, `created_at`, `updated_at`) VALUES
+(1, '76150.jpg', 'Slider', 'tranding-glasses', 'Tranding Glasses', 'Tranding Glasses', 1, NULL, '2023-02-17 22:54:41'),
+(2, '16021.jpg', 'Slider', 'tops', 'Tops', 'Tops', 1, NULL, '2023-02-17 22:55:05'),
+(3, '1383.jpg', 'Slider', 'women-tops', 'tops', 'Women Tops', 1, '2023-02-17 22:55:52', '2023-02-17 22:55:52'),
+(4, '62674.jpg', 'Fix', 'spring-special-offer', 'spring-special-collection', 'Spring special collection', 1, '2023-02-17 22:57:20', '2023-02-17 22:57:20'),
+(5, '80420.jpg', 'Fix', 'spring-special-offer', 'spring-special-collection', 'Spring special collection', 1, '2023-02-17 22:58:46', '2023-02-17 22:58:46');
 
 -- --------------------------------------------------------
 
@@ -69,14 +100,35 @@ CREATE TABLE `brands` (
 --
 
 INSERT INTO `brands` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Rich Man', 1, NULL, '2023-01-30 03:26:30'),
+(1, 'Rich Man', 1, NULL, NULL),
 (2, 'Shoilpik', 1, NULL, NULL),
 (3, 'Pret A Porter', 1, NULL, NULL),
-(4, 'Samsung', 1, NULL, '2023-01-30 07:26:46'),
-(5, 'MI', 0, NULL, '2023-01-30 08:52:51'),
-(7, 'HP', 1, NULL, '2023-01-30 03:28:11'),
-(8, 'LG', 1, '2023-01-30 07:28:18', '2023-01-30 07:28:40'),
-(9, 'One Plus', 1, '2023-02-01 02:12:17', '2023-02-01 02:12:17');
+(4, 'Samsung', 1, NULL, NULL),
+(5, 'MI', 1, NULL, NULL),
+(6, 'HP', 1, NULL, NULL),
+(7, 'LG', 1, NULL, NULL),
+(8, 'Lenovo', 1, '2023-02-17 08:18:30', '2023-02-17 08:18:30'),
+(9, 'Cats Eye', 1, '2023-02-17 08:18:37', '2023-02-17 08:18:37'),
+(10, 'One Plus', 1, '2023-02-17 08:18:45', '2023-02-17 08:18:45'),
+(11, 'Tommy', 1, '2023-02-22 06:35:14', '2023-02-22 06:35:14'),
+(12, 'Polo', 1, '2023-02-22 06:35:32', '2023-02-22 06:35:32');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `carts`
+--
+
+CREATE TABLE `carts` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `session_id` varchar(255) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `product_id` int(11) NOT NULL,
+  `size` varchar(255) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -89,8 +141,8 @@ CREATE TABLE `categories` (
   `parent_id` int(11) NOT NULL,
   `section_id` int(11) NOT NULL,
   `category_name` varchar(255) NOT NULL,
-  `category_image` varchar(255) NOT NULL,
-  `category_discount` float NOT NULL DEFAULT 0,
+  `category_image` varchar(255) DEFAULT NULL,
+  `category_discount` double(8,2) DEFAULT NULL,
   `description` text DEFAULT NULL,
   `url` varchar(255) NOT NULL,
   `meta_title` varchar(255) DEFAULT NULL,
@@ -106,15 +158,21 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `parent_id`, `section_id`, `category_name`, `category_image`, `category_discount`, `description`, `url`, `meta_title`, `meta_description`, `meta_keywords`, `status`, `created_at`, `updated_at`) VALUES
-(1, 0, 1, 'Desktop', '', 0, '', 'computer', '', '', '', 1, NULL, '2023-01-27 00:22:10'),
-(2, 0, 1, 'Laptop', '', 0, '', 'laptop', '', '', '', 0, NULL, '2023-01-27 00:23:03'),
-(3, 0, 1, 'Mobile', '13368.jpg', 0, NULL, 'mobile', NULL, NULL, NULL, 1, NULL, '2023-01-30 01:28:08'),
-(4, 0, 2, 'Men', '', 10, 'men', 'men', 'men', 'men', 'men', 1, '2023-01-29 02:23:23', '2023-01-29 05:56:02'),
-(5, 0, 2, 'Women', '', 10, 'women', 'women', 'women', 'women', 'women', 0, '2023-01-29 02:26:37', '2023-01-29 12:07:03'),
-(6, 0, 2, 'Kids', '', 10, 'kids', 'kids', 'kids', 'kids', 'kids', 1, '2023-01-29 02:30:35', '2023-01-29 02:30:35'),
-(7, 3, 1, 'smartphone', '', 10, NULL, 'smart phone', 'smart phone', 'smart phone', 'smart phone', 1, '2023-01-29 05:32:43', '2023-01-30 01:36:06'),
-(9, 4, 2, 'T-Shirt', '', 10, '', 'tshirt', NULL, NULL, NULL, 1, '2023-01-29 12:40:54', '2023-01-29 12:40:54'),
-(11, 4, 2, 'Formal Shirt', '', 0, NULL, 'formal_shirt', NULL, NULL, NULL, 1, '2023-02-01 02:25:31', '2023-02-01 02:25:31');
+(1, 0, 2, 'Desktop', '', 0.00, 'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content', 'desktop', NULL, NULL, NULL, 1, NULL, '2023-02-17 08:13:18'),
+(2, 0, 2, 'Laptop', '', 0.00, 'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content', 'laptop', NULL, NULL, NULL, 1, NULL, '2023-02-17 08:13:35'),
+(3, 0, 2, 'Mobile', '', 0.00, 'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content', 'mobile', NULL, NULL, NULL, 1, NULL, '2023-02-17 08:13:54'),
+(4, 0, 1, 'Men', '', 0.00, 'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content', 'men', NULL, NULL, NULL, 1, '2023-02-17 08:12:01', '2023-02-17 08:12:01'),
+(5, 0, 1, 'Women', '', 0.00, 'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content', 'women', NULL, NULL, NULL, 1, '2023-02-17 08:12:22', '2023-02-17 08:12:22'),
+(6, 0, 1, 'Kids', '', 0.00, 'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content', 'kids', NULL, NULL, NULL, 1, '2023-02-17 08:12:53', '2023-02-17 08:12:53'),
+(7, 0, 4, 'Vegetable', '', 0.00, 'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content', 'vegetable', NULL, NULL, NULL, 1, '2023-02-17 08:15:35', '2023-02-17 08:15:35'),
+(8, 0, 4, 'Fish', '', 0.00, 'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content', 'fish', NULL, NULL, NULL, 1, '2023-02-17 08:16:02', '2023-02-17 08:16:02'),
+(9, 0, 4, 'Meat', '', 0.00, 'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content', 'meat', NULL, NULL, NULL, 1, '2023-02-17 08:16:46', '2023-02-17 08:16:46'),
+(10, 0, 3, 'Air Conditioner', '', 0.00, 'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.', 'air-conditioner', NULL, NULL, NULL, 1, '2023-02-17 08:17:46', '2023-02-17 08:17:46'),
+(11, 4, 1, 'T-Shirt', '', 0.00, 'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.', 't-shirt', NULL, NULL, NULL, 1, '2023-02-17 08:23:03', '2023-02-17 08:23:03'),
+(12, 6, 1, 'T-Shirt', '', 0.00, 'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.', 'kid-t-shirt', NULL, NULL, NULL, 1, '2023-02-17 08:23:45', '2023-02-17 08:23:45'),
+(13, 5, 1, 'Tops', '', 0.00, 'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.', 'tops', NULL, NULL, NULL, 1, '2023-02-17 08:24:12', '2023-02-17 08:24:12'),
+(14, 4, 1, 'Shirt', '', 0.00, 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable.', 'shirt', NULL, NULL, NULL, 1, '2023-02-18 00:06:49', '2023-02-18 00:06:49'),
+(15, 3, 2, 'smartphone', '', 0.00, NULL, 'smart-phone', NULL, NULL, NULL, 1, '2023-02-21 12:47:40', '2023-02-21 12:47:40');
 
 -- --------------------------------------------------------
 
@@ -127,8 +185,8 @@ CREATE TABLE `countries` (
   `country_code` varchar(2) NOT NULL DEFAULT '',
   `country_name` varchar(100) NOT NULL DEFAULT '',
   `status` tinyint(4) DEFAULT 1,
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `created_at` datetime DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
@@ -420,15 +478,27 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (2, '2014_10_12_100000_create_password_resets_table', 1),
 (3, '2019_08_19_000000_create_failed_jobs_table', 1),
 (4, '2019_12_14_000001_create_personal_access_tokens_table', 1),
-(5, '2022_12_19_143127_create_vendors_table', 2),
-(6, '2022_12_19_144222_create_admins_table', 3),
-(7, '2023_01_12_062924_create_vendors_business_details_table', 4),
-(8, '2023_01_12_063915_create_vendors_bank_details', 5),
-(9, '2023_01_24_180531_create_sections_table', 6),
-(10, '2023_01_26_182535_create_categories_table', 7),
-(11, '2023_01_30_080838_create_brands_table', 8),
-(12, '2023_01_30_134523_create_products_table', 9),
-(13, '2023_02_02_081023_create_products_attributes_table', 10);
+(5, '2022_12_19_143127_create_vendors_table', 1),
+(6, '2022_12_19_144222_create_admins_table', 1),
+(7, '2023_01_12_062924_create_vendors_business_details_table', 1),
+(8, '2023_01_12_063915_create_vendors_bank_details', 1),
+(9, '2023_01_24_180531_create_sections_table', 1),
+(10, '2023_01_26_182535_create_categories_table', 1),
+(11, '2023_01_30_080838_create_brands_table', 1),
+(12, '2023_01_30_134523_create_products_table', 1),
+(13, '2023_02_02_081023_create_products_attributes_table', 1),
+(14, '2023_02_03_175039_create_products_images_table', 1),
+(15, '2023_02_05_054519_create_banners_table', 1),
+(16, '2023_02_06_132359_update_banners_table', 1),
+(17, '2023_02_07_070242_update_products_table', 1),
+(18, '2023_02_15_145920_create_products_filters_table', 1),
+(19, '2023_02_15_163136_create_products_filters_values_table', 1),
+(20, '2023_03_26_071010_create_recently_viewed_products_table', 2),
+(21, '2023_03_26_092551_add_group_code_to_products', 3),
+(22, '2023_03_26_093025_add_group_code_to_products', 4),
+(23, '2023_03_26_095259_add_group_code_to_products', 5),
+(24, '2023_03_26_100122_add_group_code_to_products', 6),
+(25, '2023_03_26_103258_create_carts_table', 7);
 
 -- --------------------------------------------------------
 
@@ -473,21 +543,31 @@ CREATE TABLE `products` (
   `category_id` int(11) NOT NULL,
   `brand_id` int(11) NOT NULL,
   `vendor_id` int(11) NOT NULL,
-  `admin_id` int(11) NOT NULL,
-  `admin_type` varchar(255) NOT NULL,
-  `product_name` varchar(255) NOT NULL,
-  `product_code` varchar(255) NOT NULL,
-  `product_color` varchar(255) NOT NULL,
-  `product_price` varchar(255) NOT NULL,
-  `product_discount` varchar(255) NOT NULL,
-  `product_weight` varchar(255) NOT NULL,
+  `admin_id` int(11) DEFAULT NULL,
+  `admin_type` varchar(255) DEFAULT NULL,
+  `product_name` varchar(255) DEFAULT NULL,
+  `product_code` varchar(255) DEFAULT NULL,
+  `product_color` varchar(255) DEFAULT NULL,
+  `product_price` double(8,2) DEFAULT NULL,
+  `product_discount` double(8,2) DEFAULT NULL,
+  `product_weight` int(11) DEFAULT NULL,
   `product_image` varchar(255) DEFAULT NULL,
   `product_video` varchar(255) DEFAULT NULL,
+  `group_code` varchar(255) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
+  `screen_size` varchar(255) DEFAULT NULL,
+  `operating_system` varchar(255) DEFAULT NULL,
+  `occasion` varchar(255) DEFAULT NULL,
+  `ram` varchar(255) DEFAULT NULL,
+  `fit` varchar(255) DEFAULT NULL,
+  `sleeve` varchar(255) DEFAULT NULL,
+  `pattern` varchar(255) DEFAULT NULL,
+  `fabric` varchar(255) DEFAULT NULL,
   `meta_title` varchar(255) DEFAULT NULL,
   `meta_keywords` varchar(255) DEFAULT NULL,
   `meta_description` varchar(255) DEFAULT NULL,
   `is_featured` enum('No','Yes') NOT NULL,
+  `is_bestseller` enum('No','Yes') NOT NULL,
   `status` tinyint(4) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -497,14 +577,20 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `section_id`, `category_id`, `brand_id`, `vendor_id`, `admin_id`, `admin_type`, `product_name`, `product_code`, `product_color`, `product_price`, `product_discount`, `product_weight`, `product_image`, `product_video`, `description`, `meta_title`, `meta_keywords`, `meta_description`, `is_featured`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 7, 4, 0, 1, 'superadmin', 'Samsung Galaxy M33', 'SM-M336B', 'Blue', '36000', '10', '500', '49277.png', '8465.mp4', 'Samsung Galaxy M33', 'Samsung Galaxy M33', 'Samsung Galaxy M33', 'Samsung Galaxy M33', 'Yes', 1, NULL, '2023-02-02 01:31:31'),
-(2, 2, 6, 2, 0, 1, 'superadmin', 'Apparel-Unicorn-Are-Real', 'AUARK', 'NavyBlue', '800', '20', '100', '15618.jpg', '', 'Apparel-Unicorn-Are-Real', 'Apparel-Unicorn-Are-Real', 'Apparel-Unicorn-Are-Real', 'Apparel-Unicorn-Are-Real', 'No', 1, NULL, '2023-02-02 01:22:01'),
-(3, 2, 9, 2, 0, 1, 'superadmin', 'T-shirt Cotton', 'TSC001', 'Black', '1200', '10', '150', NULL, NULL, NULL, NULL, NULL, NULL, 'No', 1, '2023-02-01 02:11:14', '2023-02-01 02:11:14'),
-(4, 1, 7, 9, 0, 1, 'superadmin', 'OnePlus Nord N20 5G', 'ON20', 'Blue', '18990', '0', '500', NULL, NULL, NULL, NULL, NULL, NULL, 'No', 1, '2023-02-01 02:18:20', '2023-02-01 10:12:13'),
-(5, 2, 11, 1, 0, 1, 'superadmin', 'Formal', 'RMF01', 'white', '1880', '8', '200', NULL, NULL, NULL, NULL, NULL, NULL, 'No', 1, '2023-02-01 02:27:00', '2023-02-01 10:12:14'),
-(6, 2, 9, 1, 0, 1, 'superadmin', 'mens-r-neck-t-shirt', 'RMMRNTS', 'white', '1318', '40', '100', '76961.jpg', '44467.mp4', NULL, NULL, NULL, NULL, 'No', 1, '2023-02-01 09:52:18', '2023-02-01 10:12:15'),
-(7, 1, 1, 8, 0, 1, 'superadmin', 'LG Teases 3', 'LG 48GQ900', 'black', '90000', '10', '3000', '21400.jpg', NULL, 'New Gaming Monitors Including a 48-Inch 4K OLED Display', 'New Gaming Monitors Including a 48-Inch 4K OLED Display', 'New Gaming Monitors Including a 48-Inch 4K OLED Display', 'New Gaming Monitors Including a 48-Inch 4K OLED Display', 'No', 1, '2023-02-02 01:43:52', '2023-02-02 01:43:52');
+INSERT INTO `products` (`id`, `section_id`, `category_id`, `brand_id`, `vendor_id`, `admin_id`, `admin_type`, `product_name`, `product_code`, `product_color`, `product_price`, `product_discount`, `product_weight`, `product_image`, `product_video`, `group_code`, `description`, `screen_size`, `operating_system`, `occasion`, `ram`, `fit`, `sleeve`, `pattern`, `fabric`, `meta_title`, `meta_keywords`, `meta_description`, `is_featured`, `is_bestseller`, `status`, `created_at`, `updated_at`) VALUES
+(1, 2, 15, 4, 1, 0, 'vendor', 'Samsung Galaxy M33', 'SGM33', 'Blue', 36000.00, 10.00, 500, '78673.png', '18261.mp4', NULL, 'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.', 'Up to 3.9 in', 'Android', NULL, '4 GB', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Yes', 'Yes', 1, NULL, '2023-03-23 23:23:28'),
+(2, 1, 11, 1, 0, 1, 'superadmin', 'Richman Basic Full Sleeve T-shirt', 'RMBFSTS', 'white', 1600.00, 20.00, 200, '68814.jpg', '', NULL, 'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.', NULL, NULL, NULL, NULL, 'Slim Fit', 'full sleeve', 'solid', 'cotton', NULL, NULL, NULL, 'Yes', 'Yes', 1, NULL, '2023-02-17 23:41:01'),
+(3, 1, 11, 3, 0, 1, 'superadmin', 'mens-r-neck-t-shirt', 'RMMRNTS', 'Brown', 1318.00, 5.00, 100, '15636.jpg', NULL, NULL, 'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.', NULL, NULL, NULL, NULL, 'Slim Fit', 'half sleeve', 'solid', 'cotton', NULL, NULL, NULL, 'No', 'Yes', 1, '2023-02-17 08:27:11', '2023-02-22 06:36:12'),
+(4, 1, 13, 2, 0, 1, 'superadmin', 'Women Tops', 'WT01', 'Pink', 1200.00, 10.00, 200, '50486.jpg', NULL, NULL, 'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.', NULL, NULL, NULL, NULL, 'Slim Fit', 'half sleeve', 'solid', 'cotton', NULL, NULL, NULL, 'Yes', 'Yes', 1, '2023-02-17 08:31:43', '2023-03-24 04:25:26'),
+(5, 2, 15, 10, 0, 1, 'superadmin', 'OnePlus Nord N20 5G', 'ON20', 'Brown', 18990.00, 10.00, 500, '74164.jpg', NULL, NULL, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In et elit vitae nunc egestas porttitor in in mauris. In quis tellus ut tortor eleifend faucibus. Integer dapibus ligula ac orci consequat cursus', 'Up to 3.9 in', 'Android', NULL, '4 GB', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'No', 'No', 1, '2023-02-17 13:17:48', '2023-02-21 12:48:58'),
+(6, 1, 11, 2, 0, 1, 'superadmin', 'Men’s Solid Polo Shirt', 'AUARK', 'Brown', 1200.00, 20.00, 200, '20395.jpeg', NULL, NULL, 'lorfem', NULL, NULL, NULL, NULL, 'Slim Fit', 'half sleeve', 'solid', 'polyester', NULL, NULL, NULL, 'Yes', 'No', 1, '2023-02-17 23:43:07', '2023-02-22 05:47:33'),
+(7, 1, 14, 1, 0, 1, 'superadmin', 'Men’s Solid Polo Shirt', 'MSPT002', 'Merun', 2700.00, 0.00, 200, '56903.jpg', NULL, NULL, 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable.', NULL, NULL, NULL, NULL, 'Slim Fit', 'full sleeve', 'solid', 'cotton', NULL, NULL, NULL, 'No', 'Yes', 1, '2023-02-18 00:09:12', '2023-02-18 00:20:29'),
+(8, 1, 14, 1, 0, 1, 'superadmin', 'Men’s Blue Color Slim-Fit shirt', 'MBCSFS', 'Blue', 2432.00, 20.00, 200, '98523.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Slim Fit', 'full sleeve', 'solid', 'cotton', NULL, NULL, NULL, 'No', 'Yes', 1, '2023-02-22 06:00:06', '2023-02-22 06:00:06'),
+(10, 2, 3, 5, 0, 1, 'superadmin', 'Note 12 Pro', 'MIRN12P', 'Blue', 28000.00, 5.00, 500, '70046.jpg', NULL, NULL, 'Lorem', 'Up to 4.4 in', 'Android', NULL, '8 GB', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'No', 'Yes', 1, '2023-03-24 05:13:52', '2023-03-24 05:13:52'),
+(11, 1, 11, 1, 0, 1, 'superadmin', 'Jacket', 'TVP', 'Red', 1200.00, 5.00, 200, '4835.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Slim Fit', 'full sleeve', 'solid', 'cotton', NULL, NULL, NULL, 'Yes', 'No', 1, NULL, '2023-03-25 07:24:46'),
+(13, 1, 11, 12, 0, 1, 'superadmin', 'Red T-Shirt', 'RTSP', 'red', 800.00, 0.00, 200, '81890.jpg', NULL, '101', 'lorem', NULL, NULL, NULL, NULL, 'Slim Fit', 'half sleeve', 'solid', 'cotton', NULL, NULL, NULL, 'Yes', 'No', 1, '2023-03-26 02:59:46', '2023-03-26 04:02:59'),
+(14, 1, 11, 12, 0, 1, 'superadmin', 'Blue T-Shirt', 'BTSP', 'Blue', 800.00, 0.00, 200, '30929.jpg', NULL, '101', NULL, NULL, NULL, NULL, NULL, 'Slim Fit', 'half sleeve', 'solid', 'cotton', NULL, NULL, NULL, 'No', 'No', 1, '2023-03-26 03:01:09', '2023-03-26 04:03:16'),
+(15, 1, 11, 12, 0, 1, 'superadmin', 'Green T-Shirt', 'GTSP', 'green', 800.00, 0.00, 200, '89452.jpg', NULL, '101', NULL, NULL, NULL, NULL, NULL, 'Slim Fit', 'half sleeve', 'solid', 'cotton', NULL, NULL, NULL, 'No', 'No', 1, '2023-03-26 03:02:12', '2023-03-26 04:28:31');
 
 -- --------------------------------------------------------
 
@@ -529,10 +615,153 @@ CREATE TABLE `products_attributes` (
 --
 
 INSERT INTO `products_attributes` (`id`, `product_id`, `size`, `price`, `stock`, `sku`, `status`, `created_at`, `updated_at`) VALUES
-(1, 6, 'Small', 800.00, 10, 'RMMRNTS-S', 1, '2023-02-02 12:34:38', '2023-02-02 12:34:38'),
-(2, 6, 'Medium', 900.00, 10, 'RMMRNTS-M', 1, '2023-02-02 12:34:38', '2023-02-02 12:34:38'),
-(3, 6, 'Large', 1000.00, 10, 'RMMRNTS-L', 1, '2023-02-02 12:34:38', '2023-02-02 12:34:38'),
-(5, 6, 'XL', 1100.00, 5, 'RMMRNTS-XL', 1, '2023-02-02 12:55:42', '2023-02-02 12:55:42');
+(1, 6, 'Small', 1200.00, 10, 'RMMRNTS-S', 0, NULL, '2023-03-24 00:51:31'),
+(2, 6, 'Medium', 1200.00, 20, 'RMMRNTS-M', 1, NULL, '2023-03-24 00:51:31'),
+(3, 6, 'Large', 1400.00, 10, 'RMMRNTS-L', 1, NULL, '2023-03-24 00:51:31'),
+(4, 5, '64GB-4GB', 17990.00, 10, 'ONN205G', 1, '2023-02-21 12:34:33', '2023-02-21 12:34:33'),
+(5, 5, '128GB-6GB', 18990.00, 10, 'ONN205GRM6', 1, '2023-02-21 12:34:33', '2023-02-21 12:34:33'),
+(6, 1, '64GB-4GB', 33000.00, 100, 'SGM33', 1, '2023-02-21 12:57:55', '2023-02-21 12:57:55'),
+(7, 7, 'Large', 2700.00, 20, 'MSPT002', 1, '2023-02-22 01:02:52', '2023-02-22 01:02:52'),
+(8, 2, 'Large', 1600.00, 10, 'RMBFSTS-L', 1, '2023-02-22 01:05:34', '2023-02-22 01:05:34'),
+(9, 2, 'Medium', 1600.00, 10, 'RMBFSTS-M', 1, '2023-02-22 01:05:34', '2023-02-22 01:05:34'),
+(10, 2, 'Small', 1500.00, 5, 'RMBFSTS-S', 1, '2023-02-22 01:05:34', '2023-02-22 01:05:34'),
+(11, 13, 'Small', 800.00, 10, 'RTSP-S', 1, '2023-03-26 07:40:04', '2023-03-26 08:09:24'),
+(12, 13, 'Medium', 850.00, 10, 'RTSP-M', 1, '2023-03-26 07:40:04', '2023-03-26 08:09:24'),
+(13, 13, 'Large', 900.00, 1, 'RTSP-L', 1, '2023-03-26 07:40:04', '2023-03-26 08:09:24');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `products_filters`
+--
+
+CREATE TABLE `products_filters` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `cat_ids` varchar(255) NOT NULL,
+  `filter_name` varchar(255) NOT NULL,
+  `filter_column` varchar(255) NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `products_filters`
+--
+
+INSERT INTO `products_filters` (`id`, `cat_ids`, `filter_name`, `filter_column`, `status`, `created_at`, `updated_at`) VALUES
+(1, '4,11,14,5,13,6,12', 'Fabric', 'fabric', 1, '2023-02-17 08:32:36', '2023-02-18 00:14:14'),
+(2, '4,11,14,5,13,6,12', 'Patterns', 'pattern', 1, '2023-02-17 08:32:56', '2023-02-18 00:15:38'),
+(3, '4,11,14,5,13,6,12', 'Sleeve', 'sleeve', 1, '2023-02-17 08:33:11', '2023-02-18 00:16:28'),
+(4, '4,11,14,5,13,6,12', 'Fit', 'fit', 1, '2023-02-17 08:33:35', '2023-02-18 00:17:07'),
+(5, '1,2,3', 'RAM', 'ram', 1, '2023-02-17 08:34:24', '2023-02-17 08:34:24'),
+(6, '4,11,14,5,13,6,12', 'Occasion', 'occasion', 1, '2023-02-17 08:58:47', '2023-02-18 00:18:24'),
+(7, '1,2,3', 'Operating System', 'operating_system', 1, '2023-02-17 08:59:16', '2023-02-17 08:59:16'),
+(8, '3', 'Screen Size', 'screen_size', 1, '2023-02-17 11:38:38', '2023-02-17 11:49:26'),
+(9, '1,2', 'Screen Size', 'screen_size', 1, '2023-02-17 11:50:09', '2023-02-17 11:50:09');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `products_filters_values`
+--
+
+CREATE TABLE `products_filters_values` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `filter_id` int(11) NOT NULL,
+  `filter_value` varchar(255) NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `products_filters_values`
+--
+
+INSERT INTO `products_filters_values` (`id`, `filter_id`, `filter_value`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 'cotton', 1, '2023-02-17 08:55:30', '2023-02-17 08:55:30'),
+(2, 1, 'polyester', 1, '2023-02-17 08:55:41', '2023-02-17 08:55:41'),
+(3, 5, '8 GB', 1, '2023-02-17 08:55:53', '2023-02-17 08:55:53'),
+(4, 5, '4 GB', 1, '2023-02-17 08:56:02', '2023-02-17 08:56:02'),
+(5, 2, 'solid', 1, '2023-02-17 08:56:42', '2023-02-17 08:56:42'),
+(6, 4, 'Slim Fit', 1, '2023-02-17 08:57:03', '2023-02-17 08:57:03'),
+(7, 3, 'full sleeve', 1, '2023-02-17 08:57:13', '2023-02-17 08:57:13'),
+(8, 7, 'Windows', 1, '2023-02-17 08:59:43', '2023-02-17 08:59:43'),
+(9, 7, 'Android', 1, '2023-02-17 08:59:58', '2023-02-17 08:59:58'),
+(10, 7, 'Ios', 1, '2023-02-17 09:00:12', '2023-02-17 09:00:12'),
+(11, 8, 'Up to 3.9 in', 1, '2023-02-17 11:41:35', '2023-02-17 11:41:35'),
+(12, 8, 'Up to 4.4 in', 1, '2023-02-17 11:41:53', '2023-02-17 11:41:53'),
+(13, 8, 'Up to 13.9 in', 1, '2023-02-17 11:42:21', '2023-02-17 11:42:21'),
+(14, 8, '14.0 to 17.9 in', 1, '2023-02-17 11:42:46', '2023-02-17 11:42:46'),
+(15, 8, '18.0 to 21.9 in', 1, '2023-02-17 11:43:09', '2023-02-17 11:43:09'),
+(16, 3, 'full sleeve', 1, '2023-02-17 11:52:26', '2023-02-17 11:52:26'),
+(17, 3, 'half sleeve', 1, '2023-02-17 11:52:51', '2023-02-17 11:52:51'),
+(18, 3, 'short sleeve', 1, '2023-02-17 11:53:20', '2023-02-17 11:53:20'),
+(19, 6, 'Eid Collection', 1, '2023-03-26 03:08:30', '2023-03-26 03:08:30');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `products_images`
+--
+
+CREATE TABLE `products_images` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `products_images`
+--
+
+INSERT INTO `products_images` (`id`, `product_id`, `image`, `status`, `created_at`, `updated_at`) VALUES
+(1, 2, 'richmantshirt.jpg93040.jpg', 1, '2023-03-08 02:14:03', '2023-03-08 02:14:03'),
+(2, 2, 'richmantshirt.jpg19827.jpg', 1, '2023-03-08 02:14:15', '2023-03-08 02:14:15');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `recently_viewed_products`
+--
+
+CREATE TABLE `recently_viewed_products` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `session_id` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `recently_viewed_products`
+--
+
+INSERT INTO `recently_viewed_products` (`id`, `product_id`, `session_id`, `created_at`, `updated_at`) VALUES
+(4, 3, 'ec88e4dd82b74acd28cd04b0e01ef2b7', NULL, NULL),
+(5, 7, 'ec88e4dd82b74acd28cd04b0e01ef2b7', NULL, NULL),
+(6, 2, 'ec88e4dd82b74acd28cd04b0e01ef2b7', NULL, NULL),
+(7, 13, 'ec88e4dd82b74acd28cd04b0e01ef2b7', NULL, NULL),
+(8, 11, 'ec88e4dd82b74acd28cd04b0e01ef2b7', NULL, NULL),
+(9, 15, 'ec88e4dd82b74acd28cd04b0e01ef2b7', NULL, NULL),
+(10, 14, 'ec88e4dd82b74acd28cd04b0e01ef2b7', NULL, NULL),
+(11, 6, 'ec88e4dd82b74acd28cd04b0e01ef2b7', NULL, NULL),
+(12, 13, '0c01b0d1be08990b3d07bf8a8284f513', NULL, NULL),
+(13, 6, '0c01b0d1be08990b3d07bf8a8284f513', NULL, NULL),
+(14, 13, '54022de5e1d68817757d358b76996781', NULL, NULL),
+(15, 14, '54022de5e1d68817757d358b76996781', NULL, NULL),
+(16, 6, '54022de5e1d68817757d358b76996781', NULL, NULL),
+(17, 14, 'ec66307b6e098c364153a54a45da8868', NULL, NULL),
+(18, 15, 'ec66307b6e098c364153a54a45da8868', NULL, NULL),
+(19, 13, 'ec66307b6e098c364153a54a45da8868', NULL, NULL),
+(20, 7, 'ec66307b6e098c364153a54a45da8868', NULL, NULL),
+(21, 8, 'ec66307b6e098c364153a54a45da8868', NULL, NULL),
+(22, 2, 'ec66307b6e098c364153a54a45da8868', NULL, NULL),
+(23, 6, 'ec66307b6e098c364153a54a45da8868', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -553,33 +782,10 @@ CREATE TABLE `sections` (
 --
 
 INSERT INTO `sections` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Electronics', 1, '0000-00-00 00:00:00', '2023-01-27 00:12:44'),
-(2, 'Clothing', 1, '2023-01-25 07:29:40', '2023-01-27 00:12:43'),
-(3, 'Appliances', 1, '2023-01-25 07:29:40', '2023-01-27 00:12:42');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `users`
---
-
-CREATE TABLE `users` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) NOT NULL,
-  `remember_token` varchar(100) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Shafiul islam', 'shafiuljony12@gmail.com', NULL, '$2y$10$7GQVwJ.B.Az2yMA889EsNejg5etDgqOHpofUiRdeVlHMF9kV4yB/G', NULL, '2022-12-18 15:32:57', '2022-12-18 15:32:57');
+(1, 'Clothing', 1, NULL, NULL),
+(2, 'Electronics', 1, NULL, NULL),
+(3, 'Appliances', 1, NULL, NULL),
+(4, 'Groceries', 1, '2023-02-17 08:11:33', '2023-02-17 08:11:33');
 
 -- --------------------------------------------------------
 
@@ -590,14 +796,15 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `re
 CREATE TABLE `vendors` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
-  `address` varchar(255) NOT NULL,
-  `city` varchar(255) NOT NULL,
-  `state` varchar(255) NOT NULL,
-  `country` varchar(255) NOT NULL,
-  `pincode` varchar(255) NOT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `state` varchar(255) DEFAULT NULL,
+  `country` varchar(255) DEFAULT NULL,
+  `pincode` varchar(255) DEFAULT NULL,
   `mobile` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `status` tinyint(4) NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 0,
+  `confirm` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -606,9 +813,18 @@ CREATE TABLE `vendors` (
 -- Dumping data for table `vendors`
 --
 
-INSERT INTO `vendors` (`id`, `name`, `address`, `city`, `state`, `country`, `pincode`, `mobile`, `email`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Sadekul Islam', 'rattarpol', 'chattogram', 'chattogram', 'Bangladesh', '4005', '01839673550', 'sadeq@admin.com', 0, NULL, '2023-01-26 09:58:06'),
-(2, 'Sowrab Hasan', '14 No. Gareg , Boddarhut', 'chattogram', 'chattogram', 'Bangladesh', '4002', '01611769787', 'sowrab@admin.com', 1, NULL, '2023-01-26 09:51:28');
+INSERT INTO `vendors` (`id`, `name`, `address`, `city`, `state`, `country`, `pincode`, `mobile`, `email`, `status`, `confirm`, `created_at`, `updated_at`) VALUES
+(2, 'shafiul', 'boddarhat-112', 'chattogram', 'chattogram', 'Bangladesh', '4002', '01558947938', 'sowrab@admin.com', 1, NULL, NULL, '2023-03-25 23:50:46'),
+(3, 'Sadek', NULL, NULL, NULL, NULL, NULL, '01838451672', 'sadekul@gmail.com', 0, 'Yes', '2023-02-17 05:57:46', '2023-02-16 23:58:04'),
+(4, 'John', NULL, NULL, NULL, NULL, NULL, '01834567656', 'john@gmail.com', 0, 'Yes', '2023-02-17 06:01:23', '2023-02-17 00:01:51'),
+(5, 'SADEKUL ISLAM', NULL, NULL, NULL, NULL, NULL, '01764206820', 'sadekulislam443@gmail.com', 0, NULL, '2023-03-21 14:12:49', '2023-03-21 14:12:49'),
+(10, 'Jane', NULL, NULL, NULL, NULL, NULL, '01838451671', 'jane@gmail.com', 0, NULL, '2023-03-24 10:05:49', '2023-03-24 10:05:49'),
+(11, 'Kate', NULL, NULL, NULL, NULL, NULL, '01923849283', 'kate@gmail.com', 0, NULL, '2023-03-24 12:54:43', '2023-03-24 12:54:43'),
+(12, 'Czar', NULL, NULL, NULL, NULL, NULL, '01923848392', 'czar@gmail.com', 0, NULL, '2023-03-24 12:59:30', '2023-03-24 12:59:30'),
+(13, 'Czar', NULL, NULL, NULL, NULL, NULL, '01934039402', 'czar@mail.com', 0, 'Yes', '2023-03-24 15:09:59', '2023-03-24 09:10:48'),
+(14, 'Malik', NULL, NULL, NULL, NULL, NULL, '01838451667', 'malik@gmail.com', 0, 'Yes', '2023-03-25 17:44:46', '2023-03-25 11:45:37'),
+(15, 'Jony', NULL, NULL, NULL, NULL, NULL, '019475673388', 'jony@gmail.com', 0, 'Yes', '2023-03-25 17:50:21', '2023-03-25 11:50:49'),
+(17, 'Shafiul islam', NULL, NULL, NULL, NULL, NULL, '01777063242', 'shafiuljony12@gmail.com', 0, 'Yes', '2023-03-26 06:03:18', '2023-03-26 00:05:25');
 
 -- --------------------------------------------------------
 
@@ -620,9 +836,10 @@ CREATE TABLE `vendors_bank_details` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `vendor_id` int(11) NOT NULL,
   `account_holder_name` varchar(255) NOT NULL,
-  `bank_name` varchar(255) NOT NULL,
   `account_number` varchar(255) NOT NULL,
-  `bank_ifsc_code` varchar(255) NOT NULL,
+  `bank_name` varchar(255) DEFAULT NULL,
+  `bank_number` varchar(255) DEFAULT NULL,
+  `bank_ifsc_code` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -631,9 +848,8 @@ CREATE TABLE `vendors_bank_details` (
 -- Dumping data for table `vendors_bank_details`
 --
 
-INSERT INTO `vendors_bank_details` (`id`, `vendor_id`, `account_holder_name`, `bank_name`, `account_number`, `bank_ifsc_code`, `created_at`, `updated_at`) VALUES
-(1, 1, 'MSI Electronics LTD', 'Al-Arafah Islami Bank', '112131287856309', '321213', NULL, '2023-01-17 07:27:37'),
-(2, 2, 'Sowrab Electronics Store', 'CIty Bank Bangladesh LTD Bhabir Bank', '127217865', '1221231', NULL, '2023-02-01 02:50:35');
+INSERT INTO `vendors_bank_details` (`id`, `vendor_id`, `account_holder_name`, `account_number`, `bank_name`, `bank_number`, `bank_ifsc_code`, `created_at`, `updated_at`) VALUES
+(2, 2, 'sawrab Electronics store', '127217865', 'Al-arafa_islami-Bank', NULL, '1221231', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -667,8 +883,7 @@ CREATE TABLE `vendors_business_details` (
 --
 
 INSERT INTO `vendors_business_details` (`id`, `vendor_id`, `shop_name`, `shop_address`, `shop_city`, `shop_state`, `shop_country`, `shop_pincode`, `shop_mobile`, `shop_website`, `shop_email`, `address_proof`, `address_proof_image`, `business_license_number`, `gst_number`, `pan_number`, `created_at`, `updated_at`) VALUES
-(1, 1, 'MSI Electronics LTD', 'rattarpol cda-120', 'Chittagong', 'chittagong', 'Bangladesh', '4005', '01839673550', 'msiltd.com.bd', 'sadeq@admin.com', 'Tread lisence', '60935.jpg', '325543241', '324423424', '2334424', NULL, '2023-01-26 09:59:21'),
-(2, 2, 'Sowrab Electronics Store', 'boddarhut cda-124', 'Chattogram', 'chattogram', 'Bangladesh', '4002', '01611769787', 'sawrabdada.bd', 'sowrab@admin.com', 'Tread lisence', '75672.jpg', '3255432412', '3244234243', '23344242', NULL, '2023-02-01 02:44:08');
+(2, 2, 'sawrab Electronics store', 'boddarHat cda-124', 'Chattogram', 'chattogram', 'Bangladesh', '4001', '01558947938', 'examplesw.in', 'sowrab@admin.com', 'Voter ID', 'voterid.jpg', '3255432412', '3244234243', '23344242', NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -682,9 +897,21 @@ ALTER TABLE `admins`
   ADD UNIQUE KEY `admins_email_unique` (`email`);
 
 --
+-- Indexes for table `banners`
+--
+ALTER TABLE `banners`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `brands`
 --
 ALTER TABLE `brands`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `carts`
+--
+ALTER TABLE `carts`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -739,17 +966,34 @@ ALTER TABLE `products_attributes`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `products_filters`
+--
+ALTER TABLE `products_filters`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `products_filters_values`
+--
+ALTER TABLE `products_filters_values`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `products_images`
+--
+ALTER TABLE `products_images`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `recently_viewed_products`
+--
+ALTER TABLE `recently_viewed_products`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `sections`
 --
 ALTER TABLE `sections`
   ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
 -- Indexes for table `vendors`
@@ -778,19 +1022,31 @@ ALTER TABLE `vendors_business_details`
 -- AUTO_INCREMENT for table `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `banners`
+--
+ALTER TABLE `banners`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `brands`
 --
 ALTER TABLE `brands`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `carts`
+--
+ALTER TABLE `carts`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `countries`
@@ -808,7 +1064,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -820,31 +1076,49 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `products_attributes`
 --
 ALTER TABLE `products_attributes`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `products_filters`
+--
+ALTER TABLE `products_filters`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `products_filters_values`
+--
+ALTER TABLE `products_filters_values`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT for table `products_images`
+--
+ALTER TABLE `products_images`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `recently_viewed_products`
+--
+ALTER TABLE `recently_viewed_products`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `sections`
 --
 ALTER TABLE `sections`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `vendors`
 --
 ALTER TABLE `vendors`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `vendors_bank_details`

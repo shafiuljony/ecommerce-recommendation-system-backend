@@ -31,6 +31,7 @@
             <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">{{ $title }}</h4>
+                  
                   @if ($errors->any())
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                         @foreach ($errors->all() as $error)
@@ -40,7 +41,8 @@
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    @endif
+                  @endif
+
                   @if(Session::has('success_message'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                       <strong>Success: </strong> {{ Session::get('success_message')}}
@@ -49,6 +51,7 @@
                       </button>
                     </div>
                   @endif
+
                   <form class="forms-sample" @if(empty($product['id'])) action="{{ url('admin/add-edit-product') }}" @else action="{{ url('admin/add-edit-product/'.$product['id']) }}" @endif method="post" enctype="multipart/form-data">@csrf
                     <div class="form-group">
                       <label for="category_id">Select Category</label>
@@ -100,6 +103,10 @@
                     <div class="form-group">
                       <label for="product_weight">Product Weight</label>
                       <input type="text" class="form-control" @if(!empty($product['product_weight'])) value="{{ $product['product_weight'] }}" @else value="{{ old('product_weight')}}" @endif id="product_weight" placeholder="Product Weight" name="product_weight" require>
+                    </div>
+                    <div class="form-group">
+                      <label for="group_code">Group Code</label>
+                      <input type="text" class="form-control" @if(!empty($product['group_code'])) value="{{ $product['group_code'] }}" @else value="{{ old('group_code')}}" @endif id="group_code" placeholder="Group Code" name="group_code" require>
                     </div>
                     <div class="form-group">
                       <label for="product_image">Product Image (Recommended Size: 1000x1000)</label>

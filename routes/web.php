@@ -152,6 +152,13 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
         Route::get('/'.$url,'ProductsController@listing');
     }
 
+    //Vendor Products
+    Route::get('/products/{vendorid}', 'ProductsController@vendorListing');
+
+    //Product Detail Page
+    Route::get('/product/{id}', 'ProductsController@detail');
+    //Get Product Attributes Price
+    Route::post('get-product-price', 'ProductsController@getProductPrice');
 
     //Vendor Login/Registation Route
      Route::get('vendor/login-register','VendorController@loginRegister');
@@ -165,14 +172,29 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
     //Add to Cart Route
     Route::post('cart/add','ProductsController@cartAdd');
 
+    //Add to Cart Route
+    Route::post('cart/add','ProductsController@cartAdd');
+
+    //Cart Route
+    Route::get('cart','ProductsController@cart');
+
+    //Update cart item qty
+    Route::post('cart/update','ProductsController@cartUpdate');
+
+    //Delete cart item
+    Route::post('cart/delete','ProductsController@cartDelete');
+
     //User Login/Registation Route
      Route::get('user/login-register','UserController@loginRegister');
 
     //User Register
     Route::post('user/register','UserController@userRegister');
 
+    //User Login
+    Route::post('user/login','UserController@userLogin');
+
     //User Logout
-    Route::get('user/logout','UserController@userLougout');
+    Route::get('user/logout','UserController@userLogout');
 
 });
 
