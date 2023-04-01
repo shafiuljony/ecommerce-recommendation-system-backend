@@ -54,6 +54,7 @@ $(document).ready(function(){
             type: 'post',
             success:function(resp){
                 $(".totalCartItems").html(resp.totalCartItems);
+                alert(resp.totalCartItems);
                 if(resp.status==false){
                     alert(resp.message);
                 }
@@ -69,20 +70,20 @@ $(document).ready(function(){
         var cartid = $(this).data('cartid');
         var result = confirm("Want to Delete This Product")
         if(result){
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data:{cartid:cartid},
-                url:'/cart/delete',
-                type:'post',
-                success:function(resp){
-                    $(".totalCartItems").html(resp.totalCartItems);
+          $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data:{cartid:cartid},
+            url:'/cart/delete',
+            type:'post',
+            success:function(resp){
+                $(".totalCartItems").html(resp.totalCartItems);
                 $('#appendCartItems').html(resp.view);
-                },error:function(){
-                    alert("Error");
-                }
-            })  
+            },error:function(){
+                alert("Error");
+            }
+        })  
         }
             
     });
