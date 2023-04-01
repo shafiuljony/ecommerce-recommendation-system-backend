@@ -52,6 +52,11 @@ $totalCartItems = totalCartItems();
                                         <i class="fas fa-sign-in-alt u-s-m-r-9"></i>
                                         My Account</a>
                                 </li>
+                                <li>
+                                    <a href="{{ url('user/logout') }}">
+                                        <i class="fas fa-sign-in-alt u-s-m-r-9"></i>
+                                        Logout</a>
+                                </li>
                             @else
                                  <li>
                                     <a href="{{ url('user/login-register') }}">
