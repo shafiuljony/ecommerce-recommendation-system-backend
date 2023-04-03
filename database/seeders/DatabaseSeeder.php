@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
         //      'email' => '',
         //  ]);
 
-        // $this->call(AdminTableSeeder::class);
+        $this->call(AdminTableSeeder::class);
         // $this->call(VendorsTableSeeder::class);
         // $this->call(VendorsBusinessDetailsTableSeeder::class);
         // $this->call(VendorsBankDetailsTableSeeder::class);
@@ -37,6 +37,6 @@ class DatabaseSeeder extends Seeder
         // $this->call(BannersTableSeeder::class);
         // $this->call(FiltersTableSeeder::class);
         // $this->call(FiltersValuesTableSeeder::class);
-        $this->call(CouponsTableSeeder::class);
+        // $this->call(CouponsTableSeeder::class);
     }
 }
