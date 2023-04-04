@@ -41,7 +41,7 @@ $(document).ready(function(){
                 return false;
             }
            
-            //Increment qty by
+            //Increament qty by
              new_qty = parseInt(quantity - 1); 
         }
         var cartid = $(this).data('cartid');
@@ -53,15 +53,18 @@ $(document).ready(function(){
             url: '/cart/update',
             type: 'post',
             success:function(resp){
+                $(".totalCartItems").html(resp.totalCartItems);
                 if(resp.status==false){
                     alert(resp.message);
                 }
                 $('#appendCartItems').html(resp.view);
+                $('#appendHeaderCartItems').html(resp.headerview);
             },error:function(){
                 alert("Error");
             }
         })
     });
+
     //Delete cart items Qty
     $(document).on('click','.deleteCartItem', function(){
         var cartid = $(this).data('cartid');
@@ -75,13 +78,77 @@ $(document).ready(function(){
             url:'/cart/delete',
             type:'post',
             success:function(resp){
+                $(".totalCartItems").html(resp.totalCartItems);
                 $('#appendCartItems').html(resp.view);
+                $('#appendHeaderCartItems').html(resp.headerview);
             },error:function(){
                 alert("Error");
             }
         })  
         }
-        
+            
+    });
+
+    //Register Form Validation
+    $("#registerForm").submit(function(){
+        var formdata = $(this).serialize();
+        $.ajax({
+            url:"/user/register",
+            type:"POST",
+            data:formdata,
+            success:function(resp){
+                if(resp.type=="error"){
+                    $.each(resp.errors,function(i,error){
+                            $("#register-"+i).attr('style','color:red');
+                            $("#register-"+i).html(error);
+                        setTimeout(function(){
+                            $("#register-"+i).css({
+                                'display':'none'
+                            });
+                        },3000);
+                    });
+                }else if(resp.type=="success"){
+                    window.location.href = resp.url;
+                }   
+            },error:function(){
+                alert("error");
+            }
+        })
+    });
+
+    //Login Form Validation
+    $("#loginForm").submit(function(){
+        var formdata = $(this).serialize();
+        $.ajax({
+            url:"/user/login",
+            type:"POST",
+            data:formdata,
+            success:function(resp){
+                if(resp.type=="error"){
+                    $.each(resp.errors,function(i,error){
+                            $("#login-"+i).attr('style','color:red');
+                            $("#login-"+i).html(error);
+                        setTimeout(function(){
+                            $("#register-"+i).css({
+                                'display':'none'
+                            });
+                        },3000);
+                    });
+                }else if(resp.type=="incorrect"){
+                    // alert(resp.message);
+                    $("#login-error").attr('style','color:red');
+                    $("#login-error").html(resp.message);
+                }else if(resp.type=="inactive"){
+                    // alert(resp.message);
+                    $("#login-error").attr('style','color:red');
+                    $("#login-error").html(resp.message);
+                }else if(resp.type=="success"){
+                    window.location.href = resp.url;
+                }  
+            },error:function(){
+                alert("error");
+            }
+        })
     });
 });
 

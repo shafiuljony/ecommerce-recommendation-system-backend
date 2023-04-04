@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('products_filters', function (Blueprint $table) {
             $table->id();
-            $table->string('cat_ids');
+            $table->string('cart_id');
             $table->string('filter_name');
             $table->string('filter_column');
             $table->tinyInteger('status');

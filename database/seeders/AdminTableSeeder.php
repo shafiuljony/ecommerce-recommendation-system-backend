@@ -18,7 +18,6 @@ class AdminTableSeeder extends Seeder
     {
         $adminRecords = [
             [
-                'id'=>1,
                 'name'=>'admin',
                 'type'=>'superadmin',
                 'vendor_id'=>1,

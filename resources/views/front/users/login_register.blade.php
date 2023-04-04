@@ -51,18 +51,21 @@
                 <div class="login-wrapper">
                     <h2 class="account-h2 u-s-m-b-20">Login</h2>
                     <h6 class="account-h6 u-s-m-b-30">Welcome back! Sign in to your account.</h6>
-                    <form action="{{ url('admin/login') }}" method="post">@csrf
+                    <p id="login-error"></p>
+                    <form id="loginForm" action="javascript:;" method="post">@csrf
                         <div class="u-s-m-b-30">
-                            <label for="user-email">Username or Email
+                            <label for="user-email">Email
                                 <span class="astk">*</span>
                             </label>
-                            <input type="email" name="email" id="user-email" class="text-field" placeholder="User Email">
+                            <input type="email" name="email" id="users-email" class="text-field" placeholder="User Email">
+                            <p id="login-email"></p>
                         </div>
                         <div class="u-s-m-b-30">
                             <label for="user-password">Password
                                 <span class="astk">*</span>
                             </label>
-                            <input type="password" name="password" id="user-password" class="text-field" placeholder="Password">
+                            <input type="password" name="password" id="users-password" class="text-field" placeholder="Password">
+                            <p id="login-password"></p>
                         </div>
                         <!-- <div class="group-inline u-s-m-b-30">
                             <div class="group-1">
@@ -88,7 +91,7 @@
                 <div class="reg-wrapper">
                     <h2 class="account-h2 u-s-m-b-20">Register</h2>
                     <h6 class="account-h6 u-s-m-b-30">Registering for this site allows you to access your order status and history.</h6>
-                    <form id="registerForm" action="{{ url('/user/register') }}" method="post">@csrf
+                    <form id="registerForm" action="javascript:;" method="post">@csrf
                         <div class="u-s-m-b-30">
                             <label for="username">Name
                                 <span class="astk">*</span>

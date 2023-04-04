@@ -90,6 +90,7 @@ ga('create', 'UA-XXXXX-Y', 'auto');
 ga('send', 'pageview')
 </script>
 <script src="https://www.google-analytics.com/analytics.js" async defer></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- Modernizr-JS -->
 <script type="text/javascript" src="{{url('front/js/vendor/modernizr-custom.min.js') }}"></script>
 <!-- NProgress -->

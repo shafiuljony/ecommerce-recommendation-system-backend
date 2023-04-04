@@ -56,13 +56,15 @@
                                             {{ $admin['email'] }}
                                         </td>
                                         <td>
+                                            @if($admin['image']!="")
                                             <img src="{{  asset('admin/images/photos/'.$admin['image']) }}" alt="" srcset="">
+                                            @endif
                                         </td>
                                         <td>
                                             @if($admin['status']==1)
                                                 <a  class="updateAdminStatus" id="admin-{{ $admin['id'] }}" admin_id="{{ $admin['id'] }}" href="javascript:void(0)"><i class="mdi mdi-bookmark-check" style="font-size: 25px;" status="Active"></i></a>
                                             @else
-                                            <a  class="updateAdminStatus" id="admin-{{ $admin['id'] }}" admin_id="{{ $admin['id'] }}" href="javascript:void(0)"><i class="mdi mdi-bookmark-outline" style="font-size: 25px;" status="Inactive"></i></a>
+                                                <a  class="updateAdminStatus" id="admin-{{ $admin['id'] }}" admin_id="{{ $admin['id'] }}" href="javascript:void(0)"><i class="mdi mdi-bookmark-outline" style="font-size: 25px;" status="Inactive"></i></a>
                                             @endif        
                                         </td>
                                         <td>

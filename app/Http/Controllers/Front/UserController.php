@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Front;
 
+use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Cart;
 use Auth;
-
-use function PHPUnit\Framework\returnSelf;
+use Validator;
+use Session;
 
 class UserController extends Controller
 {
@@ -18,19 +20,19 @@ class UserController extends Controller
     public function userRegister(Request $request){
         if($request->ajax()){
             $data = $request->all();
+            //echo "<pre"; print_r($data); die;
 
-            $validator = Validator::make($request->all(),[
-                'name' => 'required|string|max:100',
-                'mobile' => 'required|numeric|digits:11',
-                'email' => 'required|email|max:150|unique:users',
-                'password' => 'required|min:6',
-                'accept' => 'required'
-            ],
-            [
-
-                'accept.required'=>'Please accept our Terms $ Conditions'
-            ]
-            );
+                $validator = Validator::make($request->all(),[
+                    'name' => 'required|string|max:100',
+                    'mobile' => 'required|numeric|digits:11',
+                    'email' => 'required|email|max:150|unique:users',
+                    'password' => 'required|min:6',
+                    'accept' => 'required'
+                ],
+                [
+                    'accept.required'=>'Please accept our Terms & Conditions'
+                ]
+            );   
 
             if($validator->passes()){
                 //Register the User
@@ -41,15 +43,62 @@ class UserController extends Controller
                 $user->password = bcrypt($data['password']);
                 $user->status = 1;
                 $user->save();
-    
+
+                // Send Register Email
+                $email = $data['email'];
+                $messageData = ['name'=>$data['name'],'mobile'=>$data['mobile'],'email'=>$data['email']];
+                Mail::send('emails.register',$messageData,function($message)use($email){
+                        $message->to($email)->subject('Welcome to Anon!');
+                });
                 if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password']])){
                     $redirectTo = url('cart');
+
+                    //Update User Cart with user id
+                    if(!empty(Session::get('session_id'))){
+                        $user_id = Auth::user()->id;
+                        $session_id = Session::get('session_id');
+                        Cart::where('session_id',$session_id)->update(['user_id'=>$user_id]);
+                    }
                     return response()->json(['type'=>'success','url'=>$redirectTo]);
                 }
             }else{
                 return response()->json(['type'=>'error','error'=>$validator->messages()]);
             }
-            
+        }
+
+    }
+
+    public function userLogin(Request $request){
+        if($request->Ajax()){
+            $data = $request->all();
+            //echo "<pre>"; print_r($data); die;
+
+            $validator = Validator::make($request->all(),[
+                'email' => 'required|email|max:150|exists:users',
+                'password' => 'required|min:6',
+            ]);
+            if($validator->passes()){
+                if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password']])){
+
+                    if(Auth::user()->status==0){
+                        Auth::logout();
+                        return response()->json(['type'=>'inactive','message'=>'Your account is inactive. Please contact Admin']);
+                    }
+
+                    //Update User Cart with user id
+                    if(!empty(Session::get('session_id'))){
+                        $user_id = Auth::user()->id;
+                        $session_id = Session::get('session_id');
+                        Cart::where('session_id',$session_id)->update(['user_id'=>$user_id]);
+                    }
+                    $redirectTo = url('cart');
+                    return response()->json(['type'=>'success','url'=>$redirectTo]);
+                }else{
+                    return response()->json(['type'=>'incorrect','message'=>'Incorrect Email or Password']);
+                }
+            }else{
+                return response()->json(['type'=>'error','error'=>$validator->messages()]);
+            }
         }
     }
 
