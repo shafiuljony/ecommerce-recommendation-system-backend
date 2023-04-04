@@ -148,9 +148,9 @@
                                 </div>
                             @endif
                         </div>
-                        @if(isset($productDetails['vendor']));
+                        @if(isset($productDetails['vendor']))
                         <div>
-                            sold by <a href="/products/{{ $productDetails['vendor']['id'] }}">{{ $productDetails['vendorbusinessdetails']['shop_name'] }}</a> 
+                            sold by <a href="/products/{{ $productDetails['vendor']['id'] }}">{{ $productDetails['vendor']['vendorbusinessdetails']['shop_name'] }}</a> 
                         </div>
                         @endif
                         
