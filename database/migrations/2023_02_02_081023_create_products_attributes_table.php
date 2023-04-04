@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('size');
             $table->float('price');
             $table->integer('stock');
-            $table->string('sku'); //stock keep unit
+            $table->string('sku');
             $table->tinyInteger('status');
             $table->timestamps();
         });
