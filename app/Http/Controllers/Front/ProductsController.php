@@ -223,6 +223,10 @@ class ProductsController extends Controller
                 $countProducts = Cart::where(['product_id'=>$data['product_id'],'size'=>$data['size'],'session_id'=>$session_id])->count();
             }
 
+            if($countProducts>0){
+                return redirect()->back()->with('error_message','Product already exists in Cart!');
+            }
+
             //Save Product Cart table
             $item = new Cart;
             $item->session_id = $session_id;
@@ -270,7 +274,12 @@ class ProductsController extends Controller
             //Update the qty
             Cart::where('id',$data['cartid'])->update(['quantity'=>$data['qty']]);
             $getCartItems = Cart::getCartItems();
-            return response()->json(['status'=>true,'view'=>(string)View::make('front.products.cart_items')->with(compact('getCartItems'))]);
+            $totalCartItems = totalCartItems();
+            return response()->json([
+                'status'=>true,
+                'totalCartItems' => $totalCartItems,
+                'view'=>(string)View::make('front.products.cart_items')->with(compact('getCartItems'))
+            ]);
         }
     }
 
@@ -280,7 +289,10 @@ class ProductsController extends Controller
             // echo "<pre>"; print_r($data); die;
             Cart::where('id',$data['cartid'])->delete();
             $getCartItems = Cart::getCartItems();
-            return response()->json(['view'=>(string)View::make('front.products.cart_items')->with(compact('getCartItems'))]);
+            $totalCartItems = totalCartItems();
+            return response()->json([
+                'totalCartItems' => $totalCartItems,
+                'view'=>(string)View::make('front.products.cart_items')->with(compact('getCartItems'))]);
 
         }
 

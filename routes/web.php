@@ -185,16 +185,30 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
     Route::post('cart/delete','ProductsController@cartDelete');
 
     //User Login/Registation Route
-     Route::get('user/login-register','UserController@loginRegister');
+     Route::get('user/login-register',['as'=>'login','uses'=>'UserController@loginRegister']);
 
     //User Register
     Route::post('user/register','UserController@userRegister');
 
+    Route::group(['middleware'=>['auth']],function(){
+        //User Account
+        Route::match(['GET','POST'],'user/account','UserController@userAccount');
+
+        //User Update Password
+        Route::post('user/update-password','UserController@userUpdatePassword');
+    });
+    
     //User Login
     Route::post('user/login','UserController@userLogin');
 
+    //User Forgot password
+    Route::match(['get','post'],'user/forgot-password','UserController@forgotPassword');
+
     //User Logout
     Route::get('user/logout','UserController@userLogout');
+
+    //confirm user account
+    Route::get('user/confirm/{code}','UserController@confirmAccount');
 
 });
 
