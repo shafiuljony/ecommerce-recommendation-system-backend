@@ -393,4 +393,13 @@ $(document).ready(function(){
             }
         });
      });     
+
+     //Show hide coupon field for Manual/Autometic 
+     $('#AutomaticCoupon').click(function(){
+        $('#couponField').hide();
+     });
+     $('#ManualCoupon').click(function(){
+        $('#couponField').show();
+     });
+    
 });
