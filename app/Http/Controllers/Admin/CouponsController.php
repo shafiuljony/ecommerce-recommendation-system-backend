@@ -8,6 +8,7 @@ use App\Models\Coupon;
 use App\Models\Section;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Auth;
 use Session;
 
 class CouponsController extends Controller
@@ -54,10 +55,76 @@ class CouponsController extends Controller
             $coupon = Coupon::find($id);
             $message = "Coupon Updated Successfully!";
         }
-
+        
         if($request->isMethod('post')){
             $data = $request->all();
             echo "<pre>"; print_r($data);
+            $rules =[
+                'categories' => 'required',
+                'brands' => 'required',
+                'coupon_option' => 'required',
+                'coupon_type' => 'required',
+                'amount_type' => 'required',
+                'amount'=>'required||numeric',
+                'expiry_date'=>'required'
+            ];
+
+            $customMessages = [
+                'categories.required' => 'Select Category is required',
+                'brands.required' => 'Select Brands is required',
+                'coupon_option.required' => 'Select Coupon option is required',
+                'coupon_type.numeric' => 'Select Coupon type is required',
+                'amount_type.required' => 'Select Amount Type is required',
+                'amount.numeric' => 'Amount is Required',
+                'amount.required' => 'Enter Valid Amount',
+                'expiry_date.required' => 'Expiry Date is required',
+            ];
+
+            $this->validate($request,$rules,$customMessages);
+            
+            if(isset($data['categories'])){
+                $categories =  implode(", ",$data['categories']);
+            }else{
+                $categories = "";
+            }
+            if(isset($data['brands'])){
+                $brands =  implode(", ",$data['brands']);
+            }else{
+                $brands = "";
+            }
+            if(isset($data['users'])){
+                $users =  implode(", ",$data['users']);
+            }else{
+                $users = "";
+            }
+
+            if($data['coupon_option'] == "Automatic"){
+                $coupon_code = str_random(8);
+            }else{
+                $coupon_code = $data['coupon_code'];
+            }
+
+            $adminType = Auth::guard('admin')->user()->type;
+
+            if($adminType == "vendor"){
+                $coupon->vendor_id = Auth::guard('admin')->user()->vendor_id;
+            }else{
+                $coupon->vendor_id = 0;
+            }
+
+            $coupon->coupon_option = $data['coupon_option'];
+            $coupon->coupon_code = $data['coupon_code'];
+            $coupon->categories = $data['categories'];
+            $coupon->brands = $data['brands'];
+            $coupon->users = $data['users'];
+            $coupon->coupon_type = $data['coupon_type'];
+            $coupon->amount_type = $data['amount_type'];
+            $coupon->amount = $data['amount'];
+            $coupon->expiry_date = $data['expiry_date'];
+            $coupon->status = 1;
+            $coupon->save();
+
+            return redirect('admin/coupons')->with('success_message',$message);
         }
 
         //Get sections with categories and subcategories

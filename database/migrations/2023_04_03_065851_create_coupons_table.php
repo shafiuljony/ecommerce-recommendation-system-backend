@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('coupon_option');
             $table->string('coupon_code');
             $table->text('categories');
+            $table->text('brands');
             $table->text('users');
             $table->string('coupon_type');
             $table->string('amount_type');
