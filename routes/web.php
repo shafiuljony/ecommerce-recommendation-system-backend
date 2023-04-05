@@ -134,6 +134,13 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
        Route::get('delete-banner/{id}','BannersController@deleteBanner');
        Route::match(['get','post'],'add-edit-banner/{id?}','BannersController@addEditBanner');
 
+       //Coupons
+       Route::get('coupons','CouponsController@coupons');
+       //update Coupon status
+       Route::post('update-coupon-status','CouponsController@updateCouponStatus');
+       //delete Coupon
+       Route::get('delete-coupon/{id}','CouponsController@deleteCoupon');
+
     });
 
 
