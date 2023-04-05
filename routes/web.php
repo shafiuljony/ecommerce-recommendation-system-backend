@@ -140,6 +140,7 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
        Route::post('update-coupon-status','CouponsController@updateCouponStatus');
        //delete Coupon
        Route::get('delete-coupon/{id}','CouponsController@deleteCoupon');
+       Route::match(['get','post'],'add-edit-coupon/{id?}','CouponsController@addEditCoupon');
 
     });
 
