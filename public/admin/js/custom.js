@@ -401,5 +401,7 @@ $(document).ready(function(){
      $('#ManualCoupon').click(function(){
         $('#couponField').show();
      });
+
+    
     
 });

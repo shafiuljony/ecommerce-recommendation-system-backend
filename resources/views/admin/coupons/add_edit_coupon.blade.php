@@ -126,7 +126,7 @@
                     <div class="form-group">
                       <label for="expiry_date">Expiry Date</label>
                       <input type="date" class="form-control" id="expiry_date" placeholder="Enter Expiry Date" name="expiry_date" require @if(isset($coupon['expiry_date'])) value="{{ $coupon['expiry_date'] }}" @else value="{{ old['expiry_date'] }}"  @endif>
-                    </div>  
+                    </div>
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                     <button type="reset" class="btn btn-light">Cancel</button>
                   </form>

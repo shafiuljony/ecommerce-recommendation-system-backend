@@ -206,5 +206,7 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
 
 });
 
+//Route under midel war auth 
+Route::post('/apply-coupon','ProductsController@applyCoupon');
 
 
