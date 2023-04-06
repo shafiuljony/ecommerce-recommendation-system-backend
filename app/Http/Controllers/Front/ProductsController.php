@@ -68,15 +68,29 @@ class ProductsController extends Controller
 
                 //Checking for Price
 
+                // if(isset($data['price']) && !empty($data['price'])){
+                //     foreach($data['price'] as $key => $price ){
+                //         $priceArr = explode("-",$price);
+                //         $productIds[] = Product::select('id')->whereBetween('product_price',[$priceArr[0],$priceArr[1]])->pluck('id')->toArray();
+                //     }
+                //     $productIds = call_user_func_array('array_merge',$productIds);
+                //     // echo "<pre>"; print_r($productIds); die;
+                //     $categoryProducts->whereIn('products.id',$productIds);
+                // }
+
+                    //Checking for Price
+                $productIds = array();
                 if(isset($data['price']) && !empty($data['price'])){
-                    foreach($data['price'] as $key => $price ){
+                    foreach($data['price'] as $key => $price) {
                         $priceArr = explode("-",$price);
-                        $productIds[] = Product::select('id')->whereBetween('product_price',[$priceArr[0],$priceArr[1]])->pluck('id')->toArray();
+                        if(isset($priceArr[0]) && isset($priceArr[1])){
+                            $productIds[] = Product::select('id')->whereBetween('product_price',[$priceArr[0],$priceArr[1]])->pluck('id')->toArray();
+                        }   
                     }
                     $productIds = call_user_func_array('array_merge',$productIds);
-                    // echo "<pre>"; print_r($productIds); die;
                     $categoryProducts->whereIn('products.id',$productIds);
                 }
+
                 //Checking for Brand 
                 if(isset($data['brand']) && !empty($data['brand'])){
                     $productIds = Product::select('id')->whereIn('brand_id',$data['brand'])->pluck('id')->toArray();
