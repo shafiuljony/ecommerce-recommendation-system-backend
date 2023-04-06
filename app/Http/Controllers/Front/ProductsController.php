@@ -275,14 +275,18 @@ class ProductsController extends Controller
             // Caheck the product stock available or not
             if($data['qty']>$availableStock['stock']){
                 $getCartItems = Cart::getCartItems();
-                return response()->json(['status'=>false,'message'=>'Product Stock is not Available','view'=>(string)View::make('front.products.cart_items')->with(compact('getCartItems'))]);
+                return response()->json(['status'=>false,'message'=>'Product Stock is not Available','view'=>(string)View::make('front.products.cart_items')->with(compact('getCartItems')),
+                'headerview'=>(string)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))
+            ]);
             }
 
             //Check if size available or not
             $availableSize = ProductsAttributes::where(['product_id'=>$cartDetails['product_id'],'size'=>$cartDetails['size'],'status'=>1])->count();
             if($availableSize==0){
                 $getCartItems = Cart::getCartItems();
-                return response()->json(['status'=>false,'message'=>'Product Size is not Available. Please remove this Product and Choose another one!','view'=>(string)View::make('front.products.cart_items')->with(compact('getCartItems'))]);
+                return response()->json(['status'=>false,'message'=>'Product Size is not Available. Please remove this Product and Choose another one!','view'=>(string)View::make('front.products.cart_items')->with(compact('getCartItems')),
+                'headerview'=>(string)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))
+            ]);
             }
 
             //Update the qty
@@ -291,9 +295,9 @@ class ProductsController extends Controller
             $totalCartItems = totalCartItems();
             return response()->json([
                 'status'=>true,
-                'totalCartItems' => $totalCartItems,
-                'view'=>(string)View::make('front.products.cart_items')->with(compact('getCartItems'))
-            ]);
+                'totalCartItems'=>$totalCartItems,
+                'view'=>(string)View::make('front.products.cart_items')->with(compact('getCartItems')),
+                'headerview'=>(string)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))]);
         }
     }
 
@@ -302,11 +306,12 @@ class ProductsController extends Controller
             $data = $request->all();
             // echo "<pre>"; print_r($data); die;
             Cart::where('id',$data['cartid'])->delete();
-            $getCartItems = Cart::getCartItems();
             $totalCartItems = totalCartItems();
+            $getCartItems = Cart::getCartItems();
             return response()->json([
-                'totalCartItems' => $totalCartItems,
-                'view'=>(string)View::make('front.products.cart_items')->with(compact('getCartItems'))]);
+                'totalCartItems'=>$totalCartItems,
+                'view'=>(string)View::make('front.products.cart_items')->with(compact('getCartItems')),
+                'headerview'=>(string)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))]);
 
         }
 

@@ -91,5 +91,4 @@
   <script src="{{ url('js/todolist.js')}}"></script>
   <!-- endinject -->
 </body>
-
 </html>

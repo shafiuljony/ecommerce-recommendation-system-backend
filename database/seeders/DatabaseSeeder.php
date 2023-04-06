@@ -16,35 +16,34 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-         \App\Models\User::factory(10)->create();
+        //  \App\Models\User::factory(10)->create();
 
-         \App\Models\User::factory()->create([
-             'name' => '',
-             'email' => '',
-         ]);
+        //  \App\Models\User::factory()->create([
+        //      'name' => '',
+        //      'email' => '',
+        //  ]);
 
-        // $this->call(AdminTableSeeder::class);
-        // $this->call(VendorsTableSeeder::class);
-        // $this->call(VendorsBusinessDetailsTableSeeder::class);
-        // $this->call(VendorsBankDetailsTableSeeder::class);
-        // $this->call(SectionsTableSeeder::class);
-        // $this->call(CategoryTableSeeder::class);
-        // $this->call(BrandsTableSeeder::class);
-        // $this->call(ProductsTableSeeder::class);
-        // $this->call(ProductsAttributesTableSeeder::class);
-        // $this->call(BannersTableSeeder::class); 
-        // $this->call(AdminTableSeeder::class);
-        // $this->call(VendorsTableSeeder::class);
-        // $this->call(VendorsBusinessDetailsTableSeeder::class);
-        // $this->call(VendorsBankDetailsTableSeeder::class);
-        // $this->call(SectionsTableSeeder::class);
-        // $this->call(CategoryTableSeeder::class);
-        // $this->call(BrandsTableSeeder::class);
-        // $this->call(ProductsTableSeeder::class);
-        // $this->call(ProductsAttributesTableSeeder::class);
-        // $this->call(BannersTableSeeder::class);
-        // $this->call(FiltersTableSeeder::class);
-        // $this->call(FiltersValuesTableSeeder::class);
-        $this->call(DeliveryAddressTableSeeder::class);
+        $this->call(AdminTableSeeder::class);
+        $this->call(VendorsTableSeeder::class);
+        $this->call(VendorsBusinessDetailsTableSeeder::class);
+        $this->call(VendorsBankDetailsTableSeeder::class);
+        $this->call(SectionsTableSeeder::class);
+        $this->call(CategoryTableSeeder::class);
+        $this->call(BrandsTableSeeder::class);
+        $this->call(ProductsTableSeeder::class);
+        $this->call(ProductsAttributesTableSeeder::class);
+        $this->call(BannersTableSeeder::class); 
+        $this->call(AdminTableSeeder::class);
+        $this->call(VendorsTableSeeder::class);
+        $this->call(VendorsBusinessDetailsTableSeeder::class);
+        $this->call(VendorsBankDetailsTableSeeder::class);
+        $this->call(SectionsTableSeeder::class);
+        $this->call(CategoryTableSeeder::class);
+        $this->call(BrandsTableSeeder::class);
+        $this->call(ProductsTableSeeder::class);
+        $this->call(ProductsAttributesTableSeeder::class);
+        $this->call(BannersTableSeeder::class);
+        $this->call(FiltersTableSeeder::class);
+        $this->call(FiltersValuesTableSeeder::class);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 use App\Models\Cart;
-
+// echo "test"; die;
     function totalCartItems(){
         if(Auth::check()){
             $user_id = Auth::user()->id;
@@ -11,3 +11,19 @@ use App\Models\Cart;
         }
         return $totalCartItems;
     }
+
+function getCartItems(){
+    if(Auth::check()){
+        //If user logged in /Pick auth id of the user
+        $getCartItems = Cart::with(['product'=>function($query){
+            $query->select('id','category_id','product_image','product_code','product_color','product_name');
+        }])->orderby('id','Desc')->where('user_id',Auth::user()->id)->get()->toArray();
+    }else{
+        //If user not logged in / pick seasion id of the user
+        $getCartItems = Cart::with(['product'=>function($query){
+            $query->select('id','category_id','product_image','product_code','product_color','product_name');
+        }])->orderby('id','Desc')->where('session_id',Session::get('session_id'))->get()->toArray();
+
+    }
+    return $getCartItems;
+}

@@ -55,10 +55,12 @@ $(document).ready(function(){
             type: 'post',
             success:function(resp){
                 $(".totalCartItems").html(resp.totalCartItems);
+                $(".totalCartItems").html(resp.totalCartItems);
                 if(resp.status==false){
                     alert(resp.message);
                 }
                 $('#appendCartItems').html(resp.view);
+                $('#appendHeaderCartItems').html(resp.headerview);
             },error:function(){
                 alert("Error");
             }
@@ -84,6 +86,21 @@ $(document).ready(function(){
                     alert("Error");
                 }
             })  
+          $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data:{cartid:cartid},
+            url:'/cart/delete',
+            type:'post',
+            success:function(resp){
+                $(".totalCartItems").html(resp.totalCartItems);
+                $('#appendCartItems').html(resp.view);
+                $('#appendHeaderCartItems').html(resp.headerview);
+            },error:function(){
+                alert("Error");
+            }
+        })  
         }
             
     });
