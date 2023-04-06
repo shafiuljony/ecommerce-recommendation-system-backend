@@ -67,9 +67,9 @@
                                         <td>{{ $coupon['expiry_date'] }}</td>
                                         <td>
                                             @if($coupon['status']==1)
-                                                <a  class="updateCouponStatus" id="coupon-{{ $coupon['id'] }}" brand_id="{{ $coupon['id'] }}" href="javascript:void(0)"><i class="mdi mdi-bookmark-check" style="font-size: 25px;" status="Active"></i></a>
+                                                <a  class="updateCouponStatus" id="coupon-{{ $coupon['id'] }}" coupon_id="{{ $coupon['id'] }}" href="javascript:void(0)"><i class="mdi mdi-bookmark-check" style="font-size: 25px;" status="Active"></i></a>
                                             @else
-                                            <a  class="updateCouponStatus" id="coupon-{{ $coupon['id'] }}" brand_id="{{ $coupon['id'] }}" href="javascript:void(0)"><i class="mdi mdi-bookmark-outline" style="font-size: 25px;" status="Inactive"></i></a>
+                                            <a  class="updateCouponStatus" id="coupon-{{ $coupon['id'] }}" coupon_id="{{ $coupon['id'] }}" href="javascript:void(0)"><i class="mdi mdi-bookmark-outline" style="font-size: 25px;" status="Inactive"></i></a>
                                             @endif        
                                         </td>
                                         <td>

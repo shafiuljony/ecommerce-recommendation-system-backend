@@ -48,17 +48,23 @@ class CouponsController extends Controller
             //Add Coupon
             $title = "Add Coupon";
             $coupon = new Coupon;
+            $selCats = array();
+            $selBrands = array();
+            $selUsers = array();
             $message = "Coupon Added Successfully!";
         }else{
             //Update Coupon
             $title = "Edit Coupon";
             $coupon = Coupon::find($id);
+            $selCats = explode(',',$coupon['categories']);
+            $selBrands = explode(',',$coupon['brands']);
+            $selUsers = explode(',',$coupon['users']);
             $message = "Coupon Updated Successfully!";
         }
         
         if($request->isMethod('post')){
             $data = $request->all();
-            echo "<pre>"; print_r($data);
+            // echo "<pre>"; print_r($data); die;
             $rules =[
                 'categories' => 'required',
                 'brands' => 'required',
@@ -97,26 +103,27 @@ class CouponsController extends Controller
             }else{
                 $users = "";
             }
-
+            
             if($data['coupon_option'] == "Automatic"){
                 $coupon_code = str_random(8);
             }else{
                 $coupon_code = $data['coupon_code'];
             }
-
+            
             $adminType = Auth::guard('admin')->user()->type;
-
+            
             if($adminType == "vendor"){
                 $coupon->vendor_id = Auth::guard('admin')->user()->vendor_id;
             }else{
                 $coupon->vendor_id = 0;
             }
+            // dd('okbro');
 
             $coupon->coupon_option = $data['coupon_option'];
-            $coupon->coupon_code = $data['coupon_code'];
-            $coupon->categories = $data['categories'];
-            $coupon->brands = $data['brands'];
-            $coupon->users = $data['users'];
+            $coupon->coupon_code = $coupon_code;
+            $coupon->categories = $categories;
+            $coupon->brands = $brands;
+            $coupon->users = $users;
             $coupon->coupon_type = $data['coupon_type'];
             $coupon->amount_type = $data['amount_type'];
             $coupon->amount = $data['amount'];
@@ -136,6 +143,6 @@ class CouponsController extends Controller
         //Get All User Emails
         $users = User::select('email')->where('status',1)->get();
 
-        return view('admin.coupons.add_edit_coupon')->with(compact('title','coupon','categories','brands','users'));
+        return view('admin.coupons.add_edit_coupon')->with(compact('title','coupon','categories','brands','users','selCats','selBrands','selUsers'));
     }
 }
