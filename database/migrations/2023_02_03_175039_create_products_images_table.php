@@ -14,10 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('products_images', function (Blueprint $table) {
-            $table->id();
-            $table->integer('product_id');
-            $table->string('image');
-            $table->tinyInteger('status');
+            $table->id()->nullable();
+            $table->integer('product_id')->nullable();
+            $table->string('image')->nullable();
+            $table->tinyInteger('status')->nullable();
             $table->timestamps();
         });
     }

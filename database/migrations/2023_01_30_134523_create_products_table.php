@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->integer('section_id');
-            $table->integer('category_id');
-            $table->integer('brand_id');
-            $table->integer('vendor_id');
+            $table->integer('category_id')->nullable();
+            $table->integer('brand_id')->nullable();
+            $table->integer('vendor_id')->nullable();
             $table->integer('admin_id')->nullable();
             $table->string('admin_type')->nullable();
             $table->string('product_name')->nullable();
@@ -34,7 +34,7 @@ return new class extends Migration
             $table->string('meta_keywords')->nullable();
             $table->string('meta_description')->nullable();
             $table->enum('is_featured',['No','Yes']);
-            $table->tinyInteger('status');
+            $table->tinyInteger('status')->nullable();
             $table->timestamps();
         });
     }

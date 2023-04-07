@@ -16,15 +16,15 @@ return new class extends Migration
         Schema::create('coupons', function (Blueprint $table) {
             $table->id();
             $table->integer('vendor_id');
-            $table->string('coupon_option');
-            $table->string('coupon_code');
-            $table->text('categories');
-            $table->text('brands');
-            $table->text('users');
-            $table->string('coupon_type');
-            $table->string('amount_type');
-            $table->float('amount');
-            $table->date('expiry_date');
+            $table->string('coupon_option')->nullable();
+            $table->string('coupon_code')->nullable();
+            $table->text('categories')->nullable();
+            $table->text('brands')->nullable();
+            $table->text('users')->nullable();
+            $table->string('coupon_type')->nullable();
+            $table->string('amount_type')->nullable();
+            $table->float('amount')->nullable();
+            $table->date('expiry_date')->nullable();
             $table->tinyInteger('status');
             $table->timestamps();
         });
