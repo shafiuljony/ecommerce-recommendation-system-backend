@@ -83,7 +83,7 @@ class Product extends Model
 
          $discount = 0;
       }
-      return array('product_price'=>$proAttrPrice['price'],'final_price'=>$final_price, 'discount'=>$discount);
+         return array('product_price'=>$proAttrPrice['price'],'final_price'=>$final_price, 'discount'=>$discount);
      }
 
      public static function isProductNew($product_id){
