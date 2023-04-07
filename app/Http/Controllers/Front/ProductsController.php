@@ -339,6 +339,41 @@ class ProductsController extends Controller
 
                 //Get COupon Details
                 $couponDetails = Coupon::where('coupon_code',$data['code'])->first();
+
+                
+                //if Coupon is active
+                if($couponDetails->status==0){
+                    $message = "The Coupon is not active";
+                }
+                //Check coupon date expriy date
+                $expiry_date = $couponDetails->expiry_date;
+                $current_date = date('Y-m-d');
+                if($expiry_date < $current_date){
+                    $message = "The Coupon is Expire";
+                }
+
+
+                //Check if coupon is from seleted categories
+                //Get All selected Category from coupon
+                $catArr = explode(",",$couponDetails->categories);
+
+                foreach ($getCartItems as $key => $item) {
+                    if(!in_array($item['product']['category_id'],$catArr)){
+                        $message = "This Coupon is not for one of the selected Products.";
+                    }
+                }
+                //If error message is_there
+                if(isset($message)){
+                    return response()->json([
+                        'status'=>'false',
+                        'message'=>$message,
+                        'totalCartItems'=>$totalCartItems,
+                        'view'=>(string)View::make('front.products.cart_items')->with(compact('getCartItems')),
+                        'headerview'=>(string)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))
+                    ]);
+                }
+
+                
             }
         }
     }
