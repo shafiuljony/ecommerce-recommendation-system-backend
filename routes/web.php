@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Category;
+use Illuminate\Support\Facades\Schema;
 
 /*
 |--------------------------------------------------------------------------
@@ -152,12 +153,16 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
     Route::get('/','IndexController@index');
 
     //Listing Categories
-    $catUrls = Category::select('url')->where('status',1)->get()->pluck('url')->toArray();
+    
+    if(Schema::hasTable('categories')){
+    
+        $catUrls = Category::select('url')->where('status',1)->get()->pluck('url')->toArray();
 
-    // dd($catUrls); die;
-    foreach ($catUrls as $key => $url){
-        Route::match(['get','post'],'/'.$url,'ProductsController@listing');
-        Route::get('/'.$url,'ProductsController@listing');
+        // dd($catUrls); die;
+        foreach ($catUrls as $key => $url){
+            Route::match(['get','post'],'/'.$url,'ProductsController@listing');
+            Route::get('/'.$url,'ProductsController@listing');
+        }
     }
 
     //Vendor Products
