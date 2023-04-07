@@ -9,6 +9,7 @@ use App\Models\Coupon;
 use App\Models\Product;
 use App\Models\ProductsAttributes;
 use App\Models\ProductsFilter;
+use App\Models\User;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -354,7 +355,7 @@ class ProductsController extends Controller
 
 
                 //Check if coupon is from seleted categories
-                //Get All selected Category from coupon
+                //Get All selected Category from coupon and convert to array
                 $catArr = explode(",",$couponDetails->categories);
 
                 foreach ($getCartItems as $key => $item) {
@@ -362,6 +363,25 @@ class ProductsController extends Controller
                         $message = "This Coupon is not for one of the selected Products.";
                     }
                 }
+
+                //Check if coupon is from seleted users
+                // Get Selected Users and convert to array
+
+                $usersArr = explode(",",$couponDetails->users);
+                // Get user id of all selected users
+                foreach ($usersArr as $key => $user) {
+                    $getUserId = User::select('id')->where('email',$user)->first()->toArray();
+                    $usersId[] = $getUserId['id'];
+                }
+                // Check if any cart item not belong to coupon user
+                foreach ($getCartItems as $key => $item) {
+                    if(count($usersArr)>0){
+                        if(!in_array($item['user_id'],$usersId)){
+                            $message = " Sorry! This Coupon is not for You Try Again!";
+                        }
+                    }
+                }
+
                 //If error message is_there
                 if(isset($message)){
                     return response()->json([
