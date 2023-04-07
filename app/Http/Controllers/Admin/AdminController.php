@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Vendor;
+use Illuminate\Support\Facades\Mail;
 use App\Models\VendorsBankDetails;
 use App\Models\VendorsBusinessDetails;
 use App\Models\Country;
@@ -100,7 +101,10 @@ class AdminController extends Controller
         return view('admin.settings.update_admin_details');
     }
     public function updateVendorDetails($slug, Request $request){
+        $vendorDetails ='';
+       
         if($slug=="personal"){
+            
             Session::put('page','update_personal_details');
             if($request->isMethod('post')){
                 $data = $request->all();
@@ -149,8 +153,10 @@ class AdminController extends Controller
                 return redirect()->back()->with('success_message', 'Vendor details updated successfully');
             }
             $vendorDetails = Vendor::where('id', Auth::guard('admin')->user()->vendor_id)->first()->toArray();
+            
 
-        }elseif($slug=="business"){
+        }else if($slug=="business"){
+            
             //business
             Session::put('page','update_business_details');
             if($request->isMethod('post')){
@@ -193,22 +199,37 @@ class AdminController extends Controller
                     $imageName ="";
                 }
 
-
-                //update in vendors business details table
-
-                VendorsBusinessDetails::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->update(['shop_name'=>$data['shop_name'],'shop_address'=>$data['shop_address'],'shop_city'=>$data['shop_city'],'shop_state'=>$data['shop_state'],'shop_country'=>$data['shop_country'],'shop_pincode'=>$data['shop_pincode'],'shop_mobile'=>$data['shop_mobile'],
-                'shop_website'=>$data['shop_website'],
-                'address_proof'=>$data['address_proof'],
-                'address_proof_image'=>$imageName,
-                'business_license_number'=>$data['business_license_number'],
-                'gst_number'=>$data['gst_number'],
-                'pan_number'=>$data['pan_number']]);
+                $vendorCount = VendorsBusinessDetails::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->count();
+                if($vendorCount>0){
+                    VendorsBusinessDetails::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->update(['shop_name'=>$data['shop_name'],'shop_address'=>$data['shop_address'],'shop_city'=>$data['shop_city'],'shop_state'=>$data['shop_state'],'shop_country'=>$data['shop_country'],'shop_pincode'=>$data['shop_pincode'],'shop_mobile'=>$data['shop_mobile'],
+                    'shop_website'=>$data['shop_website'],
+                    'address_proof'=>$data['address_proof'],
+                    'address_proof_image'=>$imageName,
+                    'business_license_number'=>$data['business_license_number'],
+                    'gst_number'=>$data['gst_number'],
+                    'pan_number'=>$data['pan_number']]);
+                }else{
+                    //update in vendors business details table
+                    VendorsBusinessDetails::insert(['vendor_id'=>Auth::guard('admin')->user()->vendor_id,'shop_name'=>$data['shop_name'],'shop_address'=>$data['shop_address'],'shop_city'=>$data['shop_city'],'shop_state'=>$data['shop_state'],'shop_country'=>$data['shop_country'],'shop_pincode'=>$data['shop_pincode'],'shop_mobile'=>$data['shop_mobile'],
+                    'shop_website'=>$data['shop_website'],
+                    'address_proof'=>$data['address_proof'],
+                    'address_proof_image'=>$imageName,
+                    'business_license_number'=>$data['business_license_number'],
+                    'gst_number'=>$data['gst_number'],
+                    'pan_number'=>$data['pan_number']]);
+                }
 
                 return redirect()->back()->with('success_message', 'Vendor details updated successfully');
             }
+            $vendorCount = VendorsBusinessDetails::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->count();
+            if($vendorCount>0){
 
-            $vendorDetails = VendorsBusinessDetails::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->first()->toArray();
-        }elseif($slug=="bank"){
+                $vendorDetails = VendorsBusinessDetails::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->first()->toArray();
+            }else{
+                $vendorDetails = array();
+            }
+            // dd($vendorDetails);
+        }else if($slug=="bank"){
             //bank
             Session::put('page','update_bank_details');
             if($request->isMethod('post')){
@@ -234,16 +255,27 @@ class AdminController extends Controller
                 $this->validate($request,$rules,$customMessages);
 
                 //update in vendors bank details table
+                $vendorCount = VendorsBankDetails::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->count();
+                if($vendorCount>0){
+                    VendorsBankDetails::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->update(['account_holder_name'=>$data['account_holder_name'],'bank_name'=>$data['bank_name'],'account_number'=>$data['account_number'],'bank_ifsc_code'=>$data['bank_ifsc_code']]);
+                }else{
 
-                VendorsBankDetails::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->update(['account_holder_name'=>$data['account_holder_name'],'bank_name'=>$data['bank_name'],'account_number'=>$data['account_number'],'bank_ifsc_code'=>$data['bank_ifsc_code']]);
+                    VendorsBankDetails::insert(['vendor_id'=>Auth::guard('admin')->user()->vendor_id,'account_holder_name'=>$data['account_holder_name'],'bank_name'=>$data['bank_name'],'account_number'=>$data['account_number'],'bank_ifsc_code'=>$data['bank_ifsc_code']]);
+                }
 
                 return redirect()->back()->with('success_message', 'Vendor details updated successfully');
             }
+            $vendorCount = VendorsBankDetails::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->count();
+            if($vendorCount>0){
 
-            $vendorDetails = VendorsBankDetails::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->first()->toArray();
-
+                $vendorDetails = VendorsBankDetails::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->first()->toArray();
+            }else{
+                $vendorDetails = array();
+            }
+            
         }
 
+        
         $countries = Country::where('status',1)->get()->toArray();
 
         return view('admin.settings.update_vendor_details')->with(compact('slug','vendorDetails','countries'));
@@ -283,6 +315,19 @@ class AdminController extends Controller
                 $status = 1;
             }
             Admin::where('id',$data['admin_id'])->update(['status'=>$status]);
+            $adminDetails = Admin::where('id',$data['admin_id'])->first()->toArray();
+            if($adminDetails['type']=="vendor" && $status ==1){
+                //Send Approval Email
+                $email = $adminDetails['email'];
+                $messageData = [
+                    'email' => $adminDetails['email'],
+                    'name' => $adminDetails['name'],
+                    'mobile' => $adminDetails['mobile'],
+            ];
+
+            Mail::send('emails.vendor_approved', $messageData, function($message)use($email){$message->to($email)->subject('Vendor Account is Approved');
+            });
+            }
             return response()->json(['status'=>$status,'admin_id'=>$data['admin_id']]);
         }
     }
@@ -309,10 +354,21 @@ class AdminController extends Controller
             $this->validate($request,$rules,$customMessages);
 
 
+            // if(Auth::guard('admin')->attempt(['email'=>$data['email'], 'password'=>$data['password']])){
+            //     if(Auth::guard('admin')->user()->type=="vendor" && Auth::guard('admin')->user()->confirm=="No"){
+            //         return redirect()->back()->with('error_message', 'Please confirm your email to activate your Vendor Account');
+            //     }  else if(Auth::guard('admin')->user()->type!="vendor" && Auth::guard('admin')->user()->status==0){
+            //         return redirect()->back()->with('error_message','Your admin account is not active');
+            //     }else{
+            //         return redirect('admin/dashboard');
+            //     }
+            // }else{
+            //     return redirect()->back()->with('error_message', 'Invalid Email or Password');
+            // }
             if(Auth::guard('admin')->attempt(['email'=>$data['email'], 'password'=>$data['password']])){
                 if(Auth::guard('admin')->user()->type=="vendor" && Auth::guard('admin')->user()->confirm=="No"){
                     return redirect()->back()->with('error_message', 'Please confirm your email to activate your Vendor Account');
-                }  else if(Auth::guard('admin')->user()->type!="vendor" && Auth::guard('admin')->user()->status==0){
+                }else if(Auth::guard('admin')->user()->type!="vendor" && Auth::guard('admin')->user()->status==0){
                     return redirect()->back()->with('error_message','Your admin account is not active');
                 }else{
                     return redirect('admin/dashboard');

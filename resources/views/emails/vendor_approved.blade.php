@@ -9,7 +9,7 @@
 <body>
     <tr><td>Dear {{$name }}!</td></tr>
     <tr><td>&nbsp;<br></td></tr>
-    <tr><td>confirm Your Vendor Account and Update business details bank details to upload Products!<br></td></tr>
+    <tr><td>Your Vendor Account has been approved. Now You Can Login and add Products<br></td></tr>
     <tr><td>&nbsp;<br></td></tr>
     <tr><td>Your Vendor Account Details are as below:<br></td></tr>
     <tr><td>Name: {{$name}}<br></td></tr>
