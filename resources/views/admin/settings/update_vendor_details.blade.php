@@ -167,6 +167,10 @@
                       <input type="text" class="form-control" @if(isset($vendorDetails['shop_pincode'])) value="{{ $vendorDetails['shop_pincode'] }}" @endif id="shop_pincode" placeholder="Enter your  Shop name" name="shop_pincode" require>
                     </div>
                     <div class="form-group">
+                      <label for="shop_mobile"> Shop Mobile Number</label>
+                      <input type="text" class="form-control"  @if(isset( $vendorDetails['shop_mobile'] )) value="{{ $vendorDetails['shop_mobile']  }}" @endif id="shop_mobile" placeholder="Enter your Shop  Mobile Number" name="shop_mobile" require maxlength="11" minlength="11" >
+                    </div>
+                    <div class="form-group">
                       <label for="business_license_number">Business License Number</label>
                       <input type="text" class="form-control"  @if(isset($vendorDetails['business_license_number'])) value="{{ $vendorDetails['business_license_number'] }}" @endif id="business_license_number" placeholder="Enter your Shop  Licence Number" name="business_license_number" require >
                     </div>
@@ -179,12 +183,12 @@
                       <input type="text" class="form-control"  @if(isset($vendorDetails['pan_number'])) value="{{ $vendorDetails['pan_number'] }}" @endif id="pan_number" placeholder="Enter your Shop  Pan Number" name="pan_number" require maxlength="11" minlength="11" >
                     </div>
                     <div class="form-group">
-                      <label for="shop_mobile"> Shop Mobile Number</label>
-                      <input type="text" class="form-control"  @if(isset( $vendorDetails['shop_mobile'] )) value="{{ $vendorDetails['shop_mobile']  }}" @endif id="shop_mobile" placeholder="Enter your Shop  Mobile Number" name="shop_mobile" require maxlength="11" minlength="11" >
+                      <label for="shop_website"> Shop website</label>
+                      <input type="text" class="form-control" @if(isset($vendorDetails['shop_website'])) value="{{ $vendorDetails['shop_website'] }}" @endif id="shop_website" placeholder="Enter your Shop  Website" name="shop_website">
                     </div>
                     <div class="form-group">
-                      <label for="shop_website"> Shop website</label>
-                      <input type="text" class="form-control" @if(isset($vendorDetails['shop_website'])) value="{{ $vendorDetails['shop_website'] }}" @endif id="shop_website" placeholder="Enter your Shop  Mobile Number" name="shop_website">
+                      <label for="shop_email">Shop Email</label>
+                      <input type="text" class="form-control" @if(isset($vendorDetails['shop_email'])) value="{{ $vendorDetails['shop_email'] }}" @endif id="shop_email" placeholder="Enter your Shop  Email" name="shop_email">
                     </div>
                     <div class="form-group">
                       <label for="address_proof">Address Proof</label>
