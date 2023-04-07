@@ -27,6 +27,7 @@ return new class extends Migration
             $table->float('product_price')->nullable();
             $table->float('product_discount')->nullable();
             $table->integer('product_weight')->nullable();
+            $table->string('group_code')->nullable();
             $table->string('product_image')->nullable();
             $table->string('product_video')->nullable();
             $table->string('description')->nullable();

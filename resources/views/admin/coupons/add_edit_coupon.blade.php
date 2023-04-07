@@ -91,7 +91,7 @@
                     </div>
                     <div class="form-group">
                       <label for="amount">Amount</label>
-                      <input type="text" class="form-control" id="amount" placeholder="Enter Amount" name="amount" require @if(isset($coupon['amount'])) value="{{ $coupon['amount'] }}" @else value="{{ old['amount'] }}"  @endif>
+                      <input type="text" class="form-control" id="amount" placeholder="Enter Amount" name="amount" require @if(isset($coupon['amount'])) value="{{ $coupon['amount'] }}" @else value="{{ old('amount') }}"  @endif>
                     </div>    
                     <div class="form-group">
                       <label for="categories">Select Category</label>
@@ -125,7 +125,7 @@
                     </div>
                     <div class="form-group">
                       <label for="expiry_date">Expiry Date</label>
-                      <input type="date" class="form-control" id="expiry_date" placeholder="Enter Expiry Date" name="expiry_date" require @if(isset($coupon['expiry_date'])) value="{{ $coupon['expiry_date'] }}" @else value="{{ old['expiry_date'] }}"  @endif>
+                      <input type="date" class="form-control" id="expiry_date" placeholder="Enter Expiry Date" name="expiry_date" require @if(isset($coupon['expiry_date'])) value="{{ $coupon['expiry_date'] }}" @else value="{{ old('expiry_date') }}"  @endif>
                     </div>
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                     <button type="reset" class="btn btn-light">Cancel</button>

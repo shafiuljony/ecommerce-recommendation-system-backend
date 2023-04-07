@@ -17,7 +17,7 @@ class CouponsTableSeeder extends Seeder
     {
         $couponRecords = [
             ['id'=>1,'vendor_id'=>0,'coupon_option'=>'Manual','coupon_code'=>'test10','categories'=>1,'users'=>'','coupon_type'=>'Single','amount_type'=>'Percentage','amount'=>10,'expiry_date'=>'2022-12-31','status'=>1],
-            ['id'=>2,'vendor_id'=>9,'coupon_option'=>'Manual','coupon_code'=>'test20','categories'=>1,'users'=>'','coupon_type'=>'Single','amount_type'=>'Percentage','amount'=>10,'expiry_date'=>'2022-12-31','status'=>1]
+            ['id'=>2,'vendor_id'=>2,'coupon_option'=>'Manual','coupon_code'=>'test20','categories'=>1,'users'=>'','coupon_type'=>'Single','amount_type'=>'Percentage','amount'=>10,'expiry_date'=>'2022-12-31','status'=>1]
         ];
         Coupon::insert($couponRecords);
     }

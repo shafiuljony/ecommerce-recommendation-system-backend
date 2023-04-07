@@ -26,6 +26,16 @@ class AdminTableSeeder extends Seeder
                 'password'=>'$2y$10$1IYwHMurZZCh84Xml42KbOiAO6TQ.gsg4WVanDUbDMAW8Np.P3lj6',
                 'image'=>'',
                 'status'=> 1
+            ],
+            [
+                'name'=>'shafiul',
+                'type'=>'vendor',
+                'vendor_id'=>2,
+                'mobile'=>'01558947938',
+                'email'=>'shafiul@anon.com',
+                'password'=>'$2y$10$1IYwHMurZZCh84Xml42KbOiAO6TQ.gsg4WVanDUbDMAW8Np.P3lj6',
+                'image'=>'',
+                'status'=> 1
             ]
             ];
             Admin::insert($adminRecords);

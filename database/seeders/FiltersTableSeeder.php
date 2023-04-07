@@ -16,8 +16,8 @@ class FiltersTableSeeder extends Seeder
     public function run()
     {
         $filterRecords = [
-            ['id'=>1,'cat_ids'=>'1,2,3,7','filter_name'=>'RAM','filter_column'=>'ram','status'=>1],
-            ['id'=>2,'cat_ids'=>'4,5,6,9,11','filter_name'=>'Fabric','filter_column'=>'fabric','status'=>1]
+            ['id'=>1,'cat_ids'=>'1,2,3','filter_name'=>'RAM','filter_column'=>'ram','status'=>1],
+            ['id'=>2,'cat_ids'=>'4,5,6','filter_name'=>'Fabric','filter_column'=>'fabric','status'=>1]
         ];
         ProductsFilter::insert($filterRecords);
     }

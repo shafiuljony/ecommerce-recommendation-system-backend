@@ -13,8 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('products', function($table){
-            $table->enum('is_bestseller',['No','Yes'])->after('is_featured');
+        Schema::create('recently_viewed_products', function (Blueprint $table) {
+            $table->id();
+            $table->integer('product_id');
+            $table->string('session_id');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('products', function($table){
-            $table->dropColumn('is_bestseller');
-        });
+        Schema::dropIfExists('recently_viewed_products');
     }
 };

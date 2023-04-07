@@ -336,6 +336,9 @@ class ProductsController extends Controller
                 ]);
             }else{
                 // Check for other coupon conditions
+
+                //Get COupon Details
+                $couponDetails = Coupon::where('coupon_code',$data['code'])->first();
             }
         }
     }

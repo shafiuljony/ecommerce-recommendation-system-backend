@@ -16,7 +16,7 @@ class VendorsTableSeeder extends Seeder
     public function run()
     {
         $vendorRecords = [
-            ['id'=>2,'name'=>'Sowrab','address'=>'Boddarhat-112','city'=>'Chattogram','state'=>'Chattogram','country'=>'Bangladesh','pincode'=>'4002','mobile'=>'01558947938','email'=>'sowrab@admin.com','status'=>1]
+            ['id'=>2,'name'=>'shafiul','address'=>'Muradpur-112','city'=>'Chattogram','state'=>'Chattogram','country'=>'Bangladesh','pincode'=>'4002','mobile'=>'01558947938','email'=>'shafiul@admin.com','status'=>1]
         ];
         Vendor::insert($vendorRecords);
     }
