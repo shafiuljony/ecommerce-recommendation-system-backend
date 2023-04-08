@@ -322,13 +322,13 @@ function get_filter(class_name){
             $(".totalCartItems").html(resp.totalCartItems);
             $('#appendCartItems').html(resp.view);
             $('#appendHeaderCartItems').html(resp.headerview);
-            if(resp.CouponAmount > 0){
-                $('.CouponAmount').text("Rs."+resp.CouponAmount);
+            if(resp.couponAmount > 0){
+                $('.couponAmount').text("Tk."+resp.couponAmount);
             }else{
-                $('.CouponAmount').text("Rs. 0");
+                $('.couponAmount').text("Tk.0");
             }
             if(resp.grand_total > 0){
-                $('.grand_total').text("Rs."+resp.grand_total);
+                $('.grand_total').text("Tk."+resp.grand_total);
             }
         },error:function(){
             alert("Error");

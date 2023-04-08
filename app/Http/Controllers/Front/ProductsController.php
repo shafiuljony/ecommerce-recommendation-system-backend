@@ -295,6 +295,8 @@ class ProductsController extends Controller
             Cart::where('id',$data['cartid'])->update(['quantity'=>$data['qty']]);
             $getCartItems = Cart::getCartItems();
             $totalCartItems = totalCartItems();
+            Session::forget('couponAmount');
+            Session::forget('couponCode');
             return response()->json([
                 'status'=>true,
                 'totalCartItems'=>$totalCartItems,
@@ -306,6 +308,8 @@ class ProductsController extends Controller
     public function cartDelete(Request $request){
         if($request->ajax()){
             $data = $request->all();
+            Session::forget('couponAmount');
+            Session::forget('couponCode');
             // echo "<pre>"; print_r($data); die;
             Cart::where('id',$data['cartid'])->delete();
             $totalCartItems = totalCartItems();
@@ -323,6 +327,8 @@ class ProductsController extends Controller
     public function applyCoupon(Request $request){
         if($request->ajax()){
             $data = $request->all();
+            Session::forget('couponAmount');
+            Session::forget('couponCode');
             $getCartItems = Cart::getCartItems();
             // echo "<pre>"; print_r($getCartItems); die;
             $totalCartItems = totalCartItems();
