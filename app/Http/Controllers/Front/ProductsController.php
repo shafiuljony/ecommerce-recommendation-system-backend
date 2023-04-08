@@ -366,20 +366,35 @@ class ProductsController extends Controller
 
                 //Check if coupon is from seleted users
                 // Get Selected Users and convert to array
-
-                $usersArr = explode(",",$couponDetails->users);
-                // Get user id of all selected users
-                foreach ($usersArr as $key => $user) {
-                    $getUserId = User::select('id')->where('email',$user)->first()->toArray();
-                    $usersId[] = $getUserId['id'];
-                }
-                // Check if any cart item not belong to coupon user
-                foreach ($getCartItems as $key => $item) {
-                    if(count($usersArr)>0){
-                        if(!in_array($item['user_id'],$usersId)){
-                            $message = " Sorry! This Coupon is not for You Try Again!";
+                if(isset($couponDetails->users)&&!empty($couponDetails->users)){
+                    $usersArr = explode(",",$couponDetails->users);
+                    if(count($usersArr)){
+                        // Get user id of all selected users
+                        foreach ($usersArr as $key => $user) {
+                            echo "<pre>"; print_r($user); die;
+                            $getUserId = User::select('id')->where('email',$user)->first()->toArray();
+                            $usersId[] = $getUserId['id'];
+                        }
+                        // Check if any cart item not belong to coupon user
+                        foreach ($getCartItems as $key => $item) {
+                            if(!in_array($item['user_id'],$usersId)){
+                                $message = " Sorry! This Coupon is not for You Try Again!";
+                            }
                         }
                     }
+                }
+                
+                if($couponDetails->vendor_id>0){
+                    echo $couponDetails->vendor_id; die;
+                    $productIds = Product::select('id')->where('vendor_id',$couponDetails->vendor_id)->plunk('id')->toArray();
+                    echo "<pre>"; print_r($productIds); die;
+                    // Check if Coupon belong to Vendor Products
+                    foreach ($getCartItems as $key => $item) {
+                        if(!in_array($item['product']['id'],$productIds)){
+                            $message = "This Coupon is not for You Try Again!";
+                        }
+                    }
+
                 }
 
                 //If error message is_there
