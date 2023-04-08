@@ -9,6 +9,7 @@ $(document).ready(function(){
     $('#banners').DataTable();
     $('#filters').DataTable();
     $('#coupons').DataTable();
+    $('#users').DataTable();
 
     $(".nav-item").removeClass("active");
     $(".nav-link").removeClass("active");
@@ -139,6 +140,29 @@ $(document).ready(function(){
                     $("#category-"+category_id).html("<i class='mdi mdi-bookmark-outline' style='font-size: 25px;' status='Inactive'></i>");
                 }else if(resp['status']==1){
                     $("#category-"+category_id).html("<i class='mdi mdi-bookmark-check' style='font-size: 25px;' status='Active'></i>");
+                }
+            },error:function(){
+                alert("Error");
+            }
+        })
+     })
+     //Update user Status
+     $(document).on("click",".updateUserStatus",function(){
+        var status = $(this).children("i").attr("status");
+        var user_id = $(this).attr("user_id");
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type:'post',
+            url:'/admin/update-user-status',
+            data:{status:status,user_id:user_id},
+            success:function(resp){
+                // alert(resp);
+                if(resp['status']==0){
+                    $("#user-"+user_id).html("<i class='mdi mdi-bookmark-outline' style='font-size: 25px;' status='Inactive'></i>");
+                }else if(resp['status']==1){
+                    $("#user-"+user_id).html("<i class='mdi mdi-bookmark-check' style='font-size: 25px;' status='Active'></i>");
                 }
             },error:function(){
                 alert("Error");
