@@ -323,8 +323,8 @@ class ProductsController extends Controller
     public function applyCoupon(Request $request){
         if($request->ajax()){
             $data = $request->all();
-            // echo "<pre>"; print_r($data); die;
             $getCartItems = Cart::getCartItems();
+            // echo "<pre>"; print_r($getCartItems); die;
             $totalCartItems = totalCartItems();
             $couponCount = Coupon::where('coupon_code',$data['code'])->count();
             if($couponCount==0){
@@ -357,37 +357,40 @@ class ProductsController extends Controller
                 //Check if coupon is from seleted categories
                 //Get All selected Category from coupon and convert to array
                 $catArr = explode(",",$couponDetails->categories);
-
+                $total_amount = 0;
                 foreach ($getCartItems as $key => $item) {
                     if(!in_array($item['product']['category_id'],$catArr)){
                         $message = "This Coupon is not for one of the selected Products.";
                     }
+                    $attrPrice = Product::getDiscountAttributePrice($item['product_id'],$item['size']);
+                    // echo "<pre>"; print_r($attrPrice); die;
+                    $total_amount = $total_amount * ($attrPrice['final_price'] * $item['quantity']);
                 }
 
                 //Check if coupon is from seleted users
                 // Get Selected Users and convert to array
-                if(isset($couponDetails->users)&&!empty($couponDetails->users)){
-                    $usersArr = explode(",",$couponDetails->users);
-                    if(count($usersArr)){
-                        // Get user id of all selected users
-                        foreach ($usersArr as $key => $user) {
-                            echo "<pre>"; print_r($user); die;
-                            $getUserId = User::select('id')->where('email',$user)->first()->toArray();
-                            $usersId[] = $getUserId['id'];
-                        }
-                        // Check if any cart item not belong to coupon user
-                        foreach ($getCartItems as $key => $item) {
-                            if(!in_array($item['user_id'],$usersId)){
-                                $message = " Sorry! This Coupon is not for You Try Again!";
-                            }
-                        }
-                    }
-                }
+                // if(isset($couponDetails->users)&&!empty($couponDetails->users)){
+                //     $usersArr = explode(",",$couponDetails->users);
+                //     if(count($usersArr)){
+                //         // Get user id of all selected users
+                //         foreach ($usersArr as $key => $user) {
+                //             echo "<pre>"; print_r($user); die;
+                //             $getUserId = User::select('id')->where('email',$user)->first()->toArray();
+                //             $usersId[] = $getUserId['id'];
+                //         }
+                //         // Check if any cart item not belong to coupon user
+                //         foreach ($getCartItems as $key => $item) {
+                //             if(!in_array($item['user_id'],$usersId)){
+                //                 $message = " Sorry! This Coupon is not for You Try Again!";
+                //             }
+                //         }
+                //     }
+                // }
                 
                 if($couponDetails->vendor_id>0){
                     echo $couponDetails->vendor_id; die;
                     $productIds = Product::select('id')->where('vendor_id',$couponDetails->vendor_id)->plunk('id')->toArray();
-                    echo "<pre>"; print_r($productIds); die;
+                    // echo "<pre>"; print_r($productIds); die;
                     // Check if Coupon belong to Vendor Products
                     foreach ($getCartItems as $key => $item) {
                         if(!in_array($item['product']['id'],$productIds)){
@@ -400,9 +403,35 @@ class ProductsController extends Controller
                 //If error message is_there
                 if(isset($message)){
                     return response()->json([
-                        'status'=>'false',
+                        'status'=>false,
                         'message'=>$message,
                         'totalCartItems'=>$totalCartItems,
+                        'view'=>(string)View::make('front.products.cart_items')->with(compact('getCartItems')),
+                        'headerview'=>(string)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))
+                    ]);
+                }else{
+                    //Coupon Code is correct
+
+                    //check if ammount type is fixed or percentage
+                    if($couponDetails->amount_type=="Fixed"){
+                        $couponAmount = $couponDetails->amount;
+                    }else{
+                        $couponAmount = $total_amount * ($couponDetails->amount/100);
+                    }
+
+                    $grand_total = $total_amount - $couponAmount;
+
+                    //Add Coupon Code & amount in session Variable
+                    Session::put('couponAmount',$couponAmount);
+                    Session::put('couponCode',$data['code']);
+
+                    $message = "Coupon Code Successfully Applied. You are  availing discount!";
+                    return response()->json([
+                        'status'=>true,
+                        'message'=>$message,
+                        'totalCartItems'=>$totalCartItems,
+                        'couponAmount'=>$couponAmount,
+                        'grand_total'=>$grand_total,
                         'view'=>(string)View::make('front.products.cart_items')->with(compact('getCartItems')),
                         'headerview'=>(string)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))
                     ]);

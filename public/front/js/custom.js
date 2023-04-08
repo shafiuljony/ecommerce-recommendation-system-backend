@@ -318,9 +318,18 @@ function get_filter(class_name){
             if(resp.message!=""){
                 alert(resp.message)
             }
+
             $(".totalCartItems").html(resp.totalCartItems);
             $('#appendCartItems').html(resp.view);
             $('#appendHeaderCartItems').html(resp.headerview);
+            if(resp.CouponAmount > 0){
+                $('.CouponAmount').text("Rs."+resp.CouponAmount);
+            }else{
+                $('.CouponAmount').text("Rs. 0");
+            }
+            if(resp.grand_total > 0){
+                $('.grand_total').text("Rs."+resp.grand_total);
+            }
         },error:function(){
             alert("Error");
         }

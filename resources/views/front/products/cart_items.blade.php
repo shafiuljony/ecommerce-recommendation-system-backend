@@ -77,24 +77,7 @@
     </table>
 </div>
 <!-- Products-List-Wrapper /- -->
-<!-- Coupon -->
-<div class="coupon-continue-checkout u-s-m-b-60">
-    <div class="coupon-area">
-        <h6>Enter your coupon code if you have one.</h6>
-        <div class="coupon-field">
-            <form id="ApplyCoupon" method="post" action="javascript:void(0);" @if(Auth::check()) user="1" @endif>@csrf
-                <label class="sr-only" for="coupon-code">Apply Coupon</label>
-                <input id="code" name="code" type="text" class="text-field" placeholder="Enter Coupon Code">
-                <button type="submit" class="button">Apply Coupon</button>
-            </form>
-        </div>
-    </div>
-    <div class="button-area">
-        <a href="shop-v1-root-category.html" class="continue">Continue Shopping</a>
-        <a href="checkout.html" class="checkout">Proceed to Checkout</a>
-    </div>
-</div>
-<!-- Coupon /- -->
+
 <!-- Billing -->
 <div class="calculation u-s-m-b-60">
     <div class="table-wrapper-2">
@@ -115,22 +98,46 @@
                 </tr>
                 <tr>
                     <td>
-                        <h3 class="calc-h3 u-s-m-b-0">Coupon Discount</h3>
+                        <h3 class="calc-h3 u-s-m-b-0 CouponAmount">Coupon Discount</h3>
                     </td>
                     <td>
-                        <span class="calc-text">Tk. 0</span>
+                        <span class="calc-text">
+                            @if(Session::has('CouponAmount'))
+                                Tk.{{ Session::get('CouponAmount') }}
+                            @else
+                            Tk. 0
+                            @endif
+                        </span>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <h3 class="calc-h3 u-s-m-b-0">Grand Total</h3>
+                        <h3 class="calc-h3 u-s-m-b-0 ">Grand Total</h3>
                     </td>
                     <td>
-                        <span class="calc-text">Tk.{{ $total_price }}</span>
+                        <span class="calc-text grand_total">Tk.{{ $total_price - Session::get('CouponAmount') }}</span>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
 </div>
+<!-- Coupon -->
+<div class="coupon-continue-checkout u-s-m-b-60">
+    <div class="coupon-area">
+        <h6>Enter your coupon code if you have one.</h6>
+        <div class="coupon-field">
+            <form id="ApplyCoupon" method="post" action="javascript:void(0);" @if(Auth::check()) user="1" @endif>@csrf
+                <label class="sr-only" for="coupon-code">Apply Coupon</label>
+                <input id="code" name="code" type="text" class="text-field" placeholder="Enter Coupon Code">
+                <button type="submit" class="button">Apply Coupon</button>
+            </form>
+        </div>
+    </div>
+    <div class="button-area">
+        <a href="shop-v1-root-category.html" class="continue">Continue Shopping</a>
+        <a href="checkout.html" class="checkout">Proceed to Checkout</a>
+    </div>
+</div>
+<!-- Coupon /- -->
 <!-- Billing /- -->
