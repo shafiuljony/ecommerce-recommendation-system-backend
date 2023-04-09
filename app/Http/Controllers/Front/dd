@@ -1,0 +1,47 @@
+Array
+(
+    [0] => Array
+        (
+            [id] => 4
+            [session_id] => 0455e50d15ae59dc00ca233efc4429c4
+            [user_id] => 11
+            [product_id] => 3
+            [size] => Small
+            [quantity] => 1
+            [created_at] => 2023-04-08T20:47:57.000000Z
+            [updated_at] => 2023-04-08T20:50:58.000000Z
+            [product] => Array
+                (
+                    [id] => 3
+                    [category_id] => 9
+                    [product_image] => 38988.jpeg
+                    [product_code] => TSC001
+                    [product_color] => Brown
+                    [product_name] => T-shirt Cotton
+                )
+
+        )
+
+    [1] => Array
+        (
+            [id] => 2
+            [session_id] => 61dadd52ad78b0d9aa091280e7997991
+            [user_id] => 11
+            [product_id] => 2
+            [size] => Small
+            [quantity] => 1
+            [created_at] => 2023-04-07T20:20:02.000000Z
+            [updated_at] => 2023-04-07T23:13:37.000000Z
+            [product] => Array
+                (
+                    [id] => 2
+                    [category_id] => 9
+                    [product_image] => 79713.jpg
+                    [product_code] => RMMRNTS
+                    [product_color] => Brown
+                    [product_name] => mens-r-neck-t-shirt
+                )
+
+        )
+
+)

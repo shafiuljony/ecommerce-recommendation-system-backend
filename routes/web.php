@@ -137,11 +137,13 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
 
        //Coupons
        Route::get('coupons','CouponsController@coupons');
-       //update Coupon status
        Route::post('update-coupon-status','CouponsController@updateCouponStatus');
-       //delete Coupon
        Route::get('delete-coupon/{id}','CouponsController@deleteCoupon');
        Route::match(['get','post'],'add-edit-coupon/{id?}','CouponsController@addEditCoupon');
+
+       //User
+       Route::get('users','UserController@users');
+       Route::post('update-user-status','UserController@updateUserStatus');
 
     });
 
