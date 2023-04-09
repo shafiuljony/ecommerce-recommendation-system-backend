@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('countries', function (Blueprint $table) {
-            $table->id()->nullable();
-            $table->string('country_code')->nullable();
-            $table->string('country_name')->nullable();
-            $table->tinyInteger('status')->nullable();
+        Schema::create('recently_viewed_products', function (Blueprint $table) {
+            $table->id();
+            $table->integer('product_id');
+            $table->string('session_id');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('countries');
+        Schema::dropIfExists('recently_viewed_products');
     }
 };

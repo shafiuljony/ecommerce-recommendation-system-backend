@@ -3,15 +3,18 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Route;
 use App\Models\Cart;
+use App\Models\Country;
 use App\Models\Category;
 use App\Models\Coupon;
+use App\Models\User;
+use App\Models\DeliveryAddress;
 use App\Models\Product;
 use App\Models\ProductsAttributes;
 use App\Models\ProductsFilter;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 use Session;
 use View;
 use DB;
@@ -341,5 +344,11 @@ class ProductsController extends Controller
                 $couponDetails = Coupon::where('coupon_code',$data['code'])->first();
             }
         }
+    }
+    public function checkout(){
+        $deliveryAddresses = DeliveryAddress::DeliveryAddresses();
+        $countries = Country::where('status',1)->get()->toArray();
+        // dd($deliveryAddresses);
+        return view('front.products.checkout')->with(compact('deliveryAddresses','countries'));
     }
 }

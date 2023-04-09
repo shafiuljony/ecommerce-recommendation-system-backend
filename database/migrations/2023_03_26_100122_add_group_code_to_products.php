@@ -13,12 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('countries', function (Blueprint $table) {
-            $table->id()->nullable();
-            $table->string('country_code')->nullable();
-            $table->string('country_name')->nullable();
-            $table->tinyInteger('status')->nullable();
-            $table->timestamps();
+        Schema::table('products', function (Blueprint $table) {
+            $table->string('group_code')->after('product_video')->nullable();
         });
     }
 
@@ -29,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('countries');
+        Schema::table('products', function (Blueprint $table) {
+            //
+        });
     }
 };

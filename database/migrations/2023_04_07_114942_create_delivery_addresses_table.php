@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('delivery_addresses', function (Blueprint $table) {
-            $table->id()->autoIncrement();
+            $table->id();
             $table->integer('user_id')->nullable();
             $table->string('name')->nullable();
             $table->string('address')->nullable();
