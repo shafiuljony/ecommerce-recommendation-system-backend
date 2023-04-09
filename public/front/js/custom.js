@@ -139,7 +139,7 @@ $(document).ready(function(){
 
     //Account Form Validation
     $("#accountForm").submit(function(){
-        //$(".loader").show();
+        $(".loader").show();
         var formdata = $(this).serialize();
         $.ajax({
             url:"/user/account",
@@ -286,28 +286,19 @@ $(document).ready(function(){
             }
         })
     });
-});
 
-function get_filter(class_name){
-    var filter = []
-    $('.'+class_name+':checked').each(function(){
-        filter.push($(this).val());
+    //Apply Coupon
 
-    });
-    return filter;
-}
- //Apply Coupon
-
- $("#ApplyCoupon").submit(function(){
-    var user = $(this).attr("user");
-    if(user==1){
-        //Do nothing
-    }else{
-       alert("Please Login to Apply Coupon!");
-       return false;
-    }
-    var code = $("#code").val();
-    $.ajax({
+    $("#ApplyCoupon").submit(function(){
+        var user = $(this).attr("user");
+        if(user==1){
+            //Do nothing
+        }else{
+        alert("Please Login to Apply Coupon!");
+        return false;
+        }
+        var code = $("#code").val();
+        $.ajax({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
@@ -322,6 +313,8 @@ function get_filter(class_name){
             $(".totalCartItems").html(resp.totalCartItems);
             $('#appendCartItems').html(resp.view);
             $('#appendHeaderCartItems').html(resp.headerview);
+            },error:function(){
+                alert("Error");
             if(resp.couponAmount > 0){
                 $('.couponAmount').text("Tk."+resp.couponAmount);
             }else{
@@ -334,4 +327,94 @@ function get_filter(class_name){
             alert("Error");
         }
     })
- });
+    });
+
+    // Edit Delivery Address
+    $(document).on('click','.editAddress',function(){
+        var addressid = $(this).data("addressid");
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data:{addressid:addressid},
+            url:'/get-delivery-address',
+            type:'post',
+            success:function(resp){
+                $("#showdifferent").removeClass("collapse");
+                $(".newAddress").hide();
+                $(".deliveryText").text("Edit Delivery Address");
+                $('[name=delivery_id]').val(resp.address['id']);
+                $('[name=delivery_name]').val(resp.address['name']);
+                $('[name=delivery_address]').val(resp.address['address']);
+                $('[name=delivery_city]').val(resp.address['city']);
+                $('[name=delivery_state]').val(resp.address['state']);
+                $('[name=delivery_country]').val(resp.address['country']);
+                $('[name=delivery_pincode]').val(resp.address['pincode']);
+                $('[name=delivery_mobile]').val(resp.address['mobile']);
+            },error:function(){
+                alert("Error");
+            }
+        });
+    });
+
+    //Save Delivery Address
+    $(document).on('submit',"#addressAddEditForm",function(){
+        var formdata = $("#addressAddEditForm").serialize();
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: '/save-delivery-address',
+            type: 'post',
+            data: formdata,
+            success:function(resp){
+                if(resp.type=="error"){
+                    $(".loader").hide();
+                    $.each(resp.errors,function(i,error){
+                            $("#delivery-"+i).attr('style','color:red');
+                            $("#delivery-"+i).html(error);
+                        setTimeout(function(){
+                            $("#delivery-"+i).css({
+                                'display':'none'
+                            });
+                        },3000);
+                    });
+                }else{
+                    $("#deliveryAddresses").html(resp.view);
+                }
+            },error:function(){
+                alert("Error");
+            }
+        });
+    })
+
+    //Remove Delivery Address
+    $(document).on('click','.removeAddress',function(){
+        if(confirm("Are you sure to remove this?")){
+            var addressid = $(this).data("addressid");
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: '/remove-delivery-address',
+                type: 'post',
+                data: {addressid:addressid},
+                success:function(resp){
+                    $("#deliveryAddresses").html(resp.view);
+                },error:function(){
+                    alert("Error");
+                }
+            });
+        }
+    });
+});
+
+    
+ function get_filter(class_name){
+    var filter = []
+    $('.'+class_name+':checked').each(function(){
+        filter.push($(this).val());
+
+    });
+    return filter;
+}

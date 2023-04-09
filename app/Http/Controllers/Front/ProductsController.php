@@ -3,20 +3,23 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Route;
 use App\Models\Cart;
+use App\Models\Country;
 use App\Models\Category;
 use App\Models\Coupon;
+use App\Models\User;
+use App\Models\DeliveryAddress;
 use App\Models\Product;
 use App\Models\ProductsAttributes;
 use App\Models\ProductsFilter;
-use App\Models\User;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 use Session;
 use View;
 use DB;
 use Auth;
+use Symfony\Component\VarDumper\Caster\RedisCaster;
 
 class ProductsController extends Controller
 {
@@ -446,5 +449,37 @@ class ProductsController extends Controller
                 
             }
         }
+    }
+
+    public function checkout(Request $request){
+        if($request->isMethod('post')){
+            $data = $request->all();
+            // echo "<pre>"; print_r($data); die;
+
+            // Delivery Address Validation
+            if(empty($data['address_id'])){
+                $message = "Please select Delivery Address!";
+                return redirect()->back()->with('error_message',$message);
+            }
+
+            //Payment Method Validation
+            if(empty($data['payment_gateway'])){
+                $message = "Please select Payment Method!";
+                return redirect()->back()->with('error_message',$message);
+            }
+            //T&C Validation
+            if(empty($data['accept'])){
+                $message = "Please agree to T&C!";
+                return redirect()->back()->with('error_message',$message);
+            }
+
+            echo "ready to place order"; die;
+        }
+
+        $deliveryAddresses = DeliveryAddress::DeliveryAddresses();
+        $countries = Country::where('status',1)->get()->toArray();
+        $getCartItems = Cart::getCartItems();
+        //  dd($getCartItems);
+        return view('front.products.checkout')->with(compact('deliveryAddresses','countries','getCartItems'));
     }
 }
