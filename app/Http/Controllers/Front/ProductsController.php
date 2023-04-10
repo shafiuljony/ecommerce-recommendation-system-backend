@@ -372,8 +372,8 @@ class ProductsController extends Controller
                         $message = "This Coupon is not for one of the selected Products.";
                     }
                     $attrPrice = Product::getDiscountAttributePrice($item['product_id'],$item['size']);
-                    // echo "<pre>"; print_r($attrPrice); die;
-                    $total_amount = $total_amount * ($attrPrice['final_price'] * $item['quantity']);
+                    $total_amount = $total_amount + ($attrPrice['final_price'] * $item['quantity']);
+                    // echo "<pre>"; print_r($total_amount); die;
                 }
 
                 //Check if coupon is from seleted users
@@ -427,6 +427,7 @@ class ProductsController extends Controller
                     }else{
                         $couponAmount = $total_amount * ($couponDetails->amount/100);
                     }
+                    // dd($couponDetails->amount_type,$total_amount);
 
                     $grand_total = $total_amount - $couponAmount;
 
