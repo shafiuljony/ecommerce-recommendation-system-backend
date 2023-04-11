@@ -226,6 +226,12 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
 
         // Remove Delivery Address
         Route::post('remove-delivery-address','AddressController@removeDeliveryAddress');
+
+        // Thanks
+        Route::get('thanks','ProductsController@thanks');
+
+        // Users Orders
+        Route::get('user/orders','OrderController@orders');
     });
     
     //User Login

@@ -244,7 +244,8 @@ class AdminController extends Controller
                     'bank_ifsc_code' => 'required'
                 ];
 
-                $customMessages = [
+        
+                $customMessages = [ 
                     'account_holder_name.required' => 'Account Holder Name Is required',
                     'account_holder_name.regex' => 'Valid Account Holder Name Is required',
                     'bank_name.required' => 'Bank Name Is required',
