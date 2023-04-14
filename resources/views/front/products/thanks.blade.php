@@ -25,7 +25,7 @@
       <div class="row">
             <div class="col-lg-12" align="center">
                <h3>YOUR ORDER HAS BEEN PLACED SUCCESSFULLY</h3>
-               <P>Your order number is {{ Session::get('order_id') }} and Grand total is INR {{ Session::get('grand_total') }}</P> 
+               <P>Your order number is {{ Session::get('order_id') }} and Grand total is TK {{ Session::get('grand_total') }}</P> 
             </div>
          </div>
       </div>

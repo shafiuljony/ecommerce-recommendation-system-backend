@@ -2,23 +2,24 @@
 
 namespace App\Http\Controllers\Front;
 
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\View;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
-use App\Models\Cart;
-use App\Models\Country;
+use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Product;
+use App\Models\ProductsFilter;
+use App\Models\ProductsAttributes;
+use App\Models\Vendor;
+use App\Models\Cart;
 use App\Models\Coupon;
 use App\Models\User;
 use App\Models\DeliveryAddress;
-use App\Models\Product;
-use App\Models\ProductsAttributes;
-use App\Models\ProductsFilter;
-use App\Models\Vendor;
+use App\Models\Country;
 use App\Models\Order;
 use App\Models\OrdersProduct;
-use Illuminate\Http\Request;
 use Session;
-use View;
 use DB;
 use Auth;
 use PhpParser\Node\Expr\FuncCall;
@@ -565,6 +566,24 @@ class ProductsController extends Controller
             Session::put('order_id',$order_id);
 
             DB::commit();
+
+            $orderDetails = Order::with('orders_products')->where('id',$order_id)->first()->toArray();
+
+            if($data['payment_gateway']=="COD"){
+                // Send Order Email
+                $email = Auth::user()->email;
+                $messageData = [
+                    'email' => $email,
+                    'name' => Auth::user()->name,
+                    'order_id' => $order_id,
+                    'orderDetails' => $orderDetails
+                ];
+                Mail::Send('emails.order',$messageData,function($message)use($email){
+                    $message->to($email)->subject('Order Placed - Anon.com');
+                });
+            }else{
+                echo "Prepaid payment methods coming soon.";
+            }
 
             return redirect('thanks');
         }
