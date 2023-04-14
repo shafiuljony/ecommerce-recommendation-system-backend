@@ -99,9 +99,21 @@ class Product extends Model
          return $isProductNew;
      }
 
-     public static function getProductImage($product_id){
-      $getProductImage = Product::select('product_image')->where('id',$product_id)->first()->toArray();
-      return $getProductImage['product_image'];
-     }
+   //   public static function getProductImage($product_id){
+   //    $getProductImage = Product::select('product_image')->where('id',$product_id)->first()->toArray();
+   //    return $getProductImage['product_image'];
+   //   }
+
+   public static function getProductImage($product_id) {
+      $product = Product::select('product_image')->where('id', $product_id)->first();
+      if ($product) {
+          $getProductImage = $product->toArray();
+          return $getProductImage['product_image'];
+      } else {
+          // Handle case when product is not found, e.g. return a default image or show an error message
+          return null; // or throw an exception, or return a default image path, etc.
+      }
+  }
+  
 
 }
