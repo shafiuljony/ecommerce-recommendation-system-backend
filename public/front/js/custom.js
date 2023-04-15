@@ -306,15 +306,13 @@ $(document).ready(function(){
         data:{code:code},
         url:'/apply-coupon',
         success:function(resp){
+            console.log(resp);
             if(resp.message!=""){
                 alert(resp.message)
             }
-
             $(".totalCartItems").html(resp.totalCartItems);
             $('#appendCartItems').html(resp.view);
             $('#appendHeaderCartItems').html(resp.headerview);
-            },error:function(){
-                alert("Error");
             if(resp.couponAmount > 0){
                 $('.couponAmount').text("Tk."+resp.couponAmount);
             }else{

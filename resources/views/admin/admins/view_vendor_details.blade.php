@@ -86,7 +86,7 @@
                     </div>
                     <div class="form-group">
                       <label for="vendor_address">Shop Address</label>
-                      <input  class="form-control" @if(isset($vendorDetails['shop_address'])) value="{{ $vendorDetails['shop_address'] }}" @endif readonly>
+                      <input  class="form-control" @if(isset( $vendorDetails['shop_address'] )) value="{{ $vendorDetails['shop_address'] }}" @endif readonly>
                     </div>
                     <div class="form-group">
                       <label for="vendor_city">Shop City</label>

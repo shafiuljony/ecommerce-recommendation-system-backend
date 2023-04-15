@@ -281,7 +281,7 @@ class ProductsController extends Controller
         dd($product);*/
         if($request->isMethod('post')){
             $data = $request->all();
-            /*echo "<pre>"; print_r($data); die;*/
+            // echo "<pre>"; print_r($data); die;
 
             foreach ($data['sku'] as $key => $value) {
                 if(!empty($value)){
