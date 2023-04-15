@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Category;
@@ -145,10 +146,13 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
        Route::get('users','UserController@users');
        Route::post('update-user-status','UserController@updateUserStatus');
 
+       //Orders
+       Route::get('orders','OrderController@orders');
+       Route::get('orders/{id}','OrderController@orderDetails');
+       Route::post('update-order-status','OrderController@updateOrderStatus');
+       Route::post('update-order-item-status','OrderController@updateOrderItemStatus');
+
     });
-
-
-
 });
 
 Route::namespace('App\Http\Controllers\Front')->group(function(){
@@ -226,6 +230,12 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
 
         // Remove Delivery Address
         Route::post('remove-delivery-address','AddressController@removeDeliveryAddress');
+
+        // Thanks
+        Route::get('thanks','ProductsController@thanks');
+
+        // Users Orders
+        Route::get('user/orders/{id?}','OrderController@orders');
     });
     
     //User Login
