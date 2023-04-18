@@ -152,6 +152,10 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
        Route::post('update-order-status','OrderController@updateOrderStatus');
        Route::post('update-order-item-status','OrderController@updateOrderItemStatus');
 
+       //Ratings and Reviews
+       Route::get('ratings','RatingsController@ratings');
+       Route::post('update-rating-status','RatingsController@updateRatingStatus');
+
     });
 });
 
