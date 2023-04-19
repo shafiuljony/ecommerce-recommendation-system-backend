@@ -85,12 +85,15 @@
                                 </li>
                                     <?php echo $categoryDetails["breadcrumbs"]; ?>
                             </ul>
-                            <div class="product-rating">
-                                <div class='star' title="4.5 out of 5 - based on 23 Reviews">
-                                    <span style='width:67px'></span>
+                            @if($avgStarRating>0)
+                                <div class="product-rating">
+                                    <?php $star = 1;
+                                        while($star<=$avgStarRating){ ?>
+                                            <span>&#9733;</span>
+                                    <?php $star++;} ?>
+                                    <span> ( {{ $ratingsCount }} )</span>
                                 </div>
-                                <span>(23)</span>
-                            </div>
+                            @endif
                         </div>
                         <div class="section-2-short-description u-s-p-y-14">
                             <h6 class="information-heading u-s-m-b-8">Description:</h6>
@@ -148,11 +151,19 @@
                                 </div>
                             @endif
                         </div>
-                        @if(isset($productDetails['vendor']))
+                        @if(isset($productDetails['vendor']) && isset($productDetails['vendor']['id']) && isset($productDetails['vendor']['vendorbusinessdetails']['shop_name']))
                         <div>
                             sold by <a href="/products/{{ $productDetails['vendor']['id'] }}">{{ $productDetails['vendor']['vendorbusinessdetails']['shop_name'] }}</a> 
                         </div>
                         @endif
+
+
+                        <!-- @if(isset($productDetails['vendor']) && isset($productDetails['vendor']['id']) && isset($productDetails['vendor']['vendorbusinessdetails']['shop_name']))
+                        <div>
+                            sold by <a href="/products/{{ $productDetails['vendor']['id'] }}">{{ $productDetails['vendor']['vendorbusinessdetails']['shop_name'] }}</a> 
+                        </div>
+                        @endif -->
+
                         
                         <form action="{{ url('cart/add') }}" class="post-form" method="post">@csrf
                             <input type="hidden" name="product_id" value="{{ $productDetails['id'] }}">
@@ -243,7 +254,7 @@
                                 <a class="nav-link" data-toggle="tab" href="#detail">Product Detail</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#review">Reviews (15)</a>
+                                <a class="nav-link" data-toggle="tab" href="#review">Reviews ( {{ $ratingsCount }} )</a>
                             </li>
                         </ul>
                     </div>
@@ -296,9 +307,9 @@
                                         <div class="total-score-wrapper">
                                             <h6 class="review-h6">Average Rating</h6>
                                             <div class="circle-wrapper">
-                                                <h1>4.5</h1>
+                                                <h1>{{ $avgStarRating }}</h1>
                                             </div>
-                                            <h6 class="review-h6">Based on 23 Reviews</h6>
+                                            <h6 class="review-h6">Based on {{ $ratingsCount }} Reviews</h6>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6">
@@ -346,16 +357,25 @@
                                         <div class="your-rating-wrapper">
                                             <h6 class="review-h6">Your Review is matter.</h6>
                                             <h6 class="review-h6">Have you used this product before?</h6>
-                                            <div class="star-wrapper u-s-m-b-8">
+                                            <!-- <div class="star-wrapper u-s-m-b-8">
                                                 <div class="star">
                                                     <span id="your-stars" style='width:0'></span>
                                                 </div>
                                                 <label for="your-rating-value"></label>
                                                 <input id="your-rating-value" type="text" class="text-field" placeholder="0.0">
                                                 <span id="star-comment"></span>
-                                            </div>
-                                            <form>
-                                                <label for="your-name">Name
+                                            </div> -->
+                                            <form method="POST" action="{{ url('/add-rating') }}" name="ratingForm">@csrf
+                                                <input type="hidden" name="product_id" value="{{ $productDetails['id'] }}">
+                                                <div class="star-wrapper u-s-m-b-8">
+                                                    <div class="star">
+                                                        <span id="your-stars" style='width:0'></span>
+                                                    </div>
+                                                    <label for="your-rating-value"></label>
+                                                    <input name="rating" id="your-rating-value" type="text" class="text-field" placeholder="0.0" require>
+                                                    <span id="star-comment"></span>
+                                                </div>
+                                                <!-- <label for="your-name">Name
                                                     <span class="astk"> *</span>
                                                 </label>
                                                 <input id="your-name" type="text" class="text-field" placeholder="Your Name">
@@ -369,8 +389,8 @@
                                                 <input id="review-title" type="text" class="text-field" placeholder="Review Title">
                                                 <label for="review-text-area">Review
                                                     <span class="astk"> *</span>
-                                                </label>
-                                                <textarea class="text-area u-s-m-b-8" id="review-text-area" placeholder="Review"></textarea>
+                                                </label> -->
+                                                <textarea name="review" class="text-area u-s-m-b-8" id="review-text-area" placeholder="Review" require></textarea>
                                                 <button class="button button-outline-secondary">Submit Review</button>
                                             </form>
                                         </div>
@@ -379,7 +399,7 @@
                                 <!-- Get-Reviews -->
                                 <div class="get-reviews u-s-p-b-22">
                                     <!-- Review-Options -->
-                                    <div class="review-options u-s-m-b-16">
+                                    <!-- <div class="review-options u-s-m-b-16">
                                         <div class="review-option-heading">
                                             <h6>Reviews
                                                 <span> (15) </span>
@@ -394,95 +414,37 @@
                                                 </select>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <!-- Review-Options /- -->
                                     <!-- All-Reviews -->
                                     <div class="reviewers">
-                                        <div class="review-data">
-                                            <div class="reviewer-name-and-date">
-                                                <h6 class="reviewer-name">John</h6>
-                                                <h6 class="review-posted-date">10 May 2018</h6>
-                                            </div>
-                                            <div class="reviewer-stars-title-body">
-                                                <div class="reviewer-stars">
-                                                    <div class="star">
-                                                        <span style='width:67px'></span>
+                                        @if(count($ratings)>0)       
+                                            @foreach($ratings as $rating)
+                                                <div class="review-data">
+                                                    <div class="reviewer-name-and-date">
+                                                        <h6 class="reviewer-name">By {{ $rating['user']['name'] }}</h6>
+                                                        <h6 class="review-posted-date">{{ date("d-m-Y", strtotime($rating['created_at'])); }}</h6>
                                                     </div>
-                                                    <span class="review-title">Good!</span>
-                                                </div>
-                                                <p class="review-body">
-                                                    Good Quality...!
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="review-data">
-                                            <div class="reviewer-name-and-date">
-                                                <h6 class="reviewer-name">Doe</h6>
-                                                <h6 class="review-posted-date">10 June 2018</h6>
-                                            </div>
-                                            <div class="reviewer-stars-title-body">
-                                                <div class="reviewer-stars">
-                                                    <div class="star">
-                                                        <span style='width:67px'></span>
+                                                    <div class="reviewer-stars-title-body">
+                                                        <div class="reviewer-stars">
+                                                            <div>
+                                                                <?php 
+                                                                    $count=0;
+                                                                    while($count<$rating['rating']){ ?>
+                                                                    <span>&#9733;</span>
+                                                                <?php $count++; } ?>   
+                                                            </div>
+                                                            <!-- <span class="review-title">Good!</span> -->
+                                                        </div>
+                                                        <p class="review-body">
+                                                            {{ $rating['review'] }}
+                                                        </p>
                                                     </div>
-                                                    <span class="review-title">Well done!</span>
                                                 </div>
-                                                <p class="review-body">
-                                                    Cotton is good.
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="review-data">
-                                            <div class="reviewer-name-and-date">
-                                                <h6 class="reviewer-name">Tim</h6>
-                                                <h6 class="review-posted-date">10 July 2018</h6>
-                                            </div>
-                                            <div class="reviewer-stars-title-body">
-                                                <div class="reviewer-stars">
-                                                    <div class="star">
-                                                        <span style='width:67px'></span>
-                                                    </div>
-                                                    <span class="review-title">Well done!</span>
-                                                </div>
-                                                <p class="review-body">
-                                                    Excellent condition
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="review-data">
-                                            <div class="reviewer-name-and-date">
-                                                <h6 class="reviewer-name">Johnny</h6>
-                                                <h6 class="review-posted-date">10 March 2018</h6>
-                                            </div>
-                                            <div class="reviewer-stars-title-body">
-                                                <div class="reviewer-stars">
-                                                    <div class="star">
-                                                        <span style='width:67px'></span>
-                                                    </div>
-                                                    <span class="review-title">Bright!</span>
-                                                </div>
-                                                <p class="review-body">
-                                                    Cotton
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="review-data">
-                                            <div class="reviewer-name-and-date">
-                                                <h6 class="reviewer-name">Alexia C. Marshall</h6>
-                                                <h6 class="review-posted-date">12 May 2018</h6>
-                                            </div>
-                                            <div class="reviewer-stars-title-body">
-                                                <div class="reviewer-stars">
-                                                    <div class="star">
-                                                        <span style='width:67px'></span>
-                                                    </div>
-                                                    <span class="review-title">Well done!</span>
-                                                </div>
-                                                <p class="review-body">
-                                                    Good polyester Cotton
-                                                </p>
-                                            </div>
-                                        </div>
+                                            @endforeach    
+                                        @else
+                                            <p>Reviews Not Availavle for this product</p>
+                                        @endif
                                     </div>
                                     <!-- All-Reviews /- -->
                                     <!-- Pagination-Review -->

@@ -35,6 +35,18 @@
                 </ul>
             </div>
         </li>
+        <li class="nav-item">
+            <a @if(Session::get("page")=="orders") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @endif class="nav-link" data-toggle="collapse" href="#ui-orders" aria-expanded="false" aria-controls="ui-orders">
+            <i class="icon-layout menu-icon"></i>
+            <span class="menu-title">Order Management</span>
+            <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-orders">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a @if(Session::get('page')=="orders") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @else style="background: #fff !important; color:hsl(353deg 100% 78%) !important;"  @endif class="nav-link" href="{{ url('admin/orders') }}">Orders</a></li>
+                </ul>
+            </div>
+        </li>
         @else
         <li class="nav-item">
             <a @if(Session::get("page")=="update_admin_password" || Session::get('page')=="update_admin_details") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @endif class="nav-link" data-toggle="collapse" href="#ui-settings" aria-expanded="false" aria-controls="ui-settings">
@@ -82,6 +94,18 @@
             </div>
         </li>
         <li class="nav-item">
+            <a @if(Session::get("page")=="orders") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @endif class="nav-link" data-toggle="collapse" href="#ui-orders" aria-expanded="false" aria-controls="ui-orders">
+            <i class="icon-layout menu-icon"></i>
+            <span class="menu-title">Order Management</span>
+            <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-orders">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a @if(Session::get('page')=="orders") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @else style="background: #fff !important; color:hsl(353deg 100% 78%) !important;"  @endif class="nav-link" href="{{ url('admin/orders') }}">Orders</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
             <a @if(Session::get("page")=="users" || Session::get("page")=="subscribers" ) style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @endif class="nav-link" data-toggle="collapse" href="#ui-users" aria-expanded="false" aria-controls="ui-users">
             <i class="icon-layout menu-icon"></i>
             <span class="menu-title">User Management</span>
@@ -103,6 +127,18 @@
             <div class="collapse" id="ui-banners">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a @if(Session::get('page')=="banners") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @else style="background: #fff !important; color:hsl(353deg 100% 78%) !important;"  @endif class="nav-link" href="{{ url('admin/banners') }}">Home Page Banners</a></li> 
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a @if(Session::get("page")=="ratings") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @endif class="nav-link" data-toggle="collapse" href="#ui-ratings" aria-expanded="false" aria-controls="ui-ratings">
+            <i class="icon-layout menu-icon"></i>
+            <span class="menu-title">Ratings & Reviews</span>
+            <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-ratings">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a @if(Session::get('page')=="ratings") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @else style="background: #fff !important; color:hsl(353deg 100% 78%) !important;"  @endif class="nav-link" href="{{ url('admin/ratings') }}">Ratings</a></li>
                 </ul>
             </div>
         </li>
