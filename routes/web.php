@@ -240,6 +240,9 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
 
         // Users Orders
         Route::get('user/orders/{id?}','OrderController@orders');
+
+        //Add Rating
+        Route::match(['GET','POST'],'/add-rating','RatingsController@addRating');
     });
     
     //User Login

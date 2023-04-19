@@ -19,6 +19,7 @@ use App\Models\DeliveryAddress;
 use App\Models\Country;
 use App\Models\Order;
 use App\Models\OrdersProduct;
+use App\Models\Rating;
 use Session;
 use DB;
 use Auth;
@@ -205,8 +206,28 @@ class ProductsController extends Controller
             // dd($groupProducts);
         }
 
+        // Get All Reating of product
+        $ratings = Rating::with('user')->where('status',1)->where('product_id',$id)->orderBy('id','desc')->get()->toArray();
+        // dd($rating);
+
+        // Get Avarage Rating of product
+
+        $ratingsSum = Rating::where('status',1)->where('product_id',$id)->sum('rating');
+        $ratingsCount = Rating::where('status',1)->where('product_id',$id)->count();
+
+        if($ratingsCount>0){
+            $avgRating = round($ratingsSum/$ratingsCount,2);
+            $avgStarRating = round($ratingsSum/$ratingsCount);
+        }else{
+            $avgRating = 0;
+            $avgStarRating = 0;
+        }
+
+
+
         $totalStock = ProductsAttributes::where('product_id', $id)->sum('stock'); 
-        return view('front.products.detail')->with(compact('productDetails','categoryDetails','totalStock','similarProducts','recentlyViewedProducts','groupProducts'));
+        $ratings = Rating::with('user')->where('status',1)->where('product_id',$id)->get()->toArray();
+        return view('front.products.detail')->with(compact('productDetails','categoryDetails','totalStock','similarProducts','recentlyViewedProducts','groupProducts','ratings','avgRating','avgStarRating','ratingsCount'));
     }
     public function getProductPrice(Request $request){
         if($request->ajax()){
