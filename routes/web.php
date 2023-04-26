@@ -142,9 +142,15 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
        Route::get('delete-coupon/{id}','CouponsController@deleteCoupon');
        Route::match(['get','post'],'add-edit-coupon/{id?}','CouponsController@addEditCoupon');
 
-       //User
+       //Users
        Route::get('users','UserController@users');
        Route::post('update-user-status','UserController@updateUserStatus');
+
+    //    // CMS Pages
+    //    Route::get('cms-pages','CmsController@cmspages');
+    //    Route::post('update-cms-page-status','CmsController@updatePageStatus');
+    //    Route::get('delete-page/{id}','CmsController@deletePage');
+    //    Route::match('get','post','add-edit-cms-page/{id?}','CmsController@addEditCmsPage');
 
        //Orders
        Route::get('orders','OrderController@orders');
@@ -152,8 +158,15 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
        Route::post('update-order-status','OrderController@updateOrderStatus');
        Route::post('update-order-item-status','OrderController@updateOrderItemStatus');
 
+       // Order Invoices
+       Route::get('orders/invoice/{id}','OrderController@viewOrderInvoice');
+       Route::get('orders/invoice/pdf/{id}','OrderController@viewPDFInvoice');
+
     });
 });
+
+// PDF download
+Route::get('orders/invoice/download/{id}','App\Http\Controllers\Admin\OrderController@viewPDFInvoice');
 
 Route::namespace('App\Http\Controllers\Front')->group(function(){
     Route::get('/','IndexController@index');
