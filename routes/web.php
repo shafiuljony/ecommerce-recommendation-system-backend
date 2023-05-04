@@ -162,6 +162,11 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
        Route::get('orders/invoice/{id}','OrderController@viewOrderInvoice');
        Route::get('orders/invoice/pdf/{id}','OrderController@viewPDFInvoice');
 
+       // Shipping Charges
+       Route::get('shipping-charges','ShippingController@shippingCharges');
+       Route::post('update-shipping-status','ShippingController@updateShippingStatus');
+       Route::match(['get','post'],'edit-shipping-charges/{id}','ShippingController@editShippingCharges');
+
     });
 });
 
@@ -249,12 +254,15 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
 
         // Users Orders
         Route::get('user/orders/{id?}','OrderController@orders');
+
+        // Paypal
+        Route::get('paypal','PaypalController@paypal');
     });
     
-    //User Login
+    // User Login
     Route::post('user/login','UserController@userLogin');
 
-    //User Forgot password
+    // User Forgot password
     Route::match(['get','post'],'user/forgot-password','UserController@forgotPassword');
 
     //User Logout

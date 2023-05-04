@@ -45,7 +45,7 @@
                         @if(count($deliveryAddresses)>0)
                             <h4 class="section-h4">Delivery Addresses</h4>
                             @foreach($deliveryAddresses as $address)
-                                <div class="control-group" style="float:left; margin-right:5px;"><input type="radio" id="address{{ $address['id'] }}" name="address_id" value="{{ $address['id'] }}"></div>
+                                <div class="control-group" style="float:left; margin-right:5px;"><input type="radio" id="address{{ $address['id'] }}" name="address_id" value="{{ $address['id'] }}" shipping_charges="{{ $address['shipping_charges'] }}" total_price="{{ $total_price }}" coupon_amount="{{ Session::get('couponAmount') }}"></div>
                                 <div><label class="control-label" for="">{{ $address['name'] }}, {{ $address['address'] }}, {{ $address['city'] }}, {{ $address['state'] }}, {{ $address['country'] }} ({{ $address['mobile'] }})</label>
                                     <a style="float:right; margin-left:5px;" href="javascript:;" data-addressid="{{ $address['id'] }}" class="removeAddress" >Remove</a>
                                     <a style="float:right;" href="javascript:;" data-addressid="{{ $address['id'] }}" class="editAddress" >Edit</a>
@@ -95,7 +95,7 @@
                                             <h6 class="order-h6">Shipping Charges</h6>
                                         </td>
                                         <td>
-                                            <h6 class="order-h6">Tk.0</h6>
+                                            <h6 class="order-h6"><span class="shipping_charges">Tk.0</span></h6>
                                         </td>
                                     </tr>
                                     <tr>
@@ -103,8 +103,8 @@
                                             <h6 class="order-h6">Coupon Discount</h6>
                                         </td>
                                         <td>
-                                            <h6 class="order-h6">@if(Session::has('couponAmount'))
-                                            Tk.{{ Session::get('couponAmount') }}
+                                            <h6 class="order-h6">@if(Session::has('couponAmount'))<span class="couponAmount">
+                                            Tk.{{ Session::get('couponAmount') }}</span>
                                             @else
                                                 Tk. 0
                                             @endif</h6>
@@ -115,7 +115,7 @@
                                             <h3 class="order-h3">Grand Total</h3>
                                         </td>
                                         <td>
-                                            <h3 class="order-h3">Tk.{{ $total_price - Session::get('couponAmount') }}</h3>
+                                            <h3 class="order-h3"><strong class="grand_total">Tk.{{ $total_price - Session::get('couponAmount') }}</strong></h3>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -135,7 +135,7 @@
                                     <a href="terms-and-conditions.html" class="u-c-brand">terms & conditions</a>
                                 </label>
                             </div>
-                            <button type="submit" class="button button-outline-secondary">Place Order</button>
+                            <button type="submit" id="placeOrder" class="button button-outline-secondary">Place Order</button>
                         </div>
                         <!-- Checkout /- -->
                         </form>

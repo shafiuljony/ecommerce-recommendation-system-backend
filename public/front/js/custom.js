@@ -105,6 +105,11 @@ $(document).ready(function(){
             
     });
 
+    // Show Loader
+    $(document).on('click', '#placeOrder', function(){
+        $(".loader").show();
+    });
+
     //Register Form Validation
     $("#registerForm").submit(function(){
         $(".loader").show();
@@ -406,6 +411,21 @@ $(document).ready(function(){
                 }
             });
         }
+    });
+
+    // Calculate grand total
+    $("input[name=address_id]").bind('change',function(){
+        var shipping_charges = $(this).attr("shipping_charges");
+        var total_price = $(this).attr("total_price");
+        var coupon_amount = $(this).attr("coupon_amount");
+        $(".shipping_charges").html("TK."+shipping_charges);
+        if(coupon_amount==""){
+            coupon_amount = 0;
+        }
+        $(".couponAmount").html("TK."+coupon_amount);
+        var grand_total = parseInt(total_price) + parseInt(shipping_charges) - parseInt(coupon_amount);
+        //alert(grand_total);
+        $(".grand_total").html("TK."+grand_total);
     });
 });
 

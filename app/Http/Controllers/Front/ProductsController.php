@@ -19,6 +19,7 @@ use App\Models\DeliveryAddress;
 use App\Models\Country;
 use App\Models\Order;
 use App\Models\OrdersProduct;
+use App\Models\ShippingCharge;
 use Session;
 use DB;
 use Auth;
@@ -365,7 +366,16 @@ class ProductsController extends Controller
                 $expiry_date = $couponDetails->expiry_date;
                 $current_date = date('Y-m-d');
                 if($expiry_date < $current_date){
-                    $message = "The Coupon is Expire";
+                    $message = "The Coupon is Expired!";
+                }
+
+                // Check if coupon is single time
+                if($couponDetails->coupon_type == "Single Time"){
+                    // Check in orders table if coupon already availed by the user
+                    $couponCount = Order::where(['coupon_code'=>$data['code'],'user_id'=>Auth::user()->id])->count();
+                    if($couponCount>=1){
+                        $message = "This coupon code is already availed by you!";
+                    }
                 }
 
 
@@ -460,6 +470,12 @@ class ProductsController extends Controller
 
     public function checkout(Request $request){
         $deliveryAddresses = DeliveryAddress::DeliveryAddresses();
+        foreach($deliveryAddresses as $key => $value){
+            $shippingCharges = ShippingCharge::getShippingCharges($value['country']);
+            $deliveryAddresses[$key]['shipping_charges'] = $shippingCharges;
+        }
+        //dd($deliveryAddresses);
+
         $countries = Country::where('status',1)->get()->toArray();
         $getCartItems = Cart::getCartItems();
         // dd($getCartItems);
@@ -515,6 +531,9 @@ class ProductsController extends Controller
 
             // Calculate Shipping Charges
             $shipping_charges = 0;
+
+            // Get shipping charges
+            $shipping_charges = ShippingCharge::getShippingCharges($deliveryAddress['country']);
 
             // Calculate Grand Total
             $grand_total = $total_price + $shipping_charges - Session::get('couponAmount');
@@ -582,15 +601,22 @@ class ProductsController extends Controller
                 Mail::Send('emails.order',$messageData,function($message)use($email){
                     $message->to($email)->subject('Order Placed - Anon.com');
                 });
+            }if($data['payment_gateway']=="Paypal"){
+                // Paypal - Redirectuser to Paypal pageafter saving order
+                return redirect('/paypal');
             }else{
-                echo "Prepaid payment methods coming soon.";
+                echo "Other Prepaid payment methods coming soon.";
             }
 
             return redirect('thanks');
         }
 
-        
-        return view('front.products.checkout')->with(compact('deliveryAddresses','countries','getCartItems'));
+        $total_price = 0;
+        foreach($getCartItems as $item){
+            $attrPrice = Product::getDiscountAttributePrice($item['product_id'],$item['size']);
+            $total_price = $total_price + ($attrPrice['final_price']+$item['quantity']);
+        }
+        return view('front.products.checkout')->with(compact('deliveryAddresses','countries','getCartItems','total_price'));
     }
 
     public function thanks(){
