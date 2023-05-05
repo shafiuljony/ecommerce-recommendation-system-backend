@@ -56,8 +56,24 @@
                       <input type="text" class="form-control" value="{{ $shippingDetails['country'] }}"  readonly="">
                     </div>
                     <div class="form-group">
-                        <label for="rate">Rate</label>
-                        <input type="text" class="form-control" id="rate" placeholder="Enter Shipping Rate" name="rate" value="{{ $shippingDetails['rate'] }}">
+                        <label for="0_500g">Rate (0-500g)</label>
+                        <input type="text" class="form-control" id="0_500g" placeholder="Enter Shipping 0_500g" name="0_500g" value="{{ $shippingDetails['0_500g'] }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="501_1000g">Rate (501-1000g)</label>
+                        <input type="text" class="form-control" id="501_1000g" placeholder="Enter Shipping 501_1000g" name="501_1000g" value="{{ $shippingDetails['501_1000g'] }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="1001_2000g">Rate (1001-2000g)</label>
+                        <input type="text" class="form-control" id="1001_2000g" placeholder="Enter Shipping 1001_2000g" name="1001_2000g" value="{{ $shippingDetails['1001_2000g'] }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="2001_5000g">Rate (2001-5000g)</label>
+                        <input type="text" class="form-control" id="2001_5000g" placeholder="Enter Shipping 2001_5000g" name="2001_5000g" value="{{ $shippingDetails['2001_5000g'] }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="above_5000g">Rate (above 5000g)</label>
+                        <input type="text" class="form-control" id="above_5000g" placeholder="Enter Shipping above_5000g" name="above_5000g" value="{{ $shippingDetails['above_5000g'] }}">
                     </div>
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                     <button type="reset" class="btn btn-light">Cancel</button>
