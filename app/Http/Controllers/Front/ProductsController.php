@@ -224,6 +224,10 @@ class ProductsController extends Controller
             $data = $request->all();
             // echo "<pre>"; print_r($data); die;
 
+            if($data['quantity']<=0){
+                $data['quantity']=1;
+            }
+
             //Check Product Stock is available or not
             $getProductStock = ProductsAttributes::getProductStock($data['product_id'],$data['size']);
             if($getProductStock<$data['quantity']){
@@ -500,6 +504,40 @@ class ProductsController extends Controller
         if($request->isMethod('post')){
             $data = $request->all();
             // echo "<pre>"; print_r($data); die;
+
+            /// Website Seciruty
+            foreach($getCartItems as $item){
+                // Prevent Disabled Products to Order
+                $product_status = Product::getProductStatus($item['product_id']);
+                if($product_status==0){
+                    $message = $item['product']['product_name']." with ".$item['size']." Size in not available. Please remove from cart and choose some other product.";
+                    return redirect('/cart')->with('error_message',$message);
+                }
+
+                // Prevent Sold out product to order
+                $getProductStock = ProductsAttributes::getProductStock($item['product_id'],$item['size']);
+                if($getProductStock==0){
+                    $message = $item['product']['product_name']." with ".$item['size']." Size in not available. Please remove from cart and choose some other product.";
+                    return redirect('/cart')->with('error_message',$message);
+                }
+
+                // Prevent disable attribute to order
+                $getAttributeStatus = ProductsAttributes::getAttributeStatus($item['product_id'],$item['size']);
+                if($getAttributeStatus==0){
+                    $message = $item['product']['product_name']." with ".$item['size']." Size in not available. Please remove from cart and choose some other product.";
+                    return redirect('/cart')->with('error_message',$message);
+                }
+
+                // Prevent Disabled Category Products to Order
+                $getCategoryStatus = Category::getCategoryStatus($item['product']['category_id']);
+                if($getCategoryStatus==0){
+                    //Product::deleteCartProduct($item['product_id']);
+                    //$message = "One of the product is disabled! Please try again.";
+                    $message = $item['product']['product_name']." with ".$item['size']." Size in not available. Please remove from cart and choose some other product.";
+                    return redirect('/cart')->with('error_message',$message);
+                }
+            }
+
 
             // Delivery Address Validation
             if(empty($data['address_id'])){
