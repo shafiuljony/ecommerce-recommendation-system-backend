@@ -142,9 +142,15 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
        Route::get('delete-coupon/{id}','CouponsController@deleteCoupon');
        Route::match(['get','post'],'add-edit-coupon/{id?}','CouponsController@addEditCoupon');
 
-       //User
+       //Users
        Route::get('users','UserController@users');
        Route::post('update-user-status','UserController@updateUserStatus');
+
+    //    // CMS Pages
+    //    Route::get('cms-pages','CmsController@cmspages');
+    //    Route::post('update-cms-page-status','CmsController@updatePageStatus');
+    //    Route::get('delete-page/{id}','CmsController@deletePage');
+    //    Route::match('get','post','add-edit-cms-page/{id?}','CmsController@addEditCmsPage');
 
        //Orders
        Route::get('orders','OrderController@orders');
@@ -155,9 +161,20 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
        //Ratings and Reviews
        Route::get('ratings','RatingsController@ratings');
        Route::post('update-rating-status','RatingsController@updateRatingStatus');
+       // Order Invoices
+       Route::get('orders/invoice/{id}','OrderController@viewOrderInvoice');
+       Route::get('orders/invoice/pdf/{id}','OrderController@viewPDFInvoice');
+
+       // Shipping Charges
+       Route::get('shipping-charges','ShippingController@shippingCharges');
+       Route::post('update-shipping-status','ShippingController@updateShippingStatus');
+       Route::match(['get','post'],'edit-shipping-charges/{id}','ShippingController@editShippingCharges');
 
     });
 });
+
+// PDF download
+Route::get('orders/invoice/download/{id}','App\Http\Controllers\Admin\OrderController@viewPDFInvoice');
 
 Route::namespace('App\Http\Controllers\Front')->group(function(){
     Route::get('/','IndexController@index');
@@ -243,12 +260,14 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
 
         //Add Rating
         Route::match(['GET','POST'],'/add-rating','RatingsController@addRating');
+        // Paypal
+        Route::get('paypal','PaypalController@paypal');
     });
     
-    //User Login
+    // User Login
     Route::post('user/login','UserController@userLogin');
 
-    //User Forgot password
+    // User Forgot password
     Route::match(['get','post'],'user/forgot-password','UserController@forgotPassword');
 
     //User Logout

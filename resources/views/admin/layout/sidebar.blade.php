@@ -139,6 +139,14 @@
             <div class="collapse" id="ui-ratings">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a @if(Session::get('page')=="ratings") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @else style="background: #fff !important; color:hsl(353deg 100% 78%) !important;"  @endif class="nav-link" href="{{ url('admin/ratings') }}">Ratings</a></li>
+            <a @if(Session::get("page")=="shipping") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @endif class="nav-link" data-toggle="collapse" href="#ui-shipping" aria-expanded="false" aria-controls="ui-shipping">
+            <i class="icon-layout menu-icon"></i>
+            <span class="menu-title">Shipping Management</span>
+            <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-shipping">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a @if(Session::get('page')=="shipping") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @else style="background: #fff !important; color:hsl(353deg 100% 78%) !important;"  @endif class="nav-link" href="{{ url('admin/shipping-charges') }}">Shipping Charges</a></li> 
                 </ul>
             </div>
         </li>
