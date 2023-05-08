@@ -139,7 +139,12 @@
             <div class="collapse" id="ui-ratings">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a @if(Session::get('page')=="ratings") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @else style="background: #fff !important; color:hsl(353deg 100% 78%) !important;"  @endif class="nav-link" href="{{ url('admin/ratings') }}">Ratings</a></li>
-            <a @if(Session::get("page")=="shipping") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @endif class="nav-link" data-toggle="collapse" href="#ui-shipping" aria-expanded="false" aria-controls="ui-shipping">
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+                    
+        <a @if(Session::get("page")=="shipping") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @endif class="nav-link" data-toggle="collapse" href="#ui-shipping" aria-expanded="false" aria-controls="ui-shipping">
             <i class="icon-layout menu-icon"></i>
             <span class="menu-title">Shipping Management</span>
             <i class="menu-arrow"></i>
@@ -151,7 +156,7 @@
             </div>
         </li>
         @endif
-        <li class="nav-item">
+        <!-- <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
             <i class="icon-columns menu-icon"></i>
             <span class="menu-title">Form elements</span>
@@ -230,6 +235,5 @@
             <i class="icon-paper menu-icon"></i>
             <span class="menu-title">Documentation</span>
             </a>
-        </li>
-    </ul>
+        </li> -->
 </nav>
