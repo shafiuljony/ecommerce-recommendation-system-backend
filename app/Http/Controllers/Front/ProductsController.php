@@ -20,6 +20,7 @@ use App\Models\Country;
 use App\Models\Order;
 use App\Models\OrdersProduct;
 use App\Models\Rating;
+use App\Models\ShippingCharge;
 use Session;
 use DB;
 use Auth;
@@ -244,6 +245,10 @@ class ProductsController extends Controller
             $data = $request->all();
             // echo "<pre>"; print_r($data); die;
 
+            if($data['quantity']<=0){
+                $data['quantity']=1;
+            }
+
             //Check Product Stock is available or not
             $getProductStock = ProductsAttributes::getProductStock($data['product_id'],$data['size']);
             if($getProductStock<$data['quantity']){
@@ -386,7 +391,16 @@ class ProductsController extends Controller
                 $expiry_date = $couponDetails->expiry_date;
                 $current_date = date('Y-m-d');
                 if($expiry_date < $current_date){
-                    $message = "The Coupon is Expire";
+                    $message = "The Coupon is Expired!";
+                }
+
+                // Check if coupon is single time
+                if($couponDetails->coupon_type == "Single Time"){
+                    // Check in orders table if coupon already availed by the user
+                    $couponCount = Order::where(['coupon_code'=>$data['code'],'user_id'=>Auth::user()->id])->count();
+                    if($couponCount>=1){
+                        $message = "This coupon code is already availed by you!";
+                    }
                 }
 
 
@@ -480,7 +494,7 @@ class ProductsController extends Controller
     }
 
     public function checkout(Request $request){
-        $deliveryAddresses = DeliveryAddress::DeliveryAddresses();
+
         $countries = Country::where('status',1)->get()->toArray();
         $getCartItems = Cart::getCartItems();
         // dd($getCartItems);
@@ -489,9 +503,62 @@ class ProductsController extends Controller
             $message = "Shopping Cart is empty! Please add products to checkout";
             return redirect('cart')->with('error_message',$message);
         }
+
+        $total_price = 0;
+        $total_weight = 0;
+        foreach($getCartItems as $item){
+            // echo "<pre>"; print_r($item); die;
+            $attrPrice = Product::getDiscountAttributePrice($item['product_id'],$item['size']);
+            $total_price = $total_price + ($attrPrice['final_price']+$item['quantity']);
+            $product_weight = $item['product']['product_weight'];
+            $total_weight = $total_weight+$product_weight;
+        }
+
+        $deliveryAddresses = DeliveryAddress::DeliveryAddresses();
+        foreach($deliveryAddresses as $key => $value){
+            $shippingCharges = ShippingCharge::getShippingCharges($total_weight,$value['country']);
+            $deliveryAddresses[$key]['shipping_charges'] = $shippingCharges;
+        }
+        //dd($deliveryAddresses);
+
+    
         if($request->isMethod('post')){
             $data = $request->all();
             // echo "<pre>"; print_r($data); die;
+
+            /// Website Seciruty
+            foreach($getCartItems as $item){
+                // Prevent Disabled Products to Order
+                $product_status = Product::getProductStatus($item['product_id']);
+                if($product_status==0){
+                    $message = $item['product']['product_name']." with ".$item['size']." Size in not available. Please remove from cart and choose some other product.";
+                    return redirect('/cart')->with('error_message',$message);
+                }
+
+                // Prevent Sold out product to order
+                $getProductStock = ProductsAttributes::getProductStock($item['product_id'],$item['size']);
+                if($getProductStock==0){
+                    $message = $item['product']['product_name']." with ".$item['size']." Size in not available. Please remove from cart and choose some other product.";
+                    return redirect('/cart')->with('error_message',$message);
+                }
+
+                // Prevent disable attribute to order
+                $getAttributeStatus = ProductsAttributes::getAttributeStatus($item['product_id'],$item['size']);
+                if($getAttributeStatus==0){
+                    $message = $item['product']['product_name']." with ".$item['size']." Size in not available. Please remove from cart and choose some other product.";
+                    return redirect('/cart')->with('error_message',$message);
+                }
+
+                // Prevent Disabled Category Products to Order
+                $getCategoryStatus = Category::getCategoryStatus($item['product']['category_id']);
+                if($getCategoryStatus==0){
+                    //Product::deleteCartProduct($item['product_id']);
+                    //$message = "One of the product is disabled! Please try again.";
+                    $message = $item['product']['product_name']." with ".$item['size']." Size in not available. Please remove from cart and choose some other product.";
+                    return redirect('/cart')->with('error_message',$message);
+                }
+            }
+
 
             // Delivery Address Validation
             if(empty($data['address_id'])){
@@ -536,6 +603,9 @@ class ProductsController extends Controller
 
             // Calculate Shipping Charges
             $shipping_charges = 0;
+
+            // Get shipping charges
+            $shipping_charges = ShippingCharge::getShippingCharges($total_weight,$deliveryAddress['country']);
 
             // Calculate Grand Total
             $grand_total = $total_price + $shipping_charges - Session::get('couponAmount');
@@ -582,6 +652,12 @@ class ProductsController extends Controller
                 $getCartItems->product_price = $getDiscountAttributePrice['final_price'];
                 $getCartItems->product_qty = $item['quantity'];
                 $getCartItems->save();
+
+                // Reduce Stock Script Starts
+                $getProductStock = ProductsAttributes::getProductStock($item['product_id'],$item['size']);
+                $newStock = $getProductStock - $item['quantity'];
+                ProductsAttributes::where(['product_id'=>$item['product_id'],'size'=>$item['size']])->update(['stock'=>$newStock]);
+                // Reduce Stock Script ends
             }
 
             // Insert Order ID in Session variable
@@ -603,15 +679,17 @@ class ProductsController extends Controller
                 Mail::Send('emails.order',$messageData,function($message)use($email){
                     $message->to($email)->subject('Order Placed - Anon.com');
                 });
+            }if($data['payment_gateway']=="Paypal"){
+                // Paypal - Redirectuser to Paypal pageafter saving order
+                return redirect('/paypal');
             }else{
-                echo "Prepaid payment methods coming soon.";
+                echo "Other Prepaid payment methods coming soon.";
             }
 
             return redirect('thanks');
         }
 
-        
-        return view('front.products.checkout')->with(compact('deliveryAddresses','countries','getCartItems'));
+        return view('front.products.checkout')->with(compact('deliveryAddresses','countries','getCartItems','total_price'));
     }
 
     public function thanks(){
