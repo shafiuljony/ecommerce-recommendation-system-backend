@@ -275,6 +275,8 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
 
     //confirm user account
     Route::get('user/confirm/{code}','UserController@confirmAccount');
+    //Search Product
+    Route::get('/search-products','ProductsController@listing');
 
 });
 

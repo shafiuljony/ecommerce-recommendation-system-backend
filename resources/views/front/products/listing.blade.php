@@ -29,6 +29,8 @@
                     <?php echo $categoryDetails['breadcrumbs']; ?>
             </ul>
         </div>
+
+        
         <!-- Shop-Intro /- -->
         <div class="row">
             <!-- Shop-Left-Side-Bar-Wrapper -->
@@ -47,6 +49,7 @@
                         </a>
                     </div> -->
                     <!-- Toolbar Sorter 1  -->
+                    @if(!isset($_REQUEST['search']))
                     <form name="sortProducts" id="shortProducts" >
                         <input type="hidden" name="url" id="url" value="{{ $url }}">
                         <div class="toolbar-sorter">
@@ -64,7 +67,8 @@
                                 </select>
                             </div>
                         </div>
-                    </form>    
+                    </form>   
+                    @endif 
                     <!-- //end Toolbar Sorter 1  -->
                     <!-- Toolbar Sorter 2  -->
                     <!-- <div class="toolbar-sorter-2">

@@ -119,9 +119,9 @@ $totalCartItems = totalCartItems();
                     </div>
                 </div>
                 <div class="col-lg-6 u-d-none-lg">
-                    <form class="form-searchbox">
-                        <label class="sr-only" for="search-landscape">Search</label>
-                        <input id="search-landscape" type="text" class="text-field" placeholder="Search everything">
+                    <form class="form-searchbox" action="{{ url('/search-products') }}" method="get">
+                        <label class="sr-only" for="search-landscape" >Search</label>
+                        <input name="search" id="search-landscape" type="text" class="text-field" placeholder="Search everything">
                         <div class="select-box-position">
                             <div class="select-box-wrapper">
                                 <label class="sr-only" for="select-category">Choose category for search</label>

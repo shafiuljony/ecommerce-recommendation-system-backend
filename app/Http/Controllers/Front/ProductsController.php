@@ -123,12 +123,20 @@ class ProductsController extends Controller
         }else{
             $url = Route::getFacadeRoot()->current()->uri();
             $categoryCount = Category::where(['url'=>$url,'status'=>1])->count();
-    
-            if($categoryCount >0){
+            //Search Products
+            if(isset($_REQUEST['search']) && !empty($_REQUEST['search'])){
+                $search_product = $_REQUEST['search'];
+                // dd($search_product);
+                $categoryDetails['breadcrumbs']['category_name'] = $search_product;
+                $categoryDetails['catDetails']['description'] = "Search Results for".$search_product;
+                $categoryProducts = Product::with('brand')->where(function($query)use($search_product){
+                    $query->where('product_name','like','%'.$search_product.'%')->orWhere('product_code','like','%'.$search_product.'%')->orWhere('product_color','like','%'.$search_product.'%')->orWhere('description','like','%'.$search_product.'%');})->where('status',1);
+                    $categoryProducts = $categoryProducts->get();
+            }
+            else if($categoryCount >0){
                 //Get Category Details
                 $categoryDetails = Category::categoryDetails($url);
-                $categoryProducts = Product::with('brand')->whereIn('category_id',$categoryDetails['catIds'])->where('status',1);
-    
+                $categoryProducts = Product::with('brand')->whereIn('category_id',$categoryDetails['catIds'])->where('status',1);             
                 //Check for Sort
                 if(isset($_GET['sort']) && !empty($_GET['sort'])){
                     if($_GET['sort'] == "product_latest"){
