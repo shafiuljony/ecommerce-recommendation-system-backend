@@ -35,7 +35,7 @@ class UserController extends Controller
                 [
                     'accept.required'=>'Please accept our Terms & Conditions'
                 ]
-            );   
+            );
 
             if($validator->passes()){
                 //Register the User
@@ -51,9 +51,9 @@ class UserController extends Controller
 
                 $email = $data['email'];
                 $messageData = ['name'=>$data['name'],'email'=>$data['email'],'code'=>base64_encode($data['email'])];
-                Mail::send('emails.confirmation',$messageData,function($message)use($email){
-                    $message->to($email)->subject('Confirm your Anon account');
-                });
+//                Mail::send('emails.confirmation',$messageData,function($message)use($email){
+//                    $message->to($email)->subject('Confirm your Anon account');
+//                });
 
                 //Redirect back user with success message
                 $redirectTo = url('user/login-register');
@@ -67,7 +67,7 @@ class UserController extends Controller
                 // Mail::send('emails.register',$messageData,function($message)use($email){
                 //         $message->to($email)->subject('Welcome to Anon!');
                 // });
-                
+
                 // if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password']])){
                 //     $redirectTo = url('cart');
 
@@ -98,11 +98,11 @@ class UserController extends Controller
                     'country' => 'required|string|max:100',
                     'mobile' => 'required|numeric|digits:11',
                     'pincode' => 'required|string|max:100',
-                    
-                    
+
+
                 ]
             );
-            
+
             if($validator->passes()){
 
                 //Update User Details
@@ -143,13 +143,13 @@ class UserController extends Controller
                     $user->save();
 
                     //Redirect back User with success message
-                    return response()->json(['type'=>'success','message'=>'Account password is successfully updated!']); 
+                    return response()->json(['type'=>'success','message'=>'Account password is successfully updated!']);
 
                 }else{
                     //Redirect back user with error message
                     return response()->json(['type'=>'incorrect','message'=>'Your current password is incorrect!']);
                 }
-                
+
                 //Redirect back User with success message
                 return response()->json(['type'=>'success','message'=>'Your contact/billing details successfully updated!']);
             }else{
@@ -262,6 +262,6 @@ class UserController extends Controller
         }else{
             abort(404);
         }
-        
+
     }
 }

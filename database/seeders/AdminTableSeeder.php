@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Admin;
 use App\Models\Vendor;
+use Illuminate\Support\Facades\Hash;
 
 class AdminTableSeeder extends Seeder
 {
@@ -23,7 +24,7 @@ class AdminTableSeeder extends Seeder
                 'vendor_id'=>1,
                 'mobile'=>'01558947938',
                 'email'=>'admin@anon.com',
-                'password'=>'$2y$10$1IYwHMurZZCh84Xml42KbOiAO6TQ.gsg4WVanDUbDMAW8Np.P3lj6',
+                'password'=> Hash::make('123456'),
                 'image'=>'',
                 'status'=> 1
             ],
@@ -33,7 +34,7 @@ class AdminTableSeeder extends Seeder
                 'vendor_id'=>2,
                 'mobile'=>'01558947938',
                 'email'=>'shafiul@anon.com',
-                'password'=>'$2y$10$1IYwHMurZZCh84Xml42KbOiAO6TQ.gsg4WVanDUbDMAW8Np.P3lj6',
+                'password'=>Hash::make('123456'),
                 'image'=>'',
                 'status'=> 1
             ]

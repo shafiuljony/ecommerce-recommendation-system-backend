@@ -10,7 +10,7 @@ class Product extends Model
     use HasFactory;
      public function section()
      {
-        return $this->belongsTo('App\Models\section','section_id');
+        return $this->belongsTo('App\Models\Section','section_id');
      }
      public function category()
      {
@@ -70,9 +70,9 @@ class Product extends Model
          $discount = $proAttrPrice['price'] - $final_price;
 
       }else if($catDetails['category_discount'] > 0){
-         
+
          //If Product discount is not added but category discount added from the admin panel
-         
+
          $final_price = $proAttrPrice['price'] - ( $proAttrPrice['price'] * $catDetails['category_discount'] / 100);
 
          $discount = $proAttrPrice['price'] = $final_price;
@@ -114,6 +114,6 @@ class Product extends Model
           return null; // or throw an exception, or return a default image path, etc.
       }
   }
-  
+
 
 }
