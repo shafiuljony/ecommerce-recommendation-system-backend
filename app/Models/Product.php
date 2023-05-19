@@ -10,7 +10,7 @@ class Product extends Model
     use HasFactory;
      public function section()
      {
-        return $this->belongsTo('App\Models\Section','section_id');
+        return $this->belongsTo('App\Models\section','section_id');
      }
      public function category()
      {
@@ -113,6 +113,15 @@ class Product extends Model
           // Handle case when product is not found, e.g. return a default image or show an error message
           return null; // or throw an exception, or return a default image path, etc.
       }
+  }
+
+  public static function getProductStatus($product_id){
+      $getProductStatus = Product::select('status')->where('id',$product_id)->first();
+      return $getProductStatus->status;
+  }
+
+  public static function deleteCartProduct($product_id){
+   Cart::where('product_id',$product_id)->delete();
   }
 
 

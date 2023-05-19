@@ -87,6 +87,8 @@
             </table>
         </td></tr>
         <tr><td>&nbsp;</td></tr>
+        <tr><td> <a href="{{ url('orders/invoice/download/'.$orderDetails['id'].'') }}">Click here to Download Order Invoice</a></td></tr>
+        <tr><td>&nbsp;</td></tr>
         <tr><td>For any queries, you can contact us at <a href="mailto:info@anondevelopers.com">info@anondevelopers.com</a></td></tr>
         <tr><td>&nbsp;</td></tr>
         <tr><td>Regards <br> Anon Developers</td></tr>

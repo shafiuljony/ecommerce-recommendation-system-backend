@@ -12,6 +12,7 @@ $(document).ready(function(){
     $('#users').DataTable();
     $('#orders').DataTable();
     $('#ratings').DataTable();
+    $('#shipping').DataTable();
 
     $(".nav-item").removeClass("active");
     $(".nav-link").removeClass("active");
@@ -148,6 +149,7 @@ $(document).ready(function(){
             }
         })
      })
+
      //Update user Status
      $(document).on("click",".updateUserStatus",function(){
         var status = $(this).children("i").attr("status");
@@ -171,6 +173,32 @@ $(document).ready(function(){
             }
         })
      })
+
+
+     //Update Shipping Status
+     $(document).on("click",".updateShippingStatus",function(){
+        var status = $(this).children("i").attr("status");
+        var shipping_id = $(this).attr("shipping_id");
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type:'post',
+            url:'/admin/update-shipping-status',
+            data:{status:status,shipping_id:shipping_id},
+            success:function(resp){
+                // alert(resp);
+                if(resp['status']==0){
+                    $("#shipping-"+shipping_id).html("<i class='mdi mdi-bookmark-outline' style='font-size: 25px;' status='Inactive'></i>");
+                }else if(resp['status']==1){
+                    $("#shipping-"+shipping_id).html("<i class='mdi mdi-bookmark-check' style='font-size: 25px;' status='Active'></i>");
+                }
+            },error:function(){
+                alert("Error");
+            }
+        })
+     })
+
 
      //Append Categories level
 
@@ -451,6 +479,30 @@ $(document).ready(function(){
         $('#couponField').show();
      });
 
-    
+    // Show Courier Name and Tracking Number in case of Shipped Order Status
+    $("#courier_name").hide();
+    $("#tracking_number").hide();
+    $("#order_status").on("change",function(){
+        if(this.value=="Shipped"){
+            $("#courier_name").show();
+            $("#tracking_number").show();
+        }else{
+            $("#courier_name").hide();
+            $("#tracking_number").hide();
+        }
+    });
+
+    // Show Item Courier Name and Tracking Number in case of Shipped Order Item Status
+    $("#item_courier_name").hide();
+    $("#item_tracking_number").hide();
+    $("#order_item_status").on("change",function(){
+        if(this.value=="Shipped"){
+            $("#item_courier_name").show();
+            $("#item_tracking_number").show();
+        }else{
+            $("#item_courier_name").hide();
+            $("#item_tracking_number").hide();
+        }
+    });
     
 });
