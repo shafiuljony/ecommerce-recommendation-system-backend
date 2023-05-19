@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\DeliveryAddress;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,7 +17,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-         \App\Models\User::factory(10)->create();
+        User::create([
+            'name' => 'user',
+            'address' => 'user address',
+            'city' => 'user city',
+            'state' => 'user state',
+            'country' => 'user country',
+            'pincode' => 'user pincode',
+            'mobile' => '01866666666',
+            'email' => 'user@gmail.com',
+            'password' => bcrypt('123456'),
+            'status' => 1,
+            'email_verified_at' => now(),
+        ]);
 
          $this->call(AdminTableSeeder::class);
          $this->call(VendorsTableSeeder::class);
@@ -34,5 +47,8 @@ class DatabaseSeeder extends Seeder
          $this->call(DeliveryAddressTableSeeder::class);
          $this->call(OrderStatusTableSeeder::class);
          $this->call(RatingsTableSeeder::class);
+
+         $this->call(CountrySeeder::class);
+         $this->call(ShippingChargeTableSeeder::class);
     }
 }

@@ -38,7 +38,7 @@ class ProductsController extends Controller
             $url = $data['url'];
             $_GET['sort'] = $data['sort'];
             $categoryCount = Category::where(['url'=>$url,'status'=>1])->count();
-    
+
             if($categoryCount >0){
                 //Get Category Details
                 $categoryDetails = Category::categoryDetails($url);
@@ -52,7 +52,7 @@ class ProductsController extends Controller
                         $categoryProducts->whereIn($filter['filter_column'],$data[$filter['filter_column']]);
                     }
                 }
-    
+
                 //Check for Sort
                 if(isset($_GET['sort']) && !empty($_GET['sort'])){
                     if($_GET['sort'] == "product_latest"){
@@ -68,12 +68,12 @@ class ProductsController extends Controller
                     }
                 }
 
-                //Checking for size 
+                //Checking for size
                 if(isset($data['size']) && !empty($data['size'])){
                     $productIds = ProductsAttributes::select('product_id')->whereIn('size',$data['size'])->pluck('product_id')->toArray();
                     $categoryProducts->whereIn('id',$productIds);
                 }
-                //Checking for color 
+                //Checking for color
                 if(isset($data['color']) && !empty($data['color'])){
                     $productIds = Product::select('id')->whereIn('product_color',$data['color'])->pluck('id')->toArray();
                     $categoryProducts->whereIn('id',$productIds);
@@ -98,37 +98,37 @@ class ProductsController extends Controller
                         $priceArr = explode("-",$price);
                         if(isset($priceArr[0]) && isset($priceArr[1])){
                             $productIds[] = Product::select('id')->whereBetween('product_price',[$priceArr[0],$priceArr[1]])->pluck('id')->toArray();
-                        }   
+                        }
                     }
                     $productIds = call_user_func_array('array_merge',$productIds);
                     $categoryProducts->whereIn('products.id',$productIds);
                 }
 
-                //Checking for Brand 
+                //Checking for Brand
                 if(isset($data['brand']) && !empty($data['brand'])){
                     $productIds = Product::select('id')->whereIn('brand_id',$data['brand'])->pluck('id')->toArray();
                     $categoryProducts->whereIn('id',$productIds);
                 }
-    
+
                  $categoryProducts = $categoryProducts->paginate(30);
                 // dd($categoryDetails);
                 // echo "category existis"; die;
                 //Checking for sort
-    
+
                 return view('front.products.ajax_products_listing')->with(compact('categoryDetails','categoryProducts','url'));
-    
+
             }else{
                 abort(404);
             }
         }else{
             $url = Route::getFacadeRoot()->current()->uri();
             $categoryCount = Category::where(['url'=>$url,'status'=>1])->count();
-    
+
             if($categoryCount >0){
                 //Get Category Details
                 $categoryDetails = Category::categoryDetails($url);
                 $categoryProducts = Product::with('brand')->whereIn('category_id',$categoryDetails['catIds'])->where('status',1);
-    
+
                 //Check for Sort
                 if(isset($_GET['sort']) && !empty($_GET['sort'])){
                     if($_GET['sort'] == "product_latest"){
@@ -143,26 +143,26 @@ class ProductsController extends Controller
                         $categoryProducts->orderby('products.product_name','Desc');
                     }
                 }
-    
+
                  $categoryProducts = $categoryProducts->paginate(30);
                 // dd($categoryDetails);
                 // echo "category existis"; die;
                 //Checking for sort
-    
+
                 return view('front.products.listing')->with(compact('categoryDetails','categoryProducts','url'));
-    
+
             }else{
                 abort(404);
             }
         }
-       
+
     }
     public function vendorListing($vendorid){
         //Get Vendor Shop Name
 
-       $getVendorShop = Vendor::getVendorShop($vendorid); 
+       $getVendorShop = Vendor::getVendorShop($vendorid);
 
-       //Get Vendor Products 
+       //Get Vendor Products
        $vendorProducts = Product::with('brand')->where('vendor_id',$vendorid)->where('status',1);
        $vendorProducts =$vendorProducts->paginate(30);
     //    dd($vendorProducts);
@@ -178,7 +178,7 @@ class ProductsController extends Controller
         $similarProducts = Product::with('brand')->where('category_id',$productDetails['category']['id'])->where('id','!=',$id)->limit(6)->inRandomOrder()->get()->toArray();
         // dd($similarProducts);
 
-        //Set Session For Recently Viewd Products 
+        //Set Session For Recently Viewd Products
         if(empty(Session::get('session_id'))){
             $session_id = md5(uniqid(rand(), true));
         }else{
@@ -226,7 +226,7 @@ class ProductsController extends Controller
 
 
 
-        $totalStock = ProductsAttributes::where('product_id', $id)->sum('stock'); 
+        $totalStock = ProductsAttributes::where('product_id', $id)->sum('stock');
         $ratings = Rating::with('user')->where('status',1)->where('product_id',$id)->get()->toArray();
         return view('front.products.detail')->with(compact('productDetails','categoryDetails','totalStock','similarProducts','recentlyViewedProducts','groupProducts','ratings','avgRating','avgStarRating','ratingsCount'));
     }
@@ -263,9 +263,9 @@ class ProductsController extends Controller
                 Session::put('session_id',$session_id);
             }
 
-            //Check Product if already exists in the user cart 
+            //Check Product if already exists in the user cart
             if(Auth::check()){
-                //User is Logged In 
+                //User is Logged In
                 $user_id = Auth::user()->id;
                 $countProducts = Cart::where(['product_id'=>$data['product_id'],'size'=>$data['size'],'user_id'=>$user_id])->count();
             }else{
@@ -302,7 +302,7 @@ class ProductsController extends Controller
             $data = $request->all();
             // echo "<pre>"; print_r($data); die;
 
-            // Get Cart Details 
+            // Get Cart Details
             $cartDetails = Cart::find($data['cartid']);
 
             //Get Available Product Stock
@@ -382,7 +382,7 @@ class ProductsController extends Controller
                 //Get COupon Details
                 $couponDetails = Coupon::where('coupon_code',$data['code'])->first();
 
-                
+
                 //if Coupon is active
                 if($couponDetails->status==0){
                     $message = "The Coupon is not active";
@@ -436,7 +436,7 @@ class ProductsController extends Controller
                 //         }
                 //     }
                 // }
-                
+
                 if($couponDetails->vendor_id>0){
                     echo $couponDetails->vendor_id; die;
                     $productIds = Product::select('id')->where('vendor_id',$couponDetails->vendor_id)->plunk('id')->toArray();
@@ -488,7 +488,7 @@ class ProductsController extends Controller
                     ]);
                 }
 
-                
+
             }
         }
     }
@@ -521,7 +521,7 @@ class ProductsController extends Controller
         }
         //dd($deliveryAddresses);
 
-    
+
         if($request->isMethod('post')){
             $data = $request->all();
             // echo "<pre>"; print_r($data); die;
@@ -612,7 +612,7 @@ class ProductsController extends Controller
 
             // Insert Grand Total in Session Variable
             Session::put('grand_total',$grand_total);
-            
+
             //Insert Order Details
             $order = new Order;
             $order->user_id = Auth::user()->id;
@@ -631,6 +631,7 @@ class ProductsController extends Controller
             $order->payment_method = $payment_method;
             $order->payment_gateway = $data['payment_gateway'];
             $order->grand_total = $grand_total;
+
             $order->save();
             $order_id = DB::getPdo()->lastInsertId();
 
@@ -700,6 +701,6 @@ class ProductsController extends Controller
         }else{
             return redirect('cart');
         }
-        
+
     }
 }

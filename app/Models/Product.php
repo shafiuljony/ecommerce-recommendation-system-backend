@@ -10,7 +10,7 @@ class Product extends Model
     use HasFactory;
      public function section()
      {
-        return $this->belongsTo('App\Models\section','section_id');
+        return $this->belongsTo('App\Models\Section','section_id');
      }
      public function category()
      {

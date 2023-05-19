@@ -15,22 +15,24 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->string('name');
-            $table->string('address');
-            $table->string('city');
-            $table->string('state');
-            $table->string('country');
-            $table->string('pincode');
-            $table->string('mobile');
-            $table->string('email');
-            $table->float('shipping_charges');
-            $table->string('coupon_code');
-            $table->float('coupon_amount');
-            $table->string('order_status');
-            $table->string('payment_method');
-            $table->string('payment_gateway');
-            $table->float('grand_total');
+            $table->integer('user_id')->nullable();
+            $table->string('name')->nullable();
+            $table->string('address')->nullable();
+            $table->string('city')->nullable();
+            $table->string('state')->nullable();
+            $table->string('country')->nullable();
+            $table->string('pincode')->nullable();
+            $table->string('mobile')->nullable();
+            $table->string('email')->nullable();
+            $table->float('shipping_charges')->nullable();
+            $table->string('coupon_code')->nullable();
+            $table->float('coupon_amount')->nullable();
+            $table->string('order_status')->nullable();
+            $table->string('payment_method')->nullable();
+            $table->string('payment_gateway')->nullable();
+            $table->float('grand_total')->nullable();
+            $table->string('courier_name')->nullable();
+            $table->string('tracking_number')->nullable();
             $table->timestamps();
         });
     }
