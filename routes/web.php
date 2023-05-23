@@ -191,7 +191,7 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
             Route::get('/'.$url,'ProductsController@listing');
         }
     }
-
+     
     //Vendor Products
     Route::get('/products/{vendorid}', 'ProductsController@vendorListing');
 
@@ -229,6 +229,9 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
 
     //User Register
     Route::post('user/register','UserController@userRegister');
+
+     //Search Product
+     Route::get('search-products','ProductsController@listing');
 
     Route::group(['middleware'=>['auth']],function(){
         //User Account
@@ -275,8 +278,7 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
 
     //confirm user account
     Route::get('user/confirm/{code}','UserController@confirmAccount');
-    //Search Product
-    Route::get('/search-products','ProductsController@listing');
+   
 
 });
 

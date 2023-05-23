@@ -9,9 +9,11 @@
             <ul class="bread-crumb">
                 <li class="has-separator">
                     <i class="ion ion-md-home"></i>
-                    <a href="{{ url('/')}}">Home</a>
+                    <a href="index.html">Home</a>
                 </li>
-                    <?php echo $categoryDetails["breadcrumbs"]; ?>
+                <li class="has-separator">
+                    <a href="listing.html">Shop</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -24,7 +26,7 @@
         <div class="shop-intro">
             <ul class="bread-crumb">
                 <li class="has-separator">
-                    <a href="{{ url('/') }}">Home</a>
+                    <a href="listing.html">Home</a>
                 </li>
                     <?php echo $categoryDetails['breadcrumbs']; ?>
             </ul>
@@ -48,8 +50,8 @@
                             <i class="fas fa-th"></i>
                         </a>
                     </div> -->
-                    <!-- Toolbar Sorter 1  -->
                     @if(!isset($_REQUEST['search']))
+                    <!-- Toolbar Sorter 1  -->
                     <form name="sortProducts" id="shortProducts" >
                         <input type="hidden" name="url" id="url" value="{{ $url }}">
                         <div class="toolbar-sorter">
@@ -67,8 +69,8 @@
                                 </select>
                             </div>
                         </div>
-                    </form>   
-                    @endif 
+                    </form>
+                    @endif
                     <!-- //end Toolbar Sorter 1  -->
                     <!-- Toolbar Sorter 2  -->
                     <!-- <div class="toolbar-sorter-2">
@@ -97,11 +99,13 @@
                 <div class="filter_products">
                     @include('front.products.ajax_products_listing')
                 </div>
-                @if(isset($_GET['sort']))
-                    <div class="mt-5 mb-5 ">{{ $categoryProducts->appends(['sort'=>$_GET['sort']])->links() }}</div>
-                @else
-                <div class="mt-5 mb-5 ">{{$categoryProducts->links()}}</div>
-                @endif
+                @if(!isset($_REQUEST['search']))
+                    @if(isset($_GET['sort']))
+                        <div class="mt-5 mb-5 ">{{ $categoryProducts->appends(['sort'=>$_GET['sort']])->links() }}</div>
+                    @else
+                    <div class="mt-5 mb-5 ">{{$categoryProducts->links()}}</div>
+                    @endif
+                @endif    
                 <div>{{ $categoryDetails['categoryDetails']['description']}}</div>
                 <!-- Row-of-Product-Container /- -->
             </div>

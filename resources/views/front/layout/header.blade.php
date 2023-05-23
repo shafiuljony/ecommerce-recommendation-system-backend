@@ -130,7 +130,7 @@ $totalCartItems = totalCartItems();
                                         All
                                     </option>
                                     @foreach($sections as $section)
-                                    <option value="">{{ $section['name']}}</option>
+                                    <option value="{{ $section['id']}}">{{ $section['name']}}</option>
                                     @endforeach
                                 </select>
                             </div>
