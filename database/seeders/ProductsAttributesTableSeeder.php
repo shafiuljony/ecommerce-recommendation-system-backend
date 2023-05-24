@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Product;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\ProductsAttributes;
+use Faker\Factory as Faker;
 
 class ProductsAttributesTableSeeder extends Seeder
 {
@@ -15,11 +17,21 @@ class ProductsAttributesTableSeeder extends Seeder
      */
     public function run()
     {
-        $productAttributesRecords = [
-            ['id'=>1,'product_id'=>2,'size'=>'Small','price'=>800,'stock'=>10,'sku'=>'RMMRNTS-S','status'=>1],
-            ['id'=>2,'product_id'=>2,'size'=>'Medium','price'=>900,'stock'=>20,'sku'=>'RMMRNTS-M','status'=>1],
-            ['id'=>3,'product_id'=>2,'size'=>'Large','price'=>1000,'stock'=>15,'sku'=>'RMMRNTS-L','status'=>0]
-        ];
-        ProductsAttributes::insert($productAttributesRecords);
+        $faker = Faker::create();
+
+        $productId = Product::pluck('id')->toArray();
+
+        for ($i = 1; $i <= 50; $i++) {
+
+            $productattribute = new ProductsAttributes([
+                'product_id' => $faker->randomElement($productId),
+                'size' => $faker->randomElement(['S', 'M', 'L']),
+                'price' => $faker->randomFloat(2, 10, 100),
+                'stock' => $faker->numberBetween(0, 100),
+                'sku' => $faker->unique()->bothify('??-######'),
+                'status' => 1,
+            ]);
+            $productattribute->save();
+        }
     }
 }

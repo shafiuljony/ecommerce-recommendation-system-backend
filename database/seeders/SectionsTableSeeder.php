@@ -18,7 +18,8 @@ class SectionsTableSeeder extends Seeder
         $sectionRecords = [
             ['id'=>1,'name'=>'Clothing','status'=>1],
             ['id'=>2,'name'=>'Electronics','status'=>1],
-            ['id'=>3,'name'=>'Appliances','status'=>1]
+            ['id'=>3,'name'=>'Appliances','status'=>1],
+            ['id'=>4,'name'=>'Groceries','status'=>1]
         ];
 
         Section::insert($sectionRecords);

@@ -13,9 +13,14 @@ return new class extends Migration
     {
         Schema::create('shipping_charges', function (Blueprint $table) {
             $table->id();
-            $table->string('country');
-            $table->float('rate');
-            $table->tinyInteger('status');
+            $table->string('country')->nullable();
+            $table->float('rate')->nullable();
+            $table->tinyInteger('status')->nullable();
+            $table->float('0_500g')->nullable();
+            $table->float('501_1000g')->nullable();
+            $table->float('1001_2000g')->nullable();
+            $table->float('2001_5000g')->nullable();
+            $table->float('above_5000g')->nullable();
             $table->timestamps();
         });
     }

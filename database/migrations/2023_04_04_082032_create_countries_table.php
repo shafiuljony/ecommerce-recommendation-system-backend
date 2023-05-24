@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('countries', function (Blueprint $table) {
-            $table->id()->nullable();
+            $table->id();
             $table->string('country_code')->nullable();
             $table->string('country_name')->nullable();
             $table->tinyInteger('status')->nullable();
