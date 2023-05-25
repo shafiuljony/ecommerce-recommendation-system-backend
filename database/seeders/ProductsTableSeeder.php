@@ -29,11 +29,10 @@ class ProductsTableSeeder extends Seeder
         $sections = Section::pluck('id')->toArray();
         $categorys = Category::pluck('id')->toArray();
         $brands = Brand::pluck('id')->toArray();
-        $imagePath = public_path('front/images/product/');
         // $videoPath = public_path('images');
     
-        for ($i = 0; $i < 50; $i++) {
-            $productImage = $faker->randomElement(Storage::files($imagePath));
+        for ($i = 1; $i <= 50; $i++) {
+            $productImage = $i.'.jpg';
             // $productVideo = $faker->randomElement(Storage::files($videoPath));
             $product = new Product([
             'section_id' => $faker->randomElement($sections),

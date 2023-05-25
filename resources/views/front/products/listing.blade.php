@@ -9,7 +9,7 @@
             <ul class="bread-crumb">
                 <li class="has-separator">
                     <i class="ion ion-md-home"></i>
-                    <a href="index.html">Home</a>
+                    <a href="{{url('/')}}">Home</a>
                 </li>
                 <li class="has-separator">
                     <a href="listing.html">Shop</a>
@@ -26,7 +26,7 @@
         <div class="shop-intro">
             <ul class="bread-crumb">
                 <li class="has-separator">
-                    <a href="listing.html">Home</a>
+                    <a href="{{url('/')}}">Home</a>
                 </li>
                     <?php echo $categoryDetails['breadcrumbs']; ?>
             </ul>
