@@ -263,6 +263,8 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
 
         //Add Rating
         Route::match(['GET','POST'],'/add-rating','RatingsController@addRating');
+        //Recomanded system Route
+        // Route::match(['GET','POST'],'/add-rating','RatingsController@addRating');
         // Paypal
         Route::get('paypal','PaypalController@paypal');
     });

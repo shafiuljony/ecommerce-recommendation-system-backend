@@ -69,18 +69,18 @@ class VendorsTableSeeder extends Seeder
             [
                 'id'=>5,
                 'name'=>'Md.Shafiul Islam',
-                'address'=>'Muradpur',
+                'address'=>'Biponi Bitan (New Market), Chattogram',
                 'city'=>'chattogram',
                 'state'=>'chattogram',
                 'country'=>'Bangladesh',
-                'pincode'=> '4214',
+                'pincode'=> '4000',
                 'mobile'=> '01556391725',
                 'email'=> 'shafiul@anon.com',
                 'status'=>1
             ],
             [
                 'id'=>6,
-                'name'=>'Naruto Uzumaki ',
+                'name'=>'Naruto Uzumaki',
                 'address'=>'Konoha',
                 'city'=>'tokyo',
                 'state'=>'tokyo',

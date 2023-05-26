@@ -19,7 +19,7 @@ class FiltersTableSeeder extends Seeder
             ['id'=>1,'cat_ids'=>'1,2,3','filter_name'=>'RAM','filter_column'=>'ram','status'=>1],
             ['id'=>2,'cat_ids'=>'4,5,6','filter_name'=>'Fabric','filter_column'=>'fabric','status'=>1]
         ];
-        ProductsFilter::insert($filterRecords);
+    ProductsFilter::insert($filterRecords);
     }
     
 }
