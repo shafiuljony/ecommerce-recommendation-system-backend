@@ -22,6 +22,9 @@ class BrandsTableSeeder extends Seeder
             ['id'=>5,'name'=>'MI','status'=>1],
             ['id'=>6,'name'=>'HP','status'=>1],
             ['id'=>7,'name'=>'LG','status'=>1],
+            ['id'=>8,'name'=>'Agro','status'=>1],
+            ['id'=>9,'name'=>'Naturals','status'=>1],
+
         ];
         Brand::insert($brandRecords);
     }

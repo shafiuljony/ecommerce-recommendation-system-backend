@@ -2,9 +2,16 @@
 
 namespace Database\Seeders;
 
+use App\Models\Admin;
+use App\Models\Brand;
+use App\Models\Category;
 use App\Models\Product;
+use App\Models\Section;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Vendor;
+use Faker\Factory as Faker;
+use Illuminate\Support\Facades\Storage;
 
 class ProductsTableSeeder extends Seeder
 {
@@ -15,11 +22,40 @@ class ProductsTableSeeder extends Seeder
      */
     public function run()
     {
-        $productRecords = [
-            ['id'=>1,'section_id'=>2,'category_id'=>3,'brand_id'=>4,'vendor_id'=>1,'admin_id'=>2,'admin_type'=>'vendor','product_name'=>'Samsung Galaxy M33','product_code'=>'SGM33','product_color'=>'Blue','product_price'=>36000,'product_discount'=>10,'product_weight'=>500,
-            'group_code'=>'','product_image'=>'',"product_video"=>'','meta_title'=>'','meta_keywords'=>'','meta_description'=>'','is_featured'=>'Yes','status'=>1],
-            ['id'=>2,'section_id'=>1,'category_id'=>4,'brand_id'=>1,'vendor_id'=>0,'admin_id'=>0,'admin_type'=>'superadmin','product_name'=>'mens-r-neck-t-shirt','product_code'=>'RMMRNTS','product_color'=>'Brown','product_price'=>1318,'product_discount'=>5,'product_weight'=>200,'group_code'=>'','product_image'=>'',"product_video"=>'','meta_title'=>'','meta_keyword'=>'','meta_description'=>'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.','is_featured'=>'Yes','status'=>1],
-        ];
-        Product::insert($productRecords);
+        $faker = Faker::create();
+
+        $vendors = Vendor::pluck('id');
+        $admins = Admin::pluck('id')->toArray();
+        $sections = Section::pluck('id')->toArray();
+        $categorys = Category::pluck('id')->toArray();
+        $brands = Brand::pluck('id')->toArray();
+    
+        for ($i = 1; $i <= 50; $i++) {
+            $productImage = $i.'.jpg';
+            // $productImage = $i.'.jpg';//video path
+            $product = new Product([
+            'section_id' => $faker->randomElement($sections),
+            'category_id' => $faker->randomElement($categorys),
+            'brand_id' => $faker->randomElement($brands),
+            'vendor_id' => $vendors->random(),
+            'admin_id' => $faker->randomElement($admins),
+            'admin_type' => 'vendor',
+            'product_name' => $faker->randomElement(['pant', 'shirt', 'tops', 't-shirt','smartphone', 'laptop','refrigerator', 'washing machine','rice', 'bread']),
+            'product_code' => $faker->unique()->randomNumber(6),
+            'product_color' => $faker->colorName,
+            'product_price' => $faker->randomFloat(2, 10, 100),
+            'product_discount' => $faker->numberBetween(5, 50),
+            'product_weight' => $faker->numberBetween(100, 1000),
+            'group_code' => $faker->randomLetter,
+            'product_image' => $productImage,
+            'product_video' => $faker->url,
+            'meta_title' => $faker->sentence,
+            'meta_keywords' => $faker->words(5, true),
+            'meta_description' => $faker->sentence,
+            'is_featured' => $faker->randomElement(['Yes', 'No']),
+            'status' => 1,
+        ]);
+        $product->save();
+        }   
     }
 }

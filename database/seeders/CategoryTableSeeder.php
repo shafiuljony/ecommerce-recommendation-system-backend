@@ -23,7 +23,9 @@ class CategoryTableSeeder extends Seeder
             ['id'=>5,'parent_id'=>0,'section_id'=>1,'category_name'=>"Women",'category_image'=>'','category_discount'=>0,'description'=>'','url'=>'women','meta_title'=>'','meta_description'=>'','meta_keywords'=>'','status'=>1],
             ['id'=>6,'parent_id'=>0,'section_id'=>1,'category_name'=>"Kid's",'category_image'=>'','category_discount'=>0,'description'=>'','url'=>'kid','meta_title'=>'','meta_description'=>'','meta_keywords'=>'','status'=>1],
             ['id'=>7,'parent_id'=>0,'section_id'=>3,'category_name'=>'Air Condition','category_image'=>'','category_discount'=>0,'description'=>'','url'=>'ac','meta_title'=>'','meta_description'=>'','meta_keywords'=>'','status'=>1],
-            ['id'=>8,'parent_id'=>0,'section_id'=>3,'category_name'=>'Television','category_image'=>'','category_discount'=>0,'description'=>'','url'=>'television','meta_title'=>'','meta_description'=>'','meta_keywords'=>'','status'=>1]
+            ['id'=>8,'parent_id'=>0,'section_id'=>3,'category_name'=>'Television','category_image'=>'','category_discount'=>0,'description'=>'','url'=>'television','meta_title'=>'','meta_description'=>'','meta_keywords'=>'','status'=>1],
+            ['id'=>9,'parent_id'=>0,'section_id'=>4,'category_name'=>'Fruits','category_image'=>'','category_discount'=>0,'description'=>'','url'=>'fruits','meta_title'=>'','meta_description'=>'','meta_keywords'=>'','status'=>1],
+            ['id'=>10,'parent_id'=>0,'section_id'=>4,'category_name'=>'Vegetable','category_image'=>'','category_discount'=>0,'description'=>'','url'=>'vegetable','meta_title'=>'','meta_description'=>'','meta_keywords'=>'','status'=>1]
         ];
         Category::insert($categoryRecords);
     }

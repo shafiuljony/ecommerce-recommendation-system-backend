@@ -113,7 +113,6 @@ class ProductsController extends Controller
                  $categoryProducts = $categoryProducts->paginate(30);
                 // dd($categoryDetails);
                 // echo "category existis"; die;
-                //Checking for sort
 
                 return view('front.products.ajax_products_listing')->with(compact('categoryDetails','categoryProducts','url'));
 
@@ -121,9 +120,24 @@ class ProductsController extends Controller
                 abort(404);
             }
         }else{
+            //Search Products
+            if(isset($_REQUEST['search']) && !empty($_REQUEST['search'])){
+                $search_product = $_REQUEST['search'];
+                $categoryDetails['breadcrumbs'] = $search_product;
+                $categoryDetails['categoryDetails']['category_name'] = $search_product;
+                $categoryDetails['categoryDetails']['description'] = "Search Results for". $search_product;
+                $categoryProducts = Product::select('products.id','products.section_id','products.category_id','products.brand_id','products.vendor_id','products.product_name','products.product_code','products.product_color','products.product_price','products.product_discount','products.product_image','products.description')->with('brand')->join('categories','categories.id','=','products.category_id')->where(function($query)use($search_product){
+                    $query->where('products.product_name','like','%'.$search_product.'%')->orWhere('products.product_code','like','%'.$search_product.'%')->orWhere('products.product_color','like','%'.$search_product.'%')->orWhere('products.description','like','%'.$search_product.'%')->orWhere('categories.category_name','like','%'.$search_product.'%');})->where('products.status',1);
+                    if(isset($_REQUEST['section_id']) && !empty($_REQUEST['section_id'])){
+                        $categoryProducts = $categoryProducts->where('products.section_id',$_REQUEST['section_id']); 
+                    }   
+                    $categoryProducts = $categoryProducts->get();   
+                    // dd($categoryProducts);
+                    return view('front.products.listing')->with(compact('categoryDetails','categoryProducts'));
+            }
+                  
             $url = Route::getFacadeRoot()->current()->uri();
             $categoryCount = Category::where(['url'=>$url,'status'=>1])->count();
-
             if($categoryCount >0){
                 //Get Category Details
                 $categoryDetails = Category::categoryDetails($url);
@@ -152,10 +166,9 @@ class ProductsController extends Controller
                 return view('front.products.listing')->with(compact('categoryDetails','categoryProducts','url'));
 
             }else{
-                abort(404);
+                    abort(404);
+                }
             }
-        }
-
     }
     public function vendorListing($vendorid){
         //Get Vendor Shop Name
