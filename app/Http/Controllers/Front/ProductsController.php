@@ -161,7 +161,7 @@ class ProductsController extends Controller
                     // dd($categoryProducts);
                     return view('front.products.listing')->with(compact('categoryDetails','categoryProducts'));
             }
-                  
+
             $url = Route::getFacadeRoot()->current()->uri();
             $categoryCount = Category::where(['url'=>$url,'status'=>1])->count();
             if($categoryCount >0){
@@ -717,9 +717,9 @@ class ProductsController extends Controller
                     'order_id' => $order_id,
                     'orderDetails' => $orderDetails
                 ];
-                Mail::Send('emails.order',$messageData,function($message)use($email){
-                    $message->to($email)->subject('Order Placed - Anon.com');
-                });
+//                Mail::Send('emails.order',$messageData,function($message)use($email){
+//                    $message->to($email)->subject('Order Placed - Anon.com');
+//                });
             }if($data['payment_gateway']=="Paypal"){
                 // Paypal - Redirectuser to Paypal pageafter saving order
                 return redirect('/paypal');
