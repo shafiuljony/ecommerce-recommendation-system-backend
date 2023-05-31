@@ -27,13 +27,15 @@ class UserTableSeeder extends Seeder
                 'country' => $faker->country,
                 'pincode' => $faker->numberBetween(1000, 10000),
                 'mobile' => $faker->phoneNumber,
-                'email' => $faker->unique()->email,
+                'email' => 'user'.$i.'@gmail.com',
                 'password' => Hash::make('123456'),
                 'status' => 1,
                 'email_verified_at' => now(),
             ]);
-           
+
             $user->save();
-        }    
+        }
+
+
     }
 }
