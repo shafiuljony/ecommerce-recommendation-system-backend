@@ -129,13 +129,13 @@ class ProductsController extends Controller
                 $categoryProducts = Product::select('products.id','products.section_id','products.category_id','products.brand_id','products.vendor_id','products.product_name','products.product_code','products.product_color','products.product_price','products.product_discount','products.product_image','products.description')->with('brand')->join('categories','categories.id','=','products.category_id')->where(function($query)use($search_product){
                     $query->where('products.product_name','like','%'.$search_product.'%')->orWhere('products.product_code','like','%'.$search_product.'%')->orWhere('products.product_color','like','%'.$search_product.'%')->orWhere('products.description','like','%'.$search_product.'%')->orWhere('categories.category_name','like','%'.$search_product.'%');})->where('products.status',1);
                     if(isset($_REQUEST['section_id']) && !empty($_REQUEST['section_id'])){
-                        $categoryProducts = $categoryProducts->where('products.section_id',$_REQUEST['section_id']); 
-                    }   
-                    $categoryProducts = $categoryProducts->get();   
+                        $categoryProducts = $categoryProducts->where('products.section_id',$_REQUEST['section_id']);
+                    }
+                    $categoryProducts = $categoryProducts->get();
                     // dd($categoryProducts);
                     return view('front.products.listing')->with(compact('categoryDetails','categoryProducts'));
             }
-                  
+
             $url = Route::getFacadeRoot()->current()->uri();
             $categoryCount = Category::where(['url'=>$url,'status'=>1])->count();
             if($categoryCount >0){
@@ -690,9 +690,9 @@ class ProductsController extends Controller
                     'order_id' => $order_id,
                     'orderDetails' => $orderDetails
                 ];
-                Mail::Send('emails.order',$messageData,function($message)use($email){
-                    $message->to($email)->subject('Order Placed - Anon.com');
-                });
+//                Mail::Send('emails.order',$messageData,function($message)use($email){
+//                    $message->to($email)->subject('Order Placed - Anon.com');
+//                });
             }if($data['payment_gateway']=="Paypal"){
                 // Paypal - Redirectuser to Paypal pageafter saving order
                 return redirect('/paypal');
