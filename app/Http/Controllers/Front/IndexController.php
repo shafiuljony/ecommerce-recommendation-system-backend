@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
+use App\Models\OrdersProduct;
 use App\Models\Product;
+use App\Models\Rating;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
@@ -17,11 +19,32 @@ class IndexController extends Controller
         $discounterProducts = Product::where('product_discount','>',0)->where('status',1)->limit(6)->inRandomOrder()->get()->toArray();
         $isfeatured = Product::where(['is_featured'=>'Yes','status'=>1])->inRandomOrder()->get()->toArray();
 
-        //recommneded products
-        $orderProducts = Product::where('status',1)->orderBy('id','Desc')->limit(8)->get()->toArray();
 
 
-        // dd($discounterProducts);
-        return view('front.index')->with(compact('sliderBanners','fixBanners','newProducts','bestSellers','discounterProducts','isfeatured'));
+         //recommended product
+
+        $orderProducts =  OrdersProduct::pluck('product_id');
+        $ratingProducts = Rating::pluck('product_id');
+
+        $mergedProducts = $orderProducts->merge($ratingProducts);
+        $countedProducts = $mergedProducts->countBy()->sortDesc();
+        $sortedProducts = collect();
+        foreach ($countedProducts as $productId => $count) {
+            $sortedProducts->push($productId);
+        }
+        $topProducts = $sortedProducts->take(20);
+
+
+        $recommendedProducts = Product::whereIn('id',$topProducts)
+            ->where('status', 1)
+            ->orderByRaw("FIELD(id, " . implode(',', $topProducts->toArray()) . ") ASC")
+            ->get()
+            ->toArray();
+
+        //recommended product
+
+
+
+        return view('front.index')->with(compact('sliderBanners','fixBanners','newProducts','bestSellers','discounterProducts','isfeatured','recommendedProducts'));
     }
 }
