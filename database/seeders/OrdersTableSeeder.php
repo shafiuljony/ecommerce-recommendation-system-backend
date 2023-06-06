@@ -24,6 +24,8 @@ class OrdersTableSeeder extends Seeder
         $userIds = DB::table('users')->pluck('id')->toArray();
         $productIds = DB::table('products')->pluck('id')->toArray();
 
+        //Get Order Status
+
         for ($i = 1; $i <= 25; $i++) {
             // Randomly select a user ID from the array of user IDs
             $userId = $faker->randomElement($userIds);
