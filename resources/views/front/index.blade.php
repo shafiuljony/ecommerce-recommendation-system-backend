@@ -10,17 +10,17 @@
                 <h1><a @if(!empty($banner['link'])) herf="{{ url($banner['link']) }}" @else href="javascript:;" @endif><img src="{{ asset('front/images/banner_images/'.$banner['image']) }}" title="{{ $banner['title'] }}" alt="{{ $banner['alt']}}"></a></h1>
                 <!-- <h2>{{ $banner['title'] }}</h2> -->
                 <!-- <div class="banner-content">
-  
+
                     <p class="banner-subtitle">Trending item</p>
-    
+
                     <h2 class="banner-title">Women's latest fashion sale</h2>
-    
+
                     <p class="banner-text">
-                    starting at &#2547; <b>200</b>.00 
+                    starting at &#2547; <b>200</b>.00
                     </p>
-    
+
                     <a href="#" class="banner-btn">Shop now</a>
-  
+
                 </div> -->
             </div>
         </div>
@@ -223,13 +223,13 @@
 <!--
     - Recomanded Products
 -->
-@auth
+{{--@auth--}}
 <section class="section-maker">
     <div class="container">
         <div class="sec-maker-header text-center">
             <h3 class="sec-maker-h3">Recommended Products</h3>
             <div class="products-slider owl-carousel" data-item="4">
-                @foreach($newProducts as $product)
+                @foreach($recommendedProducts as $product)
                 <?php $product_image_path = 'front/images/product_images/small/'.$product['product_image']; ?>
                 <div class="item">
                     <div class="image-container">
@@ -294,8 +294,8 @@
             </div>
         </div>
     </div>
-</section>               
-@endauth
+</section>
+{{--@endauth--}}
 <!-- Top Collection /- -->
 <!-- Top Collection -->
 <section class="section-maker">
