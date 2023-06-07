@@ -32,7 +32,7 @@ class IndexController extends Controller
         foreach ($countedProducts as $productId => $count) {
             $sortedProducts->push($productId);
         }
-        $topProducts = $sortedProducts->take(20);
+        $topProducts = $sortedProducts->take(5);
 
 
         $recommendedProducts = Product::whereIn('id',$topProducts)

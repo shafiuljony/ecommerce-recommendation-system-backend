@@ -223,7 +223,7 @@
 <!--
     - Recomanded Products
 -->
-{{--@auth--}}
+@auth
 <section class="section-maker">
     <div class="container">
         <div class="sec-maker-header text-center">
@@ -295,7 +295,7 @@
         </div>
     </div>
 </section>
-{{--@endauth--}}
+@endauth
 <!-- Top Collection /- -->
 <!-- Top Collection -->
 <section class="section-maker">
