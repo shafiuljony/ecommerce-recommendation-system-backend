@@ -9,6 +9,13 @@ use Illuminate\Support\Facades\Mail;
 use App\Models\VendorsBankDetails;
 use App\Models\VendorsBusinessDetails;
 use App\Models\Country;
+use App\Models\Section;
+use App\Models\Category;
+use App\Models\Product;
+use App\Models\Order;
+use App\Models\Coupon;
+use App\Models\Brand;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -20,7 +27,15 @@ class AdminController extends Controller
 {
     public function dashboard(){
         Session::put('page','dashboard');
-        return view('admin.dashboard');
+        $sectionsCount = Section::count();
+        $categoriesCount = Category::count();
+        $productsCount = Product::count();
+        $ordersCount = Order::count();
+        $couponsCount = Coupon::count();
+        $brandsCount = Brand::count();
+        $usersCount = User::count();
+        $vendorsCount = Vendor::count();
+        return view('admin.dashboard')->with(compact('sectionsCount','categoriesCount','productsCount','ordersCount','couponsCount','brandsCount','usersCount','vendorsCount'));
     }
     public function updateAdminPassword(Request $request){
         Session::put('page','update_admin_password');

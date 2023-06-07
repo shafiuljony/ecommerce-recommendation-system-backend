@@ -27,13 +27,13 @@
                         <h6>COMPANY</h6>
                         <ul>
                             <li>
-                                <a href="about.html">About us</a>
+                                <a href="{{ url('about-us') }}">About us</a>
                             </li>
                             <li>
-                                <a href="contact.html">Contact us</a>
+                                <a href="{{ url('contact') }}">Contact us</a>
                             </li>
                             <li>
-                                <a href="faq.html">FAQ</a>
+                                <a href="{{ url('faq') }}">FAQ</a>
                             </li>
                         </ul>
                     </div>
@@ -43,13 +43,13 @@
                         <h6>COLLECTION</h6>
                         <ul>
                             <li>
-                                <a href="{{ url('/men') }}">Men Clothing</a>
+                                <a href="{{ url('men') }}">Men Clothing</a>
                             </li>
                             <li>
-                                <a href="{{ url('/women') }}">Women Clothing</a>
+                                <a href="{{ url('women') }}">Women Clothing</a>
                             </li>
                             <li>
-                                <a href="{{ url('/kid') }}">Kids Clothing</a>
+                                <a href="{{ url('kid') }}">Kids Clothing</a>
                             </li>
                         </ul>
                     </div>
@@ -59,13 +59,13 @@
                         <h6>ACCOUNT</h6>
                         <ul>
                             <li>
-                                <a href="{{ url('/user/account') }}">My Account</a>
+                                <a href="{{ url('user/account') }}">My Account</a>
                             </li>
-                            <li>
+                            <!-- <li>
                                 <a href="shop-v1-root-category.html">My Profile</a>
-                            </li>
+                            </li> -->
                             <li>
-                                <a href="{{ url('/user/orders') }}">My Orders</a>
+                                <a href="{{ url('user/orders') }}">My Orders</a>
                             </li>
                         </ul>
                     </div>
@@ -85,10 +85,11 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="mailto:info@sitemakers.in">
+                                <a href="mailto:anon@ecom.com.bd">
                                     <i class="fas fa-envelope u-s-m-r-9"></i>
                                     <span>
-                                        anon@ecom.com.bd</span>
+                                        anon@ecom.com.bd
+                                    </span>
                                 </a>
                             </li>
                         </ul>
@@ -139,7 +140,7 @@
                 </ul>
             </div>
             <p class="copyright-text">Copyright &copy; 2023
-                <a target="_blank" rel="nofollow" href="https://youtube.com/stackdevelopers">Anon Developers</a> | All Right Reserved</p>
+                <a target="_blank" rel="nofollow" href="#">Anon Developers</a> | All Right Reserved</p>
         </div>
     </div>
     <!-- Bottom-Footer /- -->
