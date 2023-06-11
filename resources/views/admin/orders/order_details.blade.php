@@ -1,4 +1,9 @@
-<?php use App\Models\Product; use App\Models\OrdersLog;?>
+<?php 
+use App\Models\Product; 
+use App\Models\OrdersLog;
+use App\Models\Vendor;
+use App\Models\Coupon;
+?> 
 @extends('admin.layout.layout')
 @section('content')
 <div class="main-panel">
@@ -228,11 +233,18 @@
                     <table class="table table-striped table-borderless">
                 <tr class="table-danger">
                     <th>Product Image</th>
-                    <th>Product Code</th>
-                    <th>Product Name</th>
-                    <th>Product Size</th>
-                    <th>Product Color</th>
-                    <th>Product Qty</th>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Size</th>
+                    <th>Color</th>
+                    <th>U_Price</th>
+                    <th>Qty</th>
+                    <th>T_Price</th>
+                    @if(Auth::guard('admin')->user()->type!="vendor")
+                      <th>P_by</th>
+                    @endif
+                    <th>Commission</th>
+                    <th>Final Amount</th>
                     <th>Item Status</th>
                 </tr>
                 @foreach($orderDetails['orders_products'] as $product)
@@ -246,7 +258,47 @@
                         <td>{{ $product['product_name'] }}</td>
                         <td>{{ $product['product_size'] }}</td>
                         <td>{{ $product['product_color'] }}</td>
+                        <td>{{ $product['product_price'] }}</td>
                         <td>{{ $product['product_qty'] }}</td>
+                        <td>
+                          @if($product['vendor_id']>0)
+                            @if($orderDetails['coupon_amount']>0 )
+                              @php $couponDetails =
+                              Coupon::couponDetails($orderDetails['coupon_code']) @endphp
+                              @if($couponDetails['vendor_id']>0)
+                                {{ $total_price = 
+                                $product['product_price']*$product['product_qty']-$item_discount }}
+                              @else
+                              {{ $total_price = 
+                                $product['product_price']*$product['product_qty'] }}
+                              @endif
+                            @else
+                              {{ $total_price = 
+                                $product['product_price']*$product['product_qty'] }}
+                            @endif
+                          @else
+                            {{ $total_price = 
+                            $product['product_price']*$product['product_qty'] }}
+                          @endif
+                        </td>
+                        @if(Auth::guard('admin')->user()->type!="vendor")
+                          @if($product['vendor_id']>0)
+                            <td>
+                             <a href="/admin/view-vendor-details/{{ $product['admin_id'] }}" target="_blank">Vendor</a>
+                            </td>
+                          @else
+                            <td>Admin</td>
+                          @endif
+                        @endif
+                        @if($product['vendor_id']>0)
+                          @php $getVendorCommission =
+                          Vendor::getVendorCommission($product['vendor_id']); @endphp
+                          <td>{{ $commission = round($total_price * $getVendorCommission/100,2) }}</td>
+                          <td>{{ $total_price - $commission }}</td>
+                        @else
+                          <td>0</td>
+                          <td>{{ $total_price }}</td>
+                        @endif
                         <td>
                             <form action="{{ url('admin/update-order-item-status') }}" method="post">@csrf
                                 <input type="hidden" name="order_item_id" value="{{ $product['id'] }}">

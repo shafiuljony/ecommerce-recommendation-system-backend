@@ -45,7 +45,7 @@
                         @if(count($deliveryAddresses)>0)
                             <h4 class="section-h4">Delivery Addresses</h4>
                             @foreach($deliveryAddresses as $address)
-                                <div class="control-group" style="float:left; margin-right:5px;"><input type="radio" id="address{{ $address['id'] }}" name="address_id" value="{{ $address['id'] }}" shipping_charges="{{ $address['shipping_charges'] }}" total_price="{{ $total_price }}" coupon_amount="{{ Session::get('couponAmount') }}"></div>
+                                <div class="control-group" style="float:left; margin-right:5px;"><input type="radio" id="address{{ $address['id'] }}" name="address_id" value="{{ $address['id'] }}" shipping_charges="{{ $address['shipping_charges'] }}" total_price="{{ $total_price }}" coupon_amount="{{ Session::get('couponAmount') }}" codpincodeCount="{{ $address['codpincodeCount'] }}"></div>
                                 <div><label class="control-label" for="">{{ $address['name'] }}, {{ $address['address'] }}, {{ $address['city'] }}, {{ $address['state'] }}, {{ $address['country'] }} ({{ $address['mobile'] }})</label>
                                     <a style="float:right; margin-left:5px;" href="javascript:;" data-addressid="{{ $address['id'] }}" class="removeAddress" >Remove</a>
                                     <a style="float:right;" href="javascript:;" data-addressid="{{ $address['id'] }}" class="editAddress" >Edit</a>
@@ -120,7 +120,7 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <div class="u-s-m-b-13">
+                            <div class="u-s-m-b-13 codMethod">
                                 <input type="radio" class="radio-box" name="payment_gateway" id="cash-on-delivery" value="COD">
                                 <label class="label-text" for="cash-on-delivery">Cash on Delivery</label>
                             </div>

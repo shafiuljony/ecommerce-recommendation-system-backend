@@ -37,6 +37,7 @@ class Product extends Model
          $proDetails = json_decode(json_encode($proDetails),true);
 
          $catDetails = Category::select('category_discount')->where('id',$proDetails['category_id'])->first();
+        
          $catDetails = json_decode(json_encode($catDetails),true);
 
          if($proDetails['product_discount']>0){

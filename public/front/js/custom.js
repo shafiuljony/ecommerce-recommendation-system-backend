@@ -419,6 +419,12 @@ $(document).ready(function(){
         var total_price = $(this).attr("total_price");
         var coupon_amount = $(this).attr("coupon_amount");
         $(".shipping_charges").html("TK."+shipping_charges);
+        var codpincodeCount = $(this).attr("codpincodeCount");
+        if(codpincodeCount>0){
+            $(".codMethod").show();
+        }else{
+            $(".codMethod").hide();
+        }
         if(coupon_amount==""){
             coupon_amount = 0;
         }

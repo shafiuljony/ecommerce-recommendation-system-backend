@@ -120,7 +120,23 @@ class ProductsController extends Controller
                 abort(404);
             }
         }else{
-            $url = Route::getFacadeRoot()->current()->uri();
+            if(isset($_REQUEST['search']) && !empty($_REQUEST['search'])){
+                $search_product = $_REQUEST['search'];
+                $categoryDetails['breadcrumbs'] = $search_product;
+                $categoryDetails['categoryDetails']['category_name'] = $search_product;
+
+                $categoryDetails['categoryDetails']['description'] = "Search Product for".$search_product;
+                $categoryProducts = Product::with('brand')->join('categories','categories.id','=','products.category_id')->where(function($query)use($search_product){
+                    $query->where('products.product_name','like','%'.$search_product.'%')
+                    ->orWhere('products.product_code','like','%'.$search_product.'%')
+                    ->orWhere('products.product_color','like','%'.$search_product.'%')
+                    ->orWhere('products.description','like','%'.$search_product.'%')
+                    ->orWhere('categories.category_name','like','%'.$search_product.'%');
+                })->where('products.status',1);
+                $categoryProducts = $categoryProducts->get();
+                return view('front.products.listing')->with(compact('categoryDetails','categoryProducts'));
+            }else{
+                $url = Route::getFacadeRoot()->current()->uri();
             $categoryCount = Category::where(['url'=>$url,'status'=>1])->count();
     
             if($categoryCount >0){
@@ -152,6 +168,7 @@ class ProductsController extends Controller
     
             }else{
                 abort(404);
+            }
             }
         }
        
@@ -224,6 +241,10 @@ class ProductsController extends Controller
             $data = $request->all();
             // echo "<pre>"; print_r($data); die;
 
+            // Forget the coupon session
+            Session::forget('couponAmount');
+            Session::forget('couponCode');
+
             if($data['quantity']<=0){
                 $data['quantity']=1;
             }
@@ -281,6 +302,10 @@ class ProductsController extends Controller
             $data = $request->all();
             // echo "<pre>"; print_r($data); die;
 
+            // Forget the coupon session
+            Session::forget('couponAmount');
+            Session::forget('couponCode');
+
             // Get Cart Details 
             $cartDetails = Cart::find($data['cartid']);
 
@@ -325,6 +350,11 @@ class ProductsController extends Controller
             Session::forget('couponAmount');
             Session::forget('couponCode');
             // echo "<pre>"; print_r($data); die;
+
+            // Forget the coupon session
+            Session::forget('couponAmount');
+            Session::forget('couponCode');
+
             Cart::where('id',$data['cartid'])->delete();
             $totalCartItems = totalCartItems();
             $getCartItems = Cart::getCartItems();
@@ -497,6 +527,9 @@ class ProductsController extends Controller
         foreach($deliveryAddresses as $key => $value){
             $shippingCharges = ShippingCharge::getShippingCharges($total_weight,$value['country']);
             $deliveryAddresses[$key]['shipping_charges'] = $shippingCharges;
+
+            // COD pincode is available or not
+            $deliveryAddresses[$key]['codpincodeCount'] = DB::table('cod_pincodes')->where('pincode',$value['pincode'])->count();
         }
         //dd($deliveryAddresses);
 

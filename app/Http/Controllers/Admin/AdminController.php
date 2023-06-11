@@ -283,6 +283,16 @@ class AdminController extends Controller
 
     }
 
+    public function updateVendorCommission(Request $request){
+        if($request->isMethod('post')){
+            $data = $request->all();
+            //echo "<pre>"; print_r($data); die;
+            //update in vendors table
+            Vendor::where('id',$data['vendor_id'])->update(['commission'=>$data['commission']]);
+            return redirect()->back()->with('success_message','Vendor commission updated successfully!');
+        }
+    }
+
     public function admins($type=null){
 
         $admins = Admin::query();
