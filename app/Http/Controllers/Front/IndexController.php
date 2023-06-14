@@ -24,15 +24,18 @@ class IndexController extends Controller
          //recommended product
 
         $orderProducts =  OrdersProduct::pluck('product_id');
+        // dd($orderProducts);
+        
         $ratingProducts = Rating::pluck('product_id');
-
+        
         $mergedProducts = $orderProducts->merge($ratingProducts);
         $countedProducts = $mergedProducts->countBy()->sortDesc();
         $sortedProducts = collect();
         foreach ($countedProducts as $productId => $count) {
             $sortedProducts->push($productId);
         }
-        $topProducts = $sortedProducts->take(5);
+        $topProducts = $sortedProducts->take(20);
+        // dd($topProducts);
 
 
         $recommendedProducts = Product::whereIn('id',$topProducts)

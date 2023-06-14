@@ -131,6 +131,7 @@ $totalCartItems = totalCartItems();
                                     </option>
                                     @foreach($sections as $section)
                                     <option @if(isset($_REQUEST['section_id']) && !empty($_REQUEST['section_id']) && $_REQUEST['section_id'] == $section['id']) selected @endif value="{{ $section['id'] }}">{{ $section['name'] }}</option>
+                                    <option value="{{ $section['id'] }}">{{ $section['name']}}</option>
                                     @endforeach
                                 </select>
                             </div>
