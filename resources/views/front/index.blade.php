@@ -223,7 +223,6 @@
 <!--
     - Recomanded Products
 -->
-@auth
 <section class="section-maker">
     <div class="container">
         <div class="sec-maker-header text-center">
@@ -295,7 +294,6 @@
         </div>
     </div>
 </section>
-@endauth
 <!-- Top Collection /- -->
 <!-- Top Collection -->
 <section class="section-maker">
