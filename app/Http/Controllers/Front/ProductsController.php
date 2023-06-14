@@ -284,6 +284,10 @@ class ProductsController extends Controller
             $data = $request->all();
             // echo "<pre>"; print_r($data); die;
 
+            // Forget the coupon session
+            Session::forget('couponAmount');
+            Session::forget('couponCode');
+
             if($data['quantity']<=0){
                 $data['quantity']=1;
             }
@@ -385,6 +389,11 @@ class ProductsController extends Controller
             Session::forget('couponAmount');
             Session::forget('couponCode');
             // echo "<pre>"; print_r($data); die;
+
+            // Forget the coupon session
+            Session::forget('couponAmount');
+            Session::forget('couponCode');
+
             Cart::where('id',$data['cartid'])->delete();
             $totalCartItems = totalCartItems();
             $getCartItems = Cart::getCartItems();

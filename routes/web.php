@@ -62,6 +62,9 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         //view vendor details
         Route::get('view-vendor-details/{id}','AdminController@viewVendorDetails');
 
+       // update vendor commission
+       Route::post('update-vendor-commission','AdminController@updateVendorCommission');
+
         //update admin status
         Route::post('update-admin-status','AdminController@updateAdminStatus');
 
@@ -170,6 +173,9 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
        Route::post('update-shipping-status','ShippingController@updateShippingStatus');
        Route::match(['get','post'],'edit-shipping-charges/{id}','ShippingController@editShippingCharges');
 
+       // Newsletter Subscriber
+       Route::get('subscribers','NewsletterController@subscribers');
+       Route::post('update-subscriber-status','NewsletterController@updateSubscriberStatus');
     });
 });
 
