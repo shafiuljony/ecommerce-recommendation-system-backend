@@ -24,7 +24,7 @@ class IndexController extends Controller
          //recommended product
         if(auth()->check()) {
             $orderProducts = OrdersProduct::where('user_id',auth()->id())->pluck('product_id');
-            $categoryId = Product::whereIn('id', $orderProducts)->pluck('category_id');
+            $categoryId = Product::whereIn('id', $orderProducts)->pluck('category_id')->unique();
             $categoryProducts = Product::whereIn('category_id', $categoryId)->pluck('id');
             $ratingProducts = Rating::pluck('product_id');
 
