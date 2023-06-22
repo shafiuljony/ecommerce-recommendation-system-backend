@@ -19,8 +19,6 @@ class IndexController extends Controller
         $discounterProducts = Product::where('product_discount','>',0)->where('status',1)->limit(6)->inRandomOrder()->get()->toArray();
         $isfeatured = Product::where(['is_featured'=>'Yes','status'=>1])->inRandomOrder()->get()->toArray();
 
-
-
          //recommended product
         if(auth()->check()) {
             $orderProducts = OrdersProduct::where('user_id',auth()->id())->pluck('product_id');
