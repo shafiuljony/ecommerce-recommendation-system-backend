@@ -21,7 +21,7 @@ class IndexController extends Controller
 
 
 
-         //recommended product
+         //recommended products for all users
 
         $orderProducts =  OrdersProduct::pluck('product_id');
         // dd($orderProducts);

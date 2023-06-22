@@ -700,6 +700,13 @@ class ProductsController extends Controller
                 $getCartItems->product_size = $item['size'];
                 $getDiscountAttributePrice = Product::getDiscountAttributePrice($item['product_id'],$item['size']);
                 $getCartItems->product_price = $getDiscountAttributePrice['final_price'];
+
+                $getProductStock = ProductsAttributes::getProductStock($item['product_id'],$item['size']);
+
+                if($item['quantity']>$getProductStock){
+                    $message = $getProductDetails['product_name']." with ".$item['size']." Quantity in not available. Please reduce its quantity and try again.";
+                    return redirect('/cart')->with('error_message',$message);
+                }
                 $getCartItems->product_qty = $item['quantity'];
                 $getCartItems->save();
 
