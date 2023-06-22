@@ -22,27 +22,31 @@ class IndexController extends Controller
 
 
          //recommended product
+        if(auth()->check()) {
+            $orderProducts = OrdersProduct::where('user_id',auth()->id())->pluck('product_id');
+            $categoryId = Product::whereIn('id', $orderProducts)->pluck('category_id');
+            $categoryProducts = Product::whereIn('category_id', $categoryId)->pluck('id');
+            $ratingProducts = Rating::pluck('product_id');
 
-        $orderProducts =  OrdersProduct::pluck('product_id');
-        $ratingProducts = Rating::pluck('product_id');
+            $mergedProducts = $categoryProducts->merge($ratingProducts);
+            $countedProducts = $mergedProducts->countBy()->sortDesc();
+            $sortedProducts = collect();
+            foreach ($countedProducts as $productId => $count) {
+                $sortedProducts->push($productId);
+            }
+            $topProducts = $sortedProducts->take(20);
 
-        $mergedProducts = $orderProducts->merge($ratingProducts);
-        $countedProducts = $mergedProducts->countBy()->sortDesc();
-        $sortedProducts = collect();
-        foreach ($countedProducts as $productId => $count) {
-            $sortedProducts->push($productId);
+
+            $recommendedProducts = Product::whereIn('id', $topProducts)
+                ->where('status', 1)
+                ->orderByRaw("FIELD(id, " . implode(',', $topProducts->toArray()) . ") ASC")
+                ->get()
+                ->toArray();
+
+            //recommended product
+        }else{
+            $recommendedProducts = [];
         }
-        $topProducts = $sortedProducts->take(20);
-
-
-        $recommendedProducts = Product::whereIn('id',$topProducts)
-            ->where('status', 1)
-            ->orderByRaw("FIELD(id, " . implode(',', $topProducts->toArray()) . ") ASC")
-            ->get()
-            ->toArray();
-
-        //recommended product
-
 
 
         return view('front.index')->with(compact('sliderBanners','fixBanners','newProducts','bestSellers','discounterProducts','isfeatured','recommendedProducts'));
