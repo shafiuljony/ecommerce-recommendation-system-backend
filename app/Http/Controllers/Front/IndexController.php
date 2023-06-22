@@ -19,33 +19,32 @@ class IndexController extends Controller
         $discounterProducts = Product::where('product_discount','>',0)->where('status',1)->limit(6)->inRandomOrder()->get()->toArray();
         $isfeatured = Product::where(['is_featured'=>'Yes','status'=>1])->inRandomOrder()->get()->toArray();
 
+         //recommended product
+        if(auth()->check()) {
+            $orderProducts = OrdersProduct::where('user_id',auth()->id())->pluck('product_id');
+            $categoryId = Product::whereIn('id', $orderProducts)->pluck('category_id')->unique();
+            $categoryProducts = Product::whereIn('category_id', $categoryId)->pluck('id');
+            $ratingProducts = Rating::pluck('product_id');
+
+            $mergedProducts = $categoryProducts->merge($ratingProducts);
+            $countedProducts = $mergedProducts->countBy()->sortDesc();
+            $sortedProducts = collect();
+            foreach ($countedProducts as $productId => $count) {
+                $sortedProducts->push($productId);
+            }
+            $topProducts = $sortedProducts->take(20);
 
 
-         //recommended products for all users
+            $recommendedProducts = Product::whereIn('id', $topProducts)
+                ->where('status', 1)
+                ->orderByRaw("FIELD(id, " . implode(',', $topProducts->toArray()) . ") ASC")
+                ->get()
+                ->toArray();
 
-        $orderProducts =  OrdersProduct::pluck('product_id');
-        // dd($orderProducts);
-        
-        $ratingProducts = Rating::pluck('product_id');
-        
-        $mergedProducts = $orderProducts->merge($ratingProducts);
-        $countedProducts = $mergedProducts->countBy()->sortDesc();
-        $sortedProducts = collect();
-        foreach ($countedProducts as $productId => $count) {
-            $sortedProducts->push($productId);
+            //recommended product
+        }else{
+            $recommendedProducts = [];
         }
-        $topProducts = $sortedProducts->take(20);
-        // dd($topProducts);
-
-
-        $recommendedProducts = Product::whereIn('id',$topProducts)
-            ->where('status', 1)
-            ->orderByRaw("FIELD(id, " . implode(',', $topProducts->toArray()) . ") ASC")
-            ->get()
-            ->toArray();
-
-        //recommended product
-
 
 
         return view('front.index')->with(compact('sliderBanners','fixBanners','newProducts','bestSellers','discounterProducts','isfeatured','recommendedProducts'));
