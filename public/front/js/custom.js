@@ -106,9 +106,9 @@ $(document).ready(function(){
     });
 
     // Show Loader
-    $(document).on('click', '#placeOrder', function(){
-        $(".loader").show();
-    });
+    // $(document).on('click', '#placeOrder', function(){
+    //     $(".loader").show();
+    // });
 
     //Register Form Validation
     $("#registerForm").submit(function(){
