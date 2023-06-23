@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
+use App\Models\Category;
 use App\Models\OrdersProduct;
 use App\Models\Product;
 use App\Models\Rating;
@@ -18,7 +19,7 @@ class IndexController extends Controller
         $bestSellers = Product::where(['is_bestseller'=>'Yes','status'=>1])->inRandomOrder()->get()->toArray();
         $discounterProducts = Product::where('product_discount','>',0)->where('status',1)->limit(6)->inRandomOrder()->get()->toArray();
         $isfeatured = Product::where(['is_featured'=>'Yes','status'=>1])->inRandomOrder()->get()->toArray();
-
+// //
          //recommended product
         if(auth()->check()) {
             $orderProducts = OrdersProduct::where('user_id',auth()->id())->pluck('product_id');
@@ -40,8 +41,9 @@ class IndexController extends Controller
                 ->orderByRaw("FIELD(id, " . implode(',', $topProducts->toArray()) . ") ASC")
                 ->get()
                 ->toArray();
-
+            // dd($recommendedProducts);
             //recommended product
+
         }else{
             $recommendedProducts = [];
         }
