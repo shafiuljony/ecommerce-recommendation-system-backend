@@ -167,17 +167,20 @@ class ProductsController extends Controller
                 
             }
 
-            $adminType = Auth::guard('admin')->user()->type;
-            $vendor_id = Auth::guard('admin')->user()->vendor_id;
-            $admin_id = Auth::guard('admin')->user()->id;
+            if($id==""){
 
-            $product->admin_type = $adminType;
-            $product->admin_id = $admin_id;
-
-            if($adminType=="vendor"){
-                $product->vendor_id = $vendor_id;
-            }else{
-                $product->vendor_id = 0;
+                $adminType = Auth::guard('admin')->user()->type;
+                $vendor_id = Auth::guard('admin')->user()->vendor_id;
+                $admin_id = Auth::guard('admin')->user()->id;
+    
+                $product->admin_type = $adminType;
+                $product->admin_id = $admin_id;
+    
+                if($adminType=="vendor"){
+                    $product->vendor_id = $vendor_id;
+                }else{
+                    $product->vendor_id = 0;
+                }
             }
 
             if(empty($data['product_discount'])){
