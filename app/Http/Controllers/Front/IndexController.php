@@ -21,12 +21,12 @@ class IndexController extends Controller
 
          //recommended product
         if(auth()->check()) {
-             $orderProducts = OrdersProduct::where('user_id',auth()->id())->pluck('product_id');
-              $categoryId = Product::whereIn('id', $orderProducts)->pluck('category_id')->unique();
-             $categoryProducts = Product::whereIn('category_id', $categoryId)->whereNotIN('id',$orderProducts)->pluck('id');
-              $ratingProducts = Rating::pluck('product_id');
+            $orderProducts = OrdersProduct::where('user_id',auth()->id())->pluck('product_id');
+            $categoryId = Product::whereIn('id', $orderProducts)->pluck('category_id')->unique();
+            $categoryProducts = Product::whereIn('category_id', $categoryId)->whereNotIN('id',$orderProducts)->pluck('id');
+            $ratingProducts = Rating::pluck('product_id');
               
-              $sortedProducts = collect();
+            $sortedProducts = collect();
             if(count($categoryProducts) > 0){
                     $topProducts = $categoryProducts->take(20);
             }else{
