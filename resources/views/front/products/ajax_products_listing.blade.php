@@ -24,6 +24,9 @@
                     <div class="what-product-is">
                         <ul class="bread-crumb">
                             <li class="has-separator">
+                                <a href="listing.html">{{ $product['category']['category_name'] }}</a>
+                            </li>
+                            <li class="has-separator">
                                 <a href="shop-v1-root-category.html">{{ $product['product_code']}}</a>
                             </li>
                             <li class="has-separator">
