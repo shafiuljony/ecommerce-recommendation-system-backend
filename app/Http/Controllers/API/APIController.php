@@ -57,6 +57,22 @@ class APIController extends Controller
 
             // echo "<pre/>"; print_r($data); die;
 
+            $rules = [
+                'email' => 'required|email|exists:users',
+                'password' => 'required',
+            ];
+            $customMessages = [
+                'email.required' => 'Email is required',
+                'email.email' => 'Email must be valid',
+                'email.exists' => 'Email does not exists',
+                'password.required' => 'Password is required',
+            ];
+
+            $validator = Validator::make($data,$rules,$customMessages);
+            if($validator->fails()){
+                return response()->json($validator->errors(),422);
+            }
+
             //Verify User Email
             $userCount = User::where('email',$data['email'])->count();
             if($userCount > 0){
