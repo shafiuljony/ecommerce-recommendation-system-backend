@@ -58,7 +58,7 @@ class APIController extends Controller
             // echo "<pre/>"; print_r($data); die;
 
             //Verify User Email
-            $userCount = User::where('email',$data['email'])->first();
+            $userCount = User::where('email',$data['email'])->count();
             if($userCount > 0){
                  //Featch User Details
                 $userDetails = User::where('email',$data['email'])->first();
