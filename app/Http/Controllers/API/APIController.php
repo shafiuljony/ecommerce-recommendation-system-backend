@@ -81,8 +81,11 @@ class APIController extends Controller
 
                 //Verify Password
                 if(password_verify($data['password'],$userDetails->password)){
-                    return response()->json(['status'=>true,
-                    "message"=>"User Logged In Successfully!"],201);
+                    return response()->json([
+                        "userDetails"=>$userDetails,
+                        'status'=>true,
+                        "message"=>"User Logged In Successfully!"
+                    ],201);
                 }else{
                     $message = "Password is Incorrect!";
                     return response()->json(['status'=>false,'message'=>$message],422);
@@ -95,4 +98,49 @@ class APIController extends Controller
            
         }
     }
-}
+
+    public function updateUser(Request $request){
+        if($request->isMethod('post')){
+            $data = $request->input();
+            // echo "<pre/>"; print_r($data); die;
+
+            $rules = [
+                'name' => 'required'
+            ];
+            $customMessages = [
+                'name.required' => 'Email is required'
+            ];
+
+            $validator = Validator::make($data,$rules,$customMessages);
+            if($validator->fails()){
+                return response()->json($validator->errors(),422);
+            }
+
+            //Verify User ID
+            $userCount = User::where('id',$data['id'])->count();
+            if($userCount > 0){
+
+                //Update User Details
+
+                User::where('id',$data['id'])->update([
+                    'name'=>$data['name'],
+                    'address'=>$data['address'],
+                    'city'=>$data['city'],
+                    'state'=>$data['state'],
+                    'country'=>$data['country'],
+                    'pincode'=>$data['pincode'],
+
+                ]);
+                 //Featch User Details
+                $userDetails = User::where('id',$data['id'])->first();return response()->json([
+                    "userDetails"=>$userDetails,
+                    'status'=>true,
+                    "message"=>"User Updated Successfully!"
+                ],201);
+                }
+            }else{
+                $message = "Updated does not exists!";
+                return response()->json(['status'=>false,'message'=>$message],422);
+            }
+        }
+    }
