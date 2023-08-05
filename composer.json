@@ -17,7 +17,9 @@
         "milon/barcode": "^10.0"
     },
     "require-dev": {
+        "beyondcode/laravel-er-diagram-generator": "^2.0",
         "fakerphp/faker": "^1.9.1",
+        "kevincobain2000/laravel-erd": "^1.6",
         "laravel/breeze": "^1.16",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",
