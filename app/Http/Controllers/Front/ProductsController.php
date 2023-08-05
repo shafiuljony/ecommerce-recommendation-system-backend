@@ -255,16 +255,13 @@ class ProductsController extends Controller
         $ratingsSum = Rating::where('status',1)->where('product_id',$id)->sum('rating');
         $ratingsCount = Rating::where('status',1)->where('product_id',$id)->count();
 
-        if($ratingsCount>0){
-            $avgRating = round($ratingsSum/$ratingsCount,2);
-            $avgStarRating = round($ratingsSum/$ratingsCount);
-        }else{
+        if ($ratingsCount > 0) {
+            $avgRating = $ratingsSum / $ratingsCount;
+            $avgStarRating = $ratingsSum / $ratingsCount;
+        } else {
             $avgRating = 0;
             $avgStarRating = 0;
         }
-
-
-
         $totalStock = ProductsAttributes::where('product_id', $id)->sum('stock');
         $ratings = Rating::with('user')->where('status',1)->where('product_id',$id)->get()->toArray();
         return view('front.products.detail')->with(compact('productDetails','categoryDetails','totalStock','similarProducts','recentlyViewedProducts','groupProducts','ratings','avgRating','avgStarRating','ratingsCount'));
@@ -284,6 +281,10 @@ class ProductsController extends Controller
             $data = $request->all();
             // echo "<pre>"; print_r($data); die;
 
+             // Check if the 'size' field is not empty
+            if (empty($data['size'])) {
+                return redirect()->back()->with('error_message', 'Please select a size before adding the product to the cart.');
+            }
             // Forget the coupon session
             Session::forget('couponAmount');
             Session::forget('couponCode');

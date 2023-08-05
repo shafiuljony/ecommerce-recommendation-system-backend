@@ -1,10 +1,7 @@
-<?php
-
-use App\Models\Product;
-use App\Models\ProductsFilter;
-
-$productFilters = ProductsFilter::productFilters();
-//  dd($productFilters);
+<?php use App\Models\Product;
+     use App\Models\ProductsFilter;
+     $productFilters = ProductsFilter::productFilters();
+    //  dd($productFilters);
 ?>
 @extends('front.layout.layout')
 @section('content')
@@ -35,17 +32,23 @@ $productFilters = ProductsFilter::productFilters();
                 <!-- Product-zoom-area -->
                 <div class="easyzoom easyzoom--overlay easyzoom--with-thumbnails">
                     <a href="{{ asset('front/images/product_images/large/'.$productDetails['product_image']) }}">
-                        <img src="{{ asset('front/images/product_images/large/'.$productDetails['product_image']) }}" alt="" width="500" height="500" />
+                        <img src="{{ asset('front/images/product_images/large/'.$productDetails['product_image']) }}"
+                            alt="" width="500" height="500" />
                     </a>
 
                 </div>
                 <div class="thumbnails mt-3">
-                    <a href="{{ asset('front/images/product_images/large/'.$productDetails['product_image']) }}" data-standard="{{ asset('front/images/product_images/small/'.$productDetails['product_image']) }}">
-                        <img height="150" width="150" src="{{ asset('front/images/product_images/small/'.$productDetails['product_image']) }}" alt="" />
+                    <a href="{{ asset('front/images/product_images/large/'.$productDetails['product_image']) }}"
+                        data-standard="{{ asset('front/images/product_images/small/'.$productDetails['product_image']) }}">
+                        <img height="150" width="150"
+                            src="{{ asset('front/images/product_images/small/'.$productDetails['product_image']) }}"
+                            alt="" />
                     </a>
                     @foreach($productDetails['images'] as $image)
-                    <a href="{{ asset('front/images/product_images/large/'.$image['image']) }}" data-standard="{{ asset('front/images/product_images/small/'.$image['image']) }}">
-                        <img height="150" width="150" src="{{ asset('front/images/product_images/small/'.$image['image']) }}" alt="" />
+                    <a href="{{ asset('front/images/product_images/large/'.$image['image']) }}"
+                        data-standard="{{ asset('front/images/product_images/small/'.$image['image']) }}">
+                        <img height="150" width="150"
+                            src="{{ asset('front/images/product_images/small/'.$image['image']) }}" alt="" />
                     </a>
                     @endforeach
                 </div>
@@ -89,11 +92,12 @@ $productFilters = ProductsFilter::productFilters();
                             <?php echo $categoryDetails["breadcrumbs"]; ?>
                         </ul>
                         <?php
-                        $averageRating = App\Models\Rating::where('product_id', $productDetails['id'])->avg('rating');
-                        $totalReviews = App\Models\Rating::where('product_id', $productDetails['id'])->count();
-                        ?>
-                        <div class="product-rating">
-                            <div class='star' title="{{ $averageRating }} out of 5 - based on {{ $totalReviews }} {{ $totalReviews == 1 ? 'Review' : 'Reviews' }}">
+                            $averageRating = App\Models\Rating::where('product_id', $productDetails['id'])->avg('rating');
+                            $totalReviews = App\Models\Rating::where('product_id', $productDetails['id'])->count();
+                            ?>
+                        <div class="item-stars">
+                            <div class='star'
+                                title="{{ $averageRating }} out of 5 - based on {{ $totalReviews }} {{ $totalReviews == 1 ? 'Review' : 'Reviews' }}">
                                 <span style='width:{{ ($averageRating / 5) * 100 }}%'></span>
                             </div>
                             <span>({{ $totalReviews }})</span>
@@ -159,7 +163,8 @@ $productFilters = ProductsFilter::productFilters();
                 @if(isset($productDetails['vendor']) && isset($productDetails['vendor']['id']) &&
                 isset($productDetails['vendor']['vendorbusinessdetails']['shop_name']))
                 <div>
-                    sold by <a href="/products/{{ $productDetails['vendor']['id'] }}">{{ $productDetails['vendor']['vendorbusinessdetails']['shop_name'] }}</a>
+                    sold by <a
+                        href="/products/{{ $productDetails['vendor']['id'] }}">{{ $productDetails['vendor']['vendorbusinessdetails']['shop_name'] }}</a>
                 </div>
                 @endif
 
@@ -180,7 +185,8 @@ $productFilters = ProductsFilter::productFilters();
                             <div class="mt-3">
                                 @foreach($groupProducts as $product)
                                 <a href="{{ url('product/'.$product['id']) }}">
-                                    <img src="{{ asset('front/images/product_images/small/'.$product['product_image']) }}" width="80">
+                                    <img src="{{ asset('front/images/product_images/small/'.$product['product_image']) }}"
+                                        width="80">
                                 </a>
                                 @endforeach
                             </div>
@@ -189,7 +195,8 @@ $productFilters = ProductsFilter::productFilters();
                         <div class="sizes u-s-m-b-11 mt-3">
                             <span>Available Size:</span>
                             <div class="size-variant select-box-wrapper">
-                                <select name="size" id="getPrice" product-id="{{ $productDetails['id'] }}" class="select-box product-size" require>
+                                <select name="size" id="getPrice" product-id="{{ $productDetails['id'] }}"
+                                    class="select-box product-size" require>
                                     <option value="">Select Size</option>
                                     @foreach($productDetails['attributes'] as $attribute)
                                     <option value="{{ $attribute['size'] }}">{{ $attribute['size'] }}</option>
@@ -199,36 +206,6 @@ $productFilters = ProductsFilter::productFilters();
                         </div>
                     </div>
                     <div class="section-6-social-media-quantity-actions u-s-p-y-14">
-                        <!-- <div class="quick-social-media-wrapper u-s-m-b-22">
-                                        <span>Share:</span>
-                                        <ul class="social-media-list">
-                                            <li>
-                                                <a href="#">
-                                                    <i class="fab fa-facebook-f"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i class="fab fa-twitter"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i class="fab fa-google-plus-g"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i class="fas fa-rss"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i class="fab fa-pinterest"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div> -->
                         <div class="quantity-wrapper u-s-m-b-22">
                             <span>Quantity:</span>
                             <div class="quantity">
@@ -270,7 +247,9 @@ $productFilters = ProductsFilter::productFilters();
                         <div>
                             @if($productDetails['product_video'])
                             <video controls>
-                                <source src=src="{{ url('front/videos/product_videos/'.$productDetails['product_video']) }}" type="video/mp4">
+                                <source
+                                    src=src="{{ url('front/videos/product_videos/'.$productDetails['product_video']) }}"
+                                    type="video/mp4">
                             </video>
                             @else
                             <p>Product Video Not exists</p>
@@ -286,7 +265,7 @@ $productFilters = ProductsFilter::productFilters();
                                 <table>
                                     @foreach($productFilters as $filter)
                                     @if(isset($productDetails['category_id']))
-                                    <?php $filterAvailable = ProductsFilter::filterAvailable($filter['id'], $productDetails['category_id']) ?>
+                                    <?php $filterAvailable = ProductsFilter::filterAvailable($filter['id'],$productDetails['category_id']) ?>
                                     @if($filterAvailable=="Yes")
                                     <tr>
                                         <td>{{ $filter['filter_name'] }}</td>
@@ -373,10 +352,12 @@ $productFilters = ProductsFilter::productFilters();
                                                     <span id="your-stars" style='width:0'></span>
                                                 </div>
                                                 <label for="your-rating-value"></label>
-                                                <input name="rating" id="your-rating-value" type="text" class="text-field" placeholder="0.0" require>
+                                                <input name="rating" id="your-rating-value" type="text"
+                                                    class="text-field" placeholder="0.0" require>
                                                 <span id="star-comment"></span>
                                             </div>
-                                            <textarea name="review" class="text-area u-s-m-b-8" id="review-text-area" placeholder="Review" require></textarea>
+                                            <textarea name="review" class="text-area u-s-m-b-8" id="review-text-area"
+                                                placeholder="Review" require></textarea>
                                             <button class="button button-outline-secondary">Submit Review</button>
                                         </form>
                                     </div>
@@ -410,18 +391,16 @@ $productFilters = ProductsFilter::productFilters();
                                         <div class="reviewer-name-and-date">
                                             <h6 class="reviewer-name">By {{ $rating['user']['name'] }}</h6>
                                             <h6 class="review-posted-date">
-                                                {{ date("d-m-Y", strtotime($rating['created_at'])); }}
-                                            </h6>
+                                                {{ date("d-m-Y", strtotime($rating['created_at'])); }}</h6>
                                         </div>
                                         <div class="reviewer-stars-title-body">
                                             <div class="reviewer-stars">
                                                 <div>
-                                                    <?php
-                                                    $count = 0;
-                                                    while ($count < $rating['rating']) { ?>
-                                                        <span>&#9733;</span>
-                                                    <?php $count++;
-                                                    } ?>
+                                                    <?php 
+                                                                    $count=0;
+                                                                    while($count<$rating['rating']){ ?>
+                                                    <span>&#9733;</span>
+                                                    <?php $count++; } ?>
                                                 </div>
                                                 <!-- <span class="review-title">Good!</span> -->
                                             </div>
@@ -493,12 +472,14 @@ $productFilters = ProductsFilter::productFilters();
                         <div class="item">
                             <div class="image-container">
                                 <a class="item-img-wrapper-link" href="{{ url('product/'.$product['id']) }}">
-                                    <?php $product_image_path = 'front/images/product_images/small/' . $product['product_image'] ?>
+                                    <?php $product_image_path = 'front/images/product_images/small/'.$product['product_image'] ?>
 
                                     @if(!empty($product['product_image']) && file_exists($product_image_path))
                                     <img class="img-fluid" src="{{ asset($product_image_path) }}" alt="Product">
                                     @else
-                                    <img class="img-fluid" src="{{ asset('front/images/product_images/small/no-images.png')}}" alt="Product">
+                                    <img class="img-fluid"
+                                        src="{{ asset('front/images/product_images/small/no-images.png')}}"
+                                        alt="Product">
                                     @endif
                                 </a>
                                 <!-- <div class="item-action-behaviors">
@@ -522,7 +503,8 @@ $productFilters = ProductsFilter::productFilters();
                                         </li>
                                     </ul>
                                     <h6 class="item-title">
-                                        <a href="{{ url('product/'.$product['id']) }}">{{ $product['product_name'] }}</a>
+                                        <a
+                                            href="{{ url('product/'.$product['id']) }}">{{ $product['product_name'] }}</a>
                                     </h6>
                                     @php
                                     // Get the average rating and total number of reviews for the current product
@@ -532,7 +514,8 @@ $productFilters = ProductsFilter::productFilters();
                                     @endphp
 
                                     <div class="item-stars">
-                                        <div class='star' title="{{ $averageRating }} out of 5 - based on {{ $totalReviews }} {{ $totalReviews == 1 ? 'Review' : 'Reviews' }}">
+                                        <div class='star'
+                                            title="{{ $averageRating }} out of 5 - based on {{ $totalReviews }} {{ $totalReviews == 1 ? 'Review' : 'Reviews' }}">
                                             <span style='width:{{ ($averageRating / 5) * 100 }}%'></span>
                                         </div>
                                         <span>({{ $totalReviews }})</span>
@@ -581,12 +564,14 @@ $productFilters = ProductsFilter::productFilters();
                         <div class="item">
                             <div class="image-container">
                                 <a class="item-img-wrapper-link" href="{{ url('product/'.$product['id']) }}">
-                                    <?php $product_image_path = 'front/images/product_images/small/' . $product['product_image'] ?>
+                                    <?php $product_image_path = 'front/images/product_images/small/'.$product['product_image'] ?>
 
                                     @if(!empty($product['product_image']) && file_exists($product_image_path))
                                     <img class="img-fluid" src="{{ asset($product_image_path) }}" alt="Product">
                                     @else
-                                    <img class="img-fluid" src="{{ asset('front/images/product_images/small/no-images.png')}}" alt="Product">
+                                    <img class="img-fluid"
+                                        src="{{ asset('front/images/product_images/small/no-images.png')}}"
+                                        alt="Product">
                                     @endif
                                 </a>
                                 <!-- <div class="item-action-behaviors">
@@ -610,7 +595,8 @@ $productFilters = ProductsFilter::productFilters();
                                         </li>
                                     </ul>
                                     <h6 class="item-title">
-                                        <a href="{{ url('product/'.$product['id']) }}">{{ $product['product_name'] }}</a>
+                                        <a
+                                            href="{{ url('product/'.$product['id']) }}">{{ $product['product_name'] }}</a>
                                     </h6>
                                     @php
                                     // Get the average rating and total number of reviews for the current product
@@ -620,7 +606,8 @@ $productFilters = ProductsFilter::productFilters();
                                     @endphp
 
                                     <div class="item-stars">
-                                        <div class='star' title="{{ $averageRating }} out of 5 - based on {{ $totalReviews }} {{ $totalReviews == 1 ? 'Review' : 'Reviews' }}">
+                                        <div class='star'
+                                            title="{{ $averageRating }} out of 5 - based on {{ $totalReviews }} {{ $totalReviews == 1 ? 'Review' : 'Reviews' }}">
                                             <span style='width:{{ ($averageRating / 5) * 100 }}%'></span>
                                         </div>
                                         <span>({{ $totalReviews }})</span>
