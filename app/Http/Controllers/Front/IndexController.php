@@ -22,12 +22,12 @@ class IndexController extends Controller
         $bestSellers = Product::where(['is_bestseller' => 'Yes', 'status' => 1])->with('category')->with('brand')->inRandomOrder()->get()->toArray();
         $discounterProducts = Product::where('product_discount', '>', 0)->with('category')->with('brand')->where('status', 1)->limit(6)->inRandomOrder()->get()->toArray();
         $isfeatured = Product::where(['is_featured' => 'Yes', 'status' => 1])->with('category')->with('brand')->inRandomOrder()->get()->toArray();
-
         // recommended product
         if(auth()->check()) {
 
             $orderProducts = OrdersProduct::where('user_id',auth()->id())->pluck('product_id');
             $categoryId = Product::whereIn('id', $orderProducts)->pluck('category_id')->unique();
+            // dd($categoryId);
             $categoryProducts = Product::whereIn('category_id', $categoryId)->whereNotIN('id',$orderProducts)->pluck('id');
             $ratingProducts = Rating::pluck('product_id');
             // dd($ratingProducts);
