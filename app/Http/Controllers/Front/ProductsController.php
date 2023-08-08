@@ -729,38 +729,38 @@ class ProductsController extends Controller
 
             $order_id = DB::getPdo()->lastInsertId();
 
-            // foreach ($getCartItems as $item) {
-            //     $getCartItems = new OrdersProduct();
-            //     $getCartItems->order_id = $order_id;
-            //     $getCartItems->user_id = Auth::user()->id;
-            //     $getProductDetails = Product::select('product_code', 'product_name', 'product_color', 'admin_id', 'vendor_id')->where('id', $item['product_id'])->first()->toArray();
-            //     // dd($getProductDetails);
+            foreach ($getCartItems as $item) {
+                $getCartItems = new OrdersProduct();
+                $getCartItems->order_id = $order_id;
+                $getCartItems->user_id = Auth::user()->id;
+                $getProductDetails = Product::select('product_code', 'product_name', 'product_color', 'admin_id', 'vendor_id')->where('id', $item['product_id'])->first()->toArray();
+                // dd($getProductDetails);
 
-            //     $getCartItems->admin_id = $getProductDetails['admin_id'];
-            //     $getCartItems->vendor_id = $getProductDetails['vendor_id'];
-            //     $getCartItems->product_id = $item['product_id'];
-            //     $getCartItems->product_code = $getProductDetails['product_code'];
-            //     $getCartItems->product_name = $getProductDetails['product_name'];
-            //     $getCartItems->product_color = $getProductDetails['product_color'];
-            //     $getCartItems->product_size = $item['size'];
-            //     $getDiscountAttributePrice = Product::getDiscountAttributePrice($item['product_id'], $item['size']);
-            //     $getCartItems->product_price = $getDiscountAttributePrice['final_price'];
+                $getCartItems->admin_id = $getProductDetails['admin_id'];
+                $getCartItems->vendor_id = $getProductDetails['vendor_id'];
+                $getCartItems->product_id = $item['product_id'];
+                $getCartItems->product_code = $getProductDetails['product_code'];
+                $getCartItems->product_name = $getProductDetails['product_name'];
+                $getCartItems->product_color = $getProductDetails['product_color'];
+                $getCartItems->product_size = $item['size'];
+                $getDiscountAttributePrice = Product::getDiscountAttributePrice($item['product_id'], $item['size']);
+                $getCartItems->product_price = $getDiscountAttributePrice['final_price'];
 
-            //     $getProductStock = ProductsAttributes::getProductStock($item['product_id'], $item['size']);
+                $getProductStock = ProductsAttributes::getProductStock($item['product_id'], $item['size']);
 
-            //     if ($item['quantity'] > $getProductStock) {
-            //         $message = $getProductDetails['product_name'] . " with " . $item['size'] . " Quantity in not available. Please reduce its quantity and try again.";
-            //         return redirect('/cart')->with('error_message', $message);
-            //     }
-            //     $getCartItems->product_qty = $item['quantity'];
-            //     $getCartItems->save();
+                if ($item['quantity'] > $getProductStock) {
+                    $message = $getProductDetails['product_name'] . " with " . $item['size'] . " Quantity in not available. Please reduce its quantity and try again.";
+                    return redirect('/cart')->with('error_message', $message);
+                }
+                $getCartItems->product_qty = $item['quantity'];
+                $getCartItems->save();
 
-            //     // Reduce Stock Script Starts
-            //     $getProductStock = ProductsAttributes::getProductStock($item['product_id'], $item['size']);
-            //     $newStock = $getProductStock - $item['quantity'];
-            //     ProductsAttributes::where(['product_id' => $item['product_id'], 'size' => $item['size']])->update(['stock' => $newStock]);
-            //     // Reduce Stock Script ends
-            // }
+                // Reduce Stock Script Starts
+                $getProductStock = ProductsAttributes::getProductStock($item['product_id'], $item['size']);
+                $newStock = $getProductStock - $item['quantity'];
+                ProductsAttributes::where(['product_id' => $item['product_id'], 'size' => $item['size']])->update(['stock' => $newStock]);
+                // Reduce Stock Script ends
+            }
 
             // Insert Order ID in Session variable
             Session::put('order_id', $order_id);
