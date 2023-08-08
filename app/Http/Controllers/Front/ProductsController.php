@@ -673,6 +673,7 @@ class ProductsController extends Controller
 
                 $payment_method = "SSLCommerz";
                 $order_status = "New";
+
                 /* ------------------------------ ssl commerze ------------------------------ */
             } else {
                 $payment_method = "Prepaid";
@@ -699,105 +700,33 @@ class ProductsController extends Controller
 
             // Insert Grand Total in Session Variable
             Session::put('grand_total', $grand_total);
-            if ($data['payment_gateway'] != "sslcommerz") {
-
-                // return $data;
-                //Insert Order Details
-                $order = new Order;
-                $order->user_id = Auth::user()->id;
-                $order->name = $deliveryAddress['name'];
-                $order->address = $deliveryAddress['address'];
-                $order->city = $deliveryAddress['city'];
-                $order->state = $deliveryAddress['state'];
-                $order->country = $deliveryAddress['country'];
-                $order->pincode = $deliveryAddress['pincode'];
-                $order->mobile = $deliveryAddress['mobile'];
-                $order->email = Auth::user()->email;
-                $order->shipping_charges = $shipping_charges;
-                $order->coupon_code = Session::get('couponCode');
-                $order->coupon_amount = Session::get('couponAmount');
-                $order->order_status = $order_status;
-                $order->payment_method = $payment_method;
-                $order->payment_gateway = $data['payment_gateway'];
-                $order->grand_total = $grand_total;
-
-                $order->save();
-
-            } else {
 
 
-
-
-                $post_data = array();
-                $post_data['total_amount'] = $grand_total + $shipping_charges; # You cant not pay less than 10
-                $post_data['currency'] = "BDT";
-                $post_data['tran_id'] = uniqid(); // tran_id must be unique
-
-                # CUSTOMER INFORMATION
-                $post_data['cus_name'] = $deliveryAddress['name'];
-                $post_data['cus_email'] = Auth::user()->email;
-                $post_data['cus_add1'] = $deliveryAddress['address'];
-                $post_data['pin_code'] = $deliveryAddress['pincode'];
-                $post_data['cus_add2'] = "";
-                $post_data['cus_city'] = "";
-                $post_data['cus_state'] = "";
-                $post_data['cus_postcode'] = "";
-                $post_data['cus_country'] = $deliveryAddress['country'];
-                $post_data['cus_phone'] = $deliveryAddress['mobile'];
-                ;
-                $post_data['cus_fax'] = "";
-
-                // # SHIPMENT INFORMATION
-                // $post_data['ship_name'] = "Store Test";
-                // $post_data['ship_add1'] = "Dhaka";
-                // $post_data['ship_add2'] = "Dhaka";
-                // $post_data['ship_city'] = "Dhaka";
-                // $post_data['ship_state'] = "Dhaka";
-                // $post_data['ship_postcode'] = "1000";
-                // $post_data['ship_phone'] = "";
-                $post_data['ship_country'] = $deliveryAddress['country'];
-                ;
-
-                $post_data['shipping_method'] = "NO";
-                $post_data['product_name'] = "nothing";
-                $post_data['product_category'] = "Goods";
-                $post_data['product_profile'] = "physical-goods";
-
-                # OPTIONAL PARAMETERS
-                // $post_data['value_a'] = "ref001";
-                // $post_data['value_b'] = "ref002";
-                // $post_data['value_c'] = "ref003";
-                // $post_data['value_d'] = "ref004";
-
-                #Before  going to initiate the payment order status need to insert or update as Pending.
-                $update_product = DB::table('orders')
-                    // ->where('transaction_id', $post_data['tran_id'])
-                    ->updateOrInsert([
-                        'user_id' => Auth::user()->id,
-                        'name' => $post_data['cus_name'],
-                        'email' => $post_data['cus_email'],
-                        'mobile' => $post_data['cus_phone'],
-                        'grand_total' => $post_data['total_amount'],
-                        'payment_status' => 'Pending',
-                        'address' => $post_data['cus_add1'],
-                        'transaction_id' => $post_data['tran_id'],
-                        // 'currency' => $post_data['currency']
-                    ]);
-
-                $sslc = new SslCommerzNotification();
-                # initiate(Transaction Data , false: Redirect to SSLCOMMERZ gateway/ true: Show all the Payement gateway here )
-                $payment_options = $sslc->makePayment($post_data, 'hosted');
-
-                if (!is_array($payment_options)) {
-                    print_r($payment_options);
-                    $payment_options = array();
-                }
-
-
-
-
-
+            // return $data;
+            //Insert Order Details
+            $order = new Order;
+            $order->user_id = Auth::user()->id;
+            $order->name = $deliveryAddress['name'];
+            $order->address = $deliveryAddress['address'];
+            $order->city = $deliveryAddress['city'];
+            $order->state = $deliveryAddress['state'];
+            $order->country = $deliveryAddress['country'];
+            $order->pincode = $deliveryAddress['pincode'];
+            $order->mobile = $deliveryAddress['mobile'];
+            $order->email = Auth::user()->email;
+            $order->shipping_charges = $shipping_charges;
+            $order->coupon_code = Session::get('couponCode');
+            $order->coupon_amount = Session::get('couponAmount');
+            $order->order_status = $order_status;
+            $order->payment_method = $payment_method;
+            $order->payment_gateway = $data['payment_gateway'];
+            $order->grand_total = $grand_total;
+            if ($data['payment_gateway'] == "sslcommerz") {
+                $order->payment_status = "pending";
             }
+            $order->save();
+
+
             $order_id = DB::getPdo()->lastInsertId();
 
             // foreach ($getCartItems as $item) {
@@ -853,7 +782,60 @@ class ProductsController extends Controller
 //                    $message->to($email)->subject('Order Placed - Anon.com');
 //                });
             }
+            if ($data['payment_gateway'] == "sslcommerz") {
+                $post_data = array();
+                $post_data['total_amount'] = $grand_total + $shipping_charges; # You cant not pay less than 10
+                $post_data['currency'] = "BDT";
+                $post_data['tran_id'] = uniqid(); // tran_id must be unique
 
+                # CUSTOMER INFORMATION
+                $post_data['cus_name'] = $deliveryAddress['name'];
+                $post_data['cus_email'] = Auth::user()->email;
+                $post_data['cus_add1'] = $deliveryAddress['address'];
+                $post_data['pin_code'] = $deliveryAddress['pincode'];
+                $post_data['cus_add2'] = "";
+                $post_data['cus_city'] = "";
+                $post_data['cus_state'] = "";
+                $post_data['cus_postcode'] = "";
+                $post_data['cus_country'] = $deliveryAddress['country'];
+                $post_data['cus_phone'] = $deliveryAddress['mobile'];
+                ;
+                $post_data['cus_fax'] = "";
+
+                // # SHIPMENT INFORMATION
+                // $post_data['ship_name'] = "Store Test";
+                // $post_data['ship_add1'] = "Dhaka";
+                // $post_data['ship_add2'] = "Dhaka";
+                // $post_data['ship_city'] = "Dhaka";
+                // $post_data['ship_state'] = "Dhaka";
+                // $post_data['ship_postcode'] = "1000";
+                // $post_data['ship_phone'] = "";
+                $post_data['ship_country'] = $deliveryAddress['country'];
+                ;
+
+                $post_data['shipping_method'] = "NO";
+                $post_data['product_name'] = "nothing";
+                $post_data['product_category'] = "Goods";
+                $post_data['product_profile'] = "physical-goods";
+
+                # OPTIONAL PARAMETERS
+                // $post_data['value_a'] = "ref001";
+                // $post_data['value_b'] = "ref002";
+                // $post_data['value_c'] = "ref003";
+                // $post_data['value_d'] = "ref004";
+
+                #Before  going to initiate the payment order status need to insert or update as Pending.
+
+
+                $sslc = new SslCommerzNotification();
+                # initiate(Transaction Data , false: Redirect to SSLCOMMERZ gateway/ true: Show all the Payement gateway here )
+                $payment_options = $sslc->makePayment($post_data, 'hosted');
+
+                if (!is_array($payment_options)) {
+                    print_r($payment_options);
+                    $payment_options = array();
+                }
+            }
             /* ----------------------------- SSLCommerz here ---------------------------- */
             if ($data['payment_gateway'] == "Paypal") {
                 // Paypal - Redirectuser to Paypal pageafter saving order
