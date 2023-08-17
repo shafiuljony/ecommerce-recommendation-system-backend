@@ -80,16 +80,6 @@ class OrdersTableSeeder extends Seeder
                     'updated_at' => now(),
                 ]);
             }
-
-
-
-
-
-
-
-
-
-
         }
     }
 }
