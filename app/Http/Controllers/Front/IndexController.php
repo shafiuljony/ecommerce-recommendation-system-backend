@@ -22,38 +22,35 @@ class IndexController extends Controller
         $bestSellers = Product::where(['is_bestseller' => 'Yes', 'status' => 1])->with('category')->with('brand')->inRandomOrder()->get()->toArray();
         $discounterProducts = Product::where('product_discount', '>', 0)->with('category')->with('brand')->where('status', 1)->limit(6)->inRandomOrder()->get()->toArray();
         $isfeatured = Product::where(['is_featured' => 'Yes', 'status' => 1])->with('category')->with('brand')->inRandomOrder()->get()->toArray();
+
+
         // recommended product
-        if(auth()->check()) {
+        if (auth()->check()) {
+    $orderProducts = OrdersProduct::where('user_id', auth()->id())->pluck('product_id');
+    $categoryId = Product::whereIn('id', $orderProducts)->pluck('category_id')->unique();
+    $categoryProducts = Product::whereIn('category_id', $categoryId)->whereNotIn('id', $orderProducts)->pluck('id');
+    $ratingProducts = Rating::pluck('product_id')->take(20);
 
-            $orderProducts = OrdersProduct::where('user_id',auth()->id())->pluck('product_id');
-            $categoryId = Product::whereIn('id', $orderProducts)->pluck('category_id')->unique();
-            // dd($categoryId);
-            $categoryProducts = Product::whereIn('category_id', $categoryId)->whereNotIN('id',$orderProducts)->pluck('id');
-            $ratingProducts = Rating::pluck('product_id');
-            // dd($ratingProducts);
+     if ($categoryProducts->isEmpty()) {
+        $recommendedProductIds = $ratingProducts->pluck('id')->toArray();
+    }else {
+        $recommendedProductIds = $categoryProducts->take(20)->toArray();
+    }
 
-            $sortedProducts = collect();
-            if(count($categoryProducts) > 0){
-                    $topProducts = $categoryProducts->take(20);
-            }else{
-                    $topProducts = $ratingProducts->take(20);
-            }
-            $recommendedProductIds = $topProducts->pluck('id')->toArray();
-            $recommendedProducts = [];
-            if (!empty($recommendedProductIds)) {
-            $recommendedProducts = Product::whereIn('id', $recommendedProductIds)
-                ->where('status', 1)
-                ->orderByRaw("FIELD(id, " . implode(',', $recommendedProductIds) . ") ASC")
-                ->with('category')
-                ->with('brand')
-                ->get()
-                ->toArray();
-            }
-                //   dd($recommendedProducts);
-            //recommended product
-        }else{
-            $recommendedProducts = [];
-        } 
+    if (!empty($recommendedProductIds)) {
+        $recommendedProducts = Product::whereIn('id', $recommendedProductIds)
+            ->where('status', 1)
+            ->orderByRaw("FIELD(id, " . implode(',', $recommendedProductIds) . ") ASC")
+            ->with('category')
+            ->with('brand')
+            ->get()
+            ->toArray();
+    } else {
+        $recommendedProducts = [];
+    }
+} else {
+    $recommendedProducts = [];
+}
         return view('front.index')->with(compact('sliderBanners', 'fixBanners', 'newProducts', 'bestSellers', 'discounterProducts', 'isfeatured', 'recommendedProducts'));
     }
    
