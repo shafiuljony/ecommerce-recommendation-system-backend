@@ -41,9 +41,13 @@
 
 <body>
 
-<div class="loader">
-   <img src="{{ asset('front/images/loaders/loader.gif') }}" alt="loading..." />
+<div class="loader-wrapper">
+   <img src="{{ asset('front/images/loaders/loaderlogin.gif') }}" alt="loading..." />
 </div>
+
+<!-- <div class="loader-wrapper">
+    <img src="{{ asset('front/images/loaders/loader-unscreen.gif') }}" alt="Loader Animation">
+</div> -->
 
 
 <!-- app -->
@@ -56,21 +60,6 @@
 {{--    @include('front.layout.modals')--}}
 
 </div>
-<!-- app /- -->
-<!--[if lte IE 9]>
-<div class="app-issue">
-    <div class="vertical-center">
-        <div class="text-center">
-            <h1>You are using an outdated browser.</h1>
-            <span>This web app is not compatible with following browser. Please upgrade your browser to improve your security and experience.</span>
-        </div>
-    </div>
-</div>
-<style> #app {
-    display: none;
-} </style>
-<![endif]-->
-<!-- NoScript -->
 <noscript>
     <div class="app-issue">
         <div class="vertical-center">
@@ -95,6 +84,14 @@ ga.q = [];
 ga.l = +new Date;
 ga('create', 'UA-XXXXX-Y', 'auto');
 ga('send', 'pageview')
+</script>
+<script>
+    // Show loader initially
+    // document.querySelector('.loader-wrapper').style.display = 'block';
+    // Hide the loader when the content is fully loaded
+    window.addEventListener('load', function() {
+        document.querySelector('.loader-wrapper').style.display = 'none';
+    });
 </script>
 <script src="https://www.google-analytics.com/analytics.js" async defer></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

@@ -31,61 +31,87 @@ class Product extends Model
       return $this->belongsTo('App\Models\Vendor', 'vendor_id')->with('vendorbusinessdetails');
      }
 
-     public static function discountPrice($product_id){
-         $proDetails = Product::select('product_price','product_discount','category_id')->where('id',$product_id)->first();
+     public static function discountPrice($product_id) {
+    $proDetails = Product::select('product_price', 'product_discount', 'category_id')->where('id', $product_id)->first();
 
-         $proDetails = json_decode(json_encode($proDetails),true);
+    if (!$proDetails) {
+        // Product doesn't exist, you can choose either of the following options:
+        // Return an error message, throw an exception, or handle it as needed.
+        // For example:
+        return "Product not found";
+    }
 
-         $catDetails = Category::select('category_discount')->where('id',$proDetails['category_id'])->first();
-        
-         $catDetails = json_decode(json_encode($catDetails),true);
+    $proDetails = $proDetails->toArray();
 
-         if($proDetails['product_discount']>0){
-            //if product discount added from the admin panel then calculate
-            $discounted_price = $proDetails['product_price'] - ( $proDetails['product_price'] * $proDetails['product_discount'] / 100);
-         }else if($catDetails['category_discount']>0){
-            //If Product discount is not added but category discount added from the admin panel
-            $discounted_price = $proDetails['product_price'] - ( $proDetails['product_price'] * $catDetails['category_discount'] / 100);
-         }else{
-            $discounted_price = 0;
-         }
-         return $discounted_price;
-     }
+    $catDetails = null;
+    
+    if ($proDetails['category_id']) {
+        $catDetails = Category::select('category_discount')->where('id', $proDetails['category_id'])->first();
+    }
 
-     public static function getDiscountAttributePrice($product_id, $size){
-      $proAttrPrice = ProductsAttributes::where(['product_id'=>$product_id,'size'=>$size])->first()->toArray();
+    if ($catDetails) {
+        $catDetails = $catDetails->toArray();
+    } else {
+        $catDetails = ['category_discount' => 0];
+    }
 
-      $proDetails = Product::select('product_discount','category_id')->where('id',$product_id)->first();
+    if ($proDetails['product_discount'] > 0) {
+        $discounted_price = $proDetails['product_price'] - ($proDetails['product_price'] * $proDetails['product_discount'] / 100);
+    } else if ($catDetails['category_discount'] > 0) {
+        $discounted_price = $proDetails['product_price'] - ($proDetails['product_price'] * $catDetails['category_discount'] / 100);
+    } else {
+        $discounted_price = $proDetails['product_price'];
+    }
+    
+    return $discounted_price;
+}
 
-      $proDetails = json_decode(json_encode($proDetails),true);
 
-      $catDetails = Category::select('category_discount')->where('id',$proDetails['category_id'])->first();
+public static function getDiscountAttributePrice($product_id, $size) {
+    $proAttrPrice = ProductsAttributes::where(['product_id' => $product_id, 'size' => $size])->first();
 
-      $catDetails = json_decode(json_encode($catDetails),true);
+    if (!$proAttrPrice) {
+        // Handle the case where the product attribute doesn't exist
+        return ['product_price' => 0, 'final_price' => 0, 'discount' => 0];
+    }
 
-      if($proDetails['product_discount'] > 0){
+    $proAttrPrice = $proAttrPrice->toArray();
 
-         //if product discount added from the admin panel then calculate
-         $final_price = $proAttrPrice['price'] - ( $proAttrPrice['price'] * $proDetails['product_discount'] / 100);
+    $proDetails = Product::select('product_discount', 'category_id')->where('id', $product_id)->first();
 
-         $discount = $proAttrPrice['price'] - $final_price;
+    if (!$proDetails) {
+        // Handle the case where the product doesn't exist
+        return ['product_price' => 0, 'final_price' => 0, 'discount' => 0];
+    }
 
-      }else if($catDetails['category_discount'] > 0){
+    $proDetails = $proDetails->toArray();
 
-         //If Product discount is not added but category discount added from the admin panel
+    $catDetails = Category::select('category_discount')->where('id', $proDetails['category_id'])->first();
 
-         $final_price = $proAttrPrice['price'] - ( $proAttrPrice['price'] * $catDetails['category_discount'] / 100);
+    if ($catDetails) {
+        $catDetails = $catDetails->toArray();
+    } else {
+        $catDetails = ['category_discount' => 0];
+    }
 
-         $discount = $proAttrPrice['price'] = $final_price;
+    $final_price = $proAttrPrice['price'];
+    $discount = 0;
 
-      }else{
+    if ($proDetails['product_discount'] > 0) {
+        $final_price = $proAttrPrice['price'] - ($proAttrPrice['price'] * $proDetails['product_discount'] / 100);
+        $discount = $proAttrPrice['price'] - $final_price;
+    } else if ($catDetails['category_discount'] > 0) {
+        $final_price = $proAttrPrice['price'] - ($proAttrPrice['price'] * $catDetails['category_discount'] / 100);
+        $discount = $proAttrPrice['price'] - $final_price;
+    }
 
-         $final_price = $proAttrPrice['price'];
+    return [
+        'product_price' => $proAttrPrice['price'],
+        'final_price' => $final_price,
+        'discount' => $discount
+    ];
+}
 
-         $discount = 0;
-      }
-         return array('product_price'=>$proAttrPrice['price'],'final_price'=>$final_price, 'discount'=>$discount);
-     }
 
      public static function isProductNew($product_id){
          //Get Last 3 Product Added by the Admin/vendor

@@ -554,14 +554,24 @@ class ProductsController extends Controller
         }
 
         $total_price = 0;
-        $total_weight = 0;
-        foreach($getCartItems as $item){
-            // echo "<pre>"; print_r($item); die;
-            $attrPrice = Product::getDiscountAttributePrice($item['product_id'],$item['size']);
-            $total_price = $total_price + ($attrPrice['final_price']+$item['quantity']);
-            $product_weight = $item['product']['product_weight'];
-            $total_weight = $total_weight+$product_weight;
+$total_weight = 0;
+
+foreach ($getCartItems as $item) {
+    // Access attribute price
+    $attrPrice = Product::getDiscountAttributePrice($item['product_id'], $item['size']);
+    
+    // Update total price
+    $total_price += ($attrPrice['final_price'] * $item['quantity']);
+    
+    // Check if 'product' key exists within $item before accessing its properties
+    if (isset($item['product'])) {
+        $product = $item['product'];
+        if (isset($product['product_weight'])) {
+            $product_weight = $product['product_weight'];
+            $total_weight += ($product_weight * $item['quantity']);
         }
+    }
+}
 
         $deliveryAddresses = DeliveryAddress::DeliveryAddresses();
         foreach($deliveryAddresses as $key => $value){

@@ -64,24 +64,34 @@
                                 </thead>
                                 <tbody>
                                 @php $total_price = 0 @endphp
-                                @foreach($getCartItems as $item)
-                                <?php
-                                    $getDiscountAttributePrice = Product::getDiscountAttributePrice($item['product_id'],$item['size']);
-                                    
-                                ?>
-                                    <tr>
-                                        <td>
-                                            <a href="{{ url('product/'.$item['product_id']) }}">
-                                            <img width="50px" src="{{ asset('front/images/product_images/small/'.$item['product']['product_image']) }}" alt="Product">
-                                            <h6 class="order-h6"> {{ $item['product']['product_name'] }} <br>{{ $item['size'] }}/{{ $item['product']['product_color'] }} </h6></a>
-                                            <span class="order-span-quantity">x {{ $item['quantity'] }}</span>
-                                        </td>
-                                        <td>
-                                            <h6 class="order-h6">Tk.{{ $getDiscountAttributePrice['final_price'] * $item['quantity'] }}</h6>
-                                        </td>
-                                    </tr>
-                                    @php $total_price = $total_price + ($getDiscountAttributePrice['final_price'] * $item['quantity']) @endphp    
-                                    @endforeach
+    @foreach($getCartItems as $item)
+        <?php
+            $getDiscountAttributePrice = Product::getDiscountAttributePrice($item['product_id'],$item['size']);
+            
+            // Check if 'product' key exists within $item before accessing its properties
+            $productImage = isset($item['product']['product_image']) ? $item['product']['product_image'] : null;
+            $productName = isset($item['product']['product_name']) ? $item['product']['product_name'] : 'Product Name Not Available';
+            $productSize = isset($item['size']) ? $item['size'] : 'Size Not Available';
+            $productColor = isset($item['product']['product_color']) ? $item['product']['product_color'] : 'Product Color Not Available';
+        ?>
+        <tr>
+            <td>
+                <a href="{{ url('product/'.$item['product_id']) }}">
+                    @if(isset($productImage))
+                        <img width="50px" src="{{ asset('front/images/product_images/small/'.$productImage) }}" alt="Product">
+                    @else
+                        <p>No product image available</p>
+                    @endif
+                    <h6 class="order-h6">{{ $productName }} <br>{{ $productSize }} / {{ $productColor }}</h6>
+                </a>
+                <span class="order-span-quantity">x {{ $item['quantity'] }}</span>
+            </td>
+            <td>
+                <h6 class="order-h6">Tk.{{ $getDiscountAttributePrice['final_price'] * $item['quantity'] }}</h6>
+            </td>
+        </tr>
+        @php $total_price = $total_price + ($getDiscountAttributePrice['final_price'] * $item['quantity']) @endphp    
+    @endforeach
                                     <tr>
                                         <td>
                                             <h3 class="order-h3">Subtotal</h3>

@@ -88,7 +88,7 @@
                     </div>
                     <div class="form-group">
                       <label for="vendor_mobile">Mobile Number</label>
-                      <input type="text" class="form-control" value="{{ $vendorDetails['mobile'] }}" id="vendor_mobile" placeholder="Enter your Mobile Number" name="vendor_mobile" require maxlength="11" minlength="11" >
+                      <input type="text" class="form-control" value="{{ $vendorDetails['mobile'] }}" id="vendor_mobile" placeholder="Enter your Mobile Number" name="vendor_mobile" require >
                     </div>
                     <div class="form-group">
                       <label for="vendor_image">Photo</label>

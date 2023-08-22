@@ -27,7 +27,7 @@ class VendorController extends Controller
             $rules = [
                 "name" => "required",
                 "email" => "required|email|unique:admins|unique:vendors",
-                "mobile" => "required|min:11|numeric|unique:admins|unique:vendors",
+                "mobile" => "required||numeric|unique:admins|unique:vendors",
                 "accept" => "required"
             ];
             $customMessages = [

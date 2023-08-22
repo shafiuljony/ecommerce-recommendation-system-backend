@@ -38,21 +38,22 @@ class IndexController extends Controller
             }else{
                     $topProducts = $ratingProducts->take(20);
             }
-
-
-            $recommendedProducts = Product::whereIn('id', $topProducts)
+            $recommendedProductIds = $topProducts->pluck('id')->toArray();
+            $recommendedProducts = [];
+            if (!empty($recommendedProductIds)) {
+            $recommendedProducts = Product::whereIn('id', $recommendedProductIds)
                 ->where('status', 1)
-                ->orderByRaw("FIELD(id, " . implode(',', $topProducts->toArray()) . ") ASC")
+                ->orderByRaw("FIELD(id, " . implode(',', $recommendedProductIds) . ") ASC")
                 ->with('category')
                 ->with('brand')
                 ->get()
                 ->toArray();
-
+            }
                 //   dd($recommendedProducts);
             //recommended product
         }else{
             $recommendedProducts = [];
-        }
+        } 
         return view('front.index')->with(compact('sliderBanners', 'fixBanners', 'newProducts', 'bestSellers', 'discounterProducts', 'isfeatured', 'recommendedProducts'));
     }
    

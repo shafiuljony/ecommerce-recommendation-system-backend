@@ -16,32 +16,30 @@
             @foreach($getCartItems as $item)
             <?php
                 $getDiscountAttributePrice = Product::getDiscountAttributePrice($item['product_id'],$item['size']);
+                $productImage = isset($item['product']['product_image']) ? $item['product']['product_image'] : null;
+            $productName = isset($item['product']['product_name']) ? $item['product']['product_name'] : 'Product Name Not Available';
+            $productCode = isset($item['product']['product_code']) ? $item['product']['product_code'] : 'Product Code Not Available';
+            $productColor = isset($item['product']['product_color']) ? $item['product']['product_color'] : 'Product Color Not Available';
                 
             ?>
-                <tr>
-                    <td>
-                        <div class="cart-anchor-image">
-                            <a href="{{ url('product/'.$item['product_id']) }}">
-                                <img src="{{ asset('front/images/product_images/small/'.$item['product']['product_image']) }}" alt="Product">
-                                <h6>
-                                    {{ $item['product']['product_name'] }}  ({{ $item['product']['product_code'] }}) - {{ $item['size'] }} <br>
-                                    Color: {{ $item['product']['product_color'] }}
-                                </h6>
-                            </a>
-                        </div>
-                    </td>
-                    <td>
+                        <tr>
+                            <td>
+                                <div class="cart-anchor-image">
+                                    <a href="{{ url('product/'.$item['product_id']) }}">
+                                        @if(isset($productImage))
+                                            <img src="{{ asset('front/images/product_images/small/'.$productImage) }}" alt="Product">
+                                        @else
+                                            <p>No product image available</p>
+                                        @endif
+                                        <h6>
+                                            {{ $productName }} ({{ $productCode }}) - {{ $item['size'] }} <br>
+                                            Color: {{ $productColor }}
+                                        </h6>
+                                    </a>
+                                </div>
+                            </td>
                         <div class="cart-price">
                             @if($getDiscountAttributePrice['discount'] > 0)
-                                <div class="price-template">
-                                    <div class="item-new-price">
-                                    ৳ {{ $getDiscountAttributePrice['final_price'] }}
-                                    </div>
-                                    <div class="item-old-price">
-                                    ৳ {{ $getDiscountAttributePrice['product_price'] }}
-                                    </div>
-                                </div>
-                            @else
                                 <div class="price-template">
                                     <div class="item-new-price">
                                         ৳ {{ $getDiscountAttributePrice['final_price'] }}
