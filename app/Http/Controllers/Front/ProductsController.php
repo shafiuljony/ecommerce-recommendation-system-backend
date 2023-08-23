@@ -517,9 +517,11 @@ class ProductsController extends Controller
                     }else{
                         $couponAmount = $total_amount * ($couponDetails->amount/100);
                     }
-                    // dd($couponDetails->amount_type,$total_amount);
+                    //dd($couponDetails->amount_type,$total_amount);
 
                     $grand_total = $total_amount - $couponAmount;
+
+                    
 
                     //Add Coupon Code & amount in session Variable
                     Session::put('couponAmount',$couponAmount);
@@ -554,24 +556,24 @@ class ProductsController extends Controller
         }
 
         $total_price = 0;
-$total_weight = 0;
+        $total_weight = 0;
 
-foreach ($getCartItems as $item) {
-    // Access attribute price
-    $attrPrice = Product::getDiscountAttributePrice($item['product_id'], $item['size']);
-    
-    // Update total price
-    $total_price += ($attrPrice['final_price'] * $item['quantity']);
-    
-    // Check if 'product' key exists within $item before accessing its properties
-    if (isset($item['product'])) {
-        $product = $item['product'];
-        if (isset($product['product_weight'])) {
-            $product_weight = $product['product_weight'];
-            $total_weight += ($product_weight * $item['quantity']);
+        foreach ($getCartItems as $item) {
+            // Access attribute price
+            $attrPrice = Product::getDiscountAttributePrice($item['product_id'], $item['size']);
+            
+            // Update total price
+            $total_price += ($attrPrice['final_price'] * $item['quantity']);
+            
+            // Check if 'product' key exists within $item before accessing its properties
+            if (isset($item['product'])) {
+                $product = $item['product'];
+                if (isset($product['product_weight'])) {
+                    $product_weight = $product['product_weight'];
+                    $total_weight += ($product_weight * $item['quantity']);
+                }
+            }
         }
-    }
-}
 
         $deliveryAddresses = DeliveryAddress::DeliveryAddresses();
         foreach($deliveryAddresses as $key => $value){
@@ -658,7 +660,7 @@ foreach ($getCartItems as $item) {
             $total_price = 0;
             foreach ($getCartItems as $item) {
                 $getDiscountAttributePrice = Product::getDiscountAttributePrice($item['product_id'],$item['size']);
-                $total_price = $total_price + ($getDiscountAttributePrice['final_price'] + $item['quantity']);
+                $total_price = $total_price + ($getDiscountAttributePrice['final_price'] * $item['quantity']);
             }
 
             // Calculate Shipping Charges
@@ -666,12 +668,13 @@ foreach ($getCartItems as $item) {
 
             // Get shipping charges
             $shipping_charges = ShippingCharge::getShippingCharges($total_weight,$deliveryAddress['country']);
-
             // Calculate Grand Total
             $grand_total = $total_price + $shipping_charges - Session::get('couponAmount');
 
             // Insert Grand Total in Session Variable
             Session::put('grand_total',$grand_total);
+
+            
 
             //Insert Order Details
             $order = new Order;

@@ -41,13 +41,13 @@ class DatabaseSeeder extends Seeder
         $this->call([ProductsTableSeeder::class]);
         $this->call([ProductsAttributesTableSeeder::class]);
         $this->call([UserTableSeeder::class]);
+        $this->call(BannersTableSeeder::class);
+        $this->call(FiltersTableSeeder::class);
+        $this->call(FiltersValuesTableSeeder::class);
+        $this->call(CouponsTableSeeder::class);
+        $this->call(DeliveryAddressTableSeeder::class);
+    $this->call([RatingsTableSeeder::class]);
         $this->call([OrdersTableSeeder::class]);
-        $this->call([RatingsTableSeeder::class]);
-         $this->call(BannersTableSeeder::class);
-         $this->call(FiltersTableSeeder::class);
-         $this->call(FiltersValuesTableSeeder::class);
-         $this->call(CouponsTableSeeder::class);
-         $this->call(DeliveryAddressTableSeeder::class);
          $this->call(OrderStatusTableSeeder::class);
 
          $this->call(CountrySeeder::class);

@@ -38,17 +38,15 @@
     <!-- Custom  -->
     <link rel="stylesheet" href="{{ url('front/css/custom.css') }}">
 </head>
-
 <body>
-
-<div class="loader-wrapper">
-   <img src="{{ asset('front/images/loaders/loaderlogin.gif') }}" alt="loading..." />
+<!-- loading-container -->
+<div id="loadingContainer" class="loading-container">
+    <div class="loading-video">
+        <video id="loadingVideo" autoplay loop muted>
+            <source src="{{ url('front/videos/animated_medium20201002-25684-d3rxxj.mp4') }}" type="video/mp4">
+        </video>
+    </div>
 </div>
-
-<!-- <div class="loader-wrapper">
-    <img src="{{ asset('front/images/loaders/loader-unscreen.gif') }}" alt="Loader Animation">
-</div> -->
-
 
 <!-- app -->
 <div id="app">
@@ -60,21 +58,19 @@
 {{--    @include('front.layout.modals')--}}
 
 </div>
-<noscript>
-    <div class="app-issue">
-        <div class="vertical-center">
-            <div class="text-center">
-                <h1>JavaScript is disabled in your browser.</h1>
-                <span>Please enable JavaScript in your browser or upgrade to a JavaScript-capable browser.</span>
-            </div>
-        </div>
-    </div>
-    <style>
-    #app {
-        display: none;
-    }
-    </style>
-</noscript>
+<script>
+  function showLoader() {
+      const loader = document.getElementById("loadingContainer");
+      loader.classList.remove("hidden");
+  }
+  function hideLoader() {
+      const loader = document.getElementById("loadingContainer");
+      loader.classList.add("hidden");
+  }
+  setTimeout(() => {
+      hideLoader(); // Call this function when your content is loaded
+  }, 1500);
+</script>
 <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
 <script>
 window.ga = function() {
@@ -84,14 +80,6 @@ ga.q = [];
 ga.l = +new Date;
 ga('create', 'UA-XXXXX-Y', 'auto');
 ga('send', 'pageview')
-</script>
-<script>
-    // Show loader initially
-    // document.querySelector('.loader-wrapper').style.display = 'block';
-    // Hide the loader when the content is fully loaded
-    window.addEventListener('load', function() {
-        document.querySelector('.loader-wrapper').style.display = 'none';
-    });
 </script>
 <script src="https://www.google-analytics.com/analytics.js" async defer></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -128,21 +116,21 @@ ga('send', 'pageview')
 <!-- Zoom  -->
 <script type="text/javascript" src="{{url('front/js/easyzoom.js') }}"></script>
 <script>
-		// Instantiate EasyZoom instances
-		var $easyzoom = $('.easyzoom').easyZoom();
-
-		// Setup thumbnails example
-		var api1 = $easyzoom.filter('.easyzoom--with-thumbnails').data('easyZoom');
-
-		$('.thumbnails').on('click', 'a', function(e) {
-			var $this = $(this);
-
-			e.preventDefault();
-
-			// Use EasyZoom's `swap` method
-			api1.swap($this.data('standard'), $this.attr('href'));
-		});
-
+    // Instantiate EasyZoom instances
+    var $easyzoom = $('.easyzoom').easyZoom();
+    
+    // Setup thumbnails example
+    var api1 = $easyzoom.filter('.easyzoom--with-thumbnails').data('easyZoom');
+    
+    $('.thumbnails').on('click', 'a', function(e) {
+        var $this = $(this);
+        
+        e.preventDefault();
+        
+        // Use EasyZoom's `swap` method
+        api1.swap($this.data('standard'), $this.attr('href'));
+    });
+    
 		// Setup toggles example
 		var api2 = $easyzoom.filter('.easyzoom--with-toggle').data('easyZoom');
 
@@ -150,7 +138,7 @@ ga('send', 'pageview')
 			var $this = $(this);
 
 			if ($this.data("active") === true) {
-				$this.text("Switch on").data("active", false);
+                $this.text("Switch on").data("active", false);
 				api2.teardown();
 			} else {
 				$this.text("Switch off").data("active", true);
@@ -159,6 +147,11 @@ ga('send', 'pageview')
 		});
 	</script>
 
+                <!-- <script>
+                   $(window).on("load", function () {
+                    $(".loading-container").addClass("hidden");
+                });
+                </script> -->
 @include('front.layout.scripts')
 
 </body>

@@ -90,8 +90,8 @@
                 <h6 class="order-h6">Tk.{{ $getDiscountAttributePrice['final_price'] * $item['quantity'] }}</h6>
             </td>
         </tr>
-        @php $total_price = $total_price + ($getDiscountAttributePrice['final_price'] * $item['quantity']) @endphp    
-    @endforeach
+                        @php $total_price = $total_price + ($getDiscountAttributePrice['final_price'] * $item['quantity']) @endphp    
+                    @endforeach
                                     <tr>
                                         <td>
                                             <h3 class="order-h3">Subtotal</h3>
@@ -130,12 +130,12 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <div class="u-s-m-b-13 allpincodeMethod">
+                            <div class="u-s-m-b-13">
                                 <input type="radio" class="radio-box" name="payment_gateway" id="cash-on-delivery" value="COD">
                                 <label class="label-text" for="cash-on-delivery">Cash on Delivery</label>
                             </div>
                     
-                            <div class="u-s-m-b-13 allpincodeMethod">
+                            <div class="u-s-m-b-13">
                                     <input type="radio" class="radio-box" name="payment_gateway" id="paypal" value="Paypal">
                                     <label class="label-text" for="paypal">Paypal</label>
                             </div>
