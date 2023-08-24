@@ -17,10 +17,10 @@
             <?php
                 $getDiscountAttributePrice = Product::getDiscountAttributePrice($item['product_id'],$item['size']);
                 $productImage = isset($item['product']['product_image']) ? $item['product']['product_image'] : null;
-            $productName = isset($item['product']['product_name']) ? $item['product']['product_name'] : 'Product Name Not Available';
-            $productCode = isset($item['product']['product_code']) ? $item['product']['product_code'] : 'Product Code Not Available';
-            $productColor = isset($item['product']['product_color']) ? $item['product']['product_color'] : 'Product Color Not Available';
-                
+                $productName = isset($item['product']['product_name']) ? $item['product']['product_name'] : 'Product Name Not Available';
+                $productCode = isset($item['product']['product_code']) ? $item['product']['product_code'] : 'Product Code Not Available';
+                $productColor = isset($item['product']['product_color']) ? $item['product']['product_color'] : 'Product Color Not Available';
+                    
             ?>
                         <tr>
                             <td>
@@ -38,16 +38,7 @@
                                     </a>
                                 </div>
                             </td>
-                        <div class="cart-price">
-                            @if($getDiscountAttributePrice['discount'] > 0)
-                                <div class="price-template">
-                                    <div class="item-new-price">
-                                        ৳ {{ $getDiscountAttributePrice['final_price'] }}
-                                    </div>
-                                </div>
-                            @endif
-                        </div>
-                    </td>
+                        </td>
                     <td>
                         <div class="cart-quantity">
                             <div class="quantity">

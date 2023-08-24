@@ -26,32 +26,33 @@ class IndexController extends Controller
 
         // recommended product
         if (auth()->check()) {
-    $orderProducts = OrdersProduct::where('user_id', auth()->id())->pluck('product_id');
-    $categoryId = Product::whereIn('id', $orderProducts)->pluck('category_id')->unique();
-    $categoryProducts = Product::whereIn('category_id', $categoryId)->whereNotIn('id', $orderProducts)->pluck('id');
-    $ratingProducts = Rating::pluck('product_id')->take(20);
+            $orderProducts = OrdersProduct::where('user_id', auth()->id())->pluck('product_id');
+            $categoryId = Product::whereIn('id', $orderProducts)->pluck('category_id')->unique();
+            $categoryProducts = Product::whereIn('category_id', $categoryId)->whereNotIn('id', $orderProducts)->pluck('id');
 
-     if ($categoryProducts->isEmpty()) {
-        $recommendedProductIds = $ratingProducts->pluck('id')->toArray();
-    }else {
-        $recommendedProductIds = $categoryProducts->take(20)->toArray();
-    }
+            if ($categoryProducts->isEmpty()) {
+                $ratingProducts = Rating::pluck('product_id')->take(20);
+                $recommendedProductIds = $ratingProducts->toArray();
+            } else {
+                $recommendedProductIds = $categoryProducts->take(20)->toArray();
+            }
 
-    if (!empty($recommendedProductIds)) {
-        $recommendedProducts = Product::whereIn('id', $recommendedProductIds)
-            ->where('status', 1)
-            ->orderByRaw("FIELD(id, " . implode(',', $recommendedProductIds) . ") ASC")
-            ->with('category')
-            ->with('brand')
-            ->get()
-            ->toArray();
-    } else {
+            if (!empty($recommendedProductIds)) {
+                $recommendedProducts = Product::whereIn('id', $recommendedProductIds)
+                    ->where('status', 1)
+                    ->orderByRaw("FIELD(id, " . implode(',', $recommendedProductIds) . ") ASC")
+                    ->with('category')
+                    ->with('brand')
+                    ->get()
+                    ->toArray();
+            } else {
+                $recommendedProducts = [];
+            }
+        } else {
         $recommendedProducts = [];
     }
-} else {
-    $recommendedProducts = [];
-}
         return view('front.index')->with(compact('sliderBanners', 'fixBanners', 'newProducts', 'bestSellers', 'discounterProducts', 'isfeatured', 'recommendedProducts'));
+    
     }
    
 }
