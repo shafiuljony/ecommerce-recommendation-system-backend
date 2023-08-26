@@ -17,14 +17,15 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->string('address')->nullable();
-            $table->string('city')->nullable();
-            $table->string('state')->nullable();
-            $table->string('country')->nullable();
+            $table->string('city')->default('chattogram');
+            $table->string('state')->default('chattogram');
+            $table->string('country')->default('Bangladesh');
             $table->string('pincode')->nullable();
             $table->string('mobile')->nullable();
             $table->string('email')->unique();
+            $table->string('confirm')->default(0);
+            $table->string('commission')->default(2);
             $table->tinyInteger('status')->default(0);
-            $table->string('confirm')->nullable();
             $table->timestamps();
         });
     }

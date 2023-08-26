@@ -149,11 +149,11 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
        Route::get('users','UserController@users');
        Route::post('update-user-status','UserController@updateUserStatus');
 
-    //    // CMS Pages
-    //    Route::get('cms-pages','CmsController@cmspages');
-    //    Route::post('update-cms-page-status','CmsController@updatePageStatus');
-    //    Route::get('delete-page/{id}','CmsController@deletePage');
-    //    Route::match('get','post','add-edit-cms-page/{id?}','CmsController@addEditCmsPage');
+        // CMS Pages
+        Route::get('cms-pages','CmsController@index');
+        /** Route::post('update-cms-page-status','CmsController@updatePageStatus');
+        Route::get('delete-page/{id}','CmsController@deletePage');
+        Route::match('get','post','add-edit-cms-page/{id?}','CmsController@addEditCmsPage');*/
 
        //Orders
        Route::get('orders','OrderController@orders');

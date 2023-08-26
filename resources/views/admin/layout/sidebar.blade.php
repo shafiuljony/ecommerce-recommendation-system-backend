@@ -114,7 +114,6 @@
             <div class="collapse" id="ui-users">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a @if(Session::get('page')=="users") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @else style="background: #fff !important; color:hsl(353deg 100% 78%) !important;"  @endif class="nav-link" href="{{ url('admin/users') }}">Users</a></li>
-                    <li class="nav-item"> <a @if(Session::get('page')=="subscribers") style="background: hsl(353deg 100% 78%) !important; color:#fff !important;" @else style="background: #fff !important; color:hsl(353deg 100% 78%) !important;"  @endif class="nav-link" href="{{ url('admin/subscribers') }}">Subscribers</a></li>
                 </ul>
             </div>
         </li>

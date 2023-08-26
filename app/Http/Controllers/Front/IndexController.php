@@ -18,9 +18,9 @@ class IndexController extends Controller
     {
         $sliderBanners =  Banner::where('type', 'Slider')->where('status', 1)->get()->toArray();
         $fixBanners =  Banner::where('type', 'Fix')->where('status', 1)->get()->toArray();
-        $newProducts = Product::orderBy('id', 'Desc')->with('category')->with('brand')->where('status', 1)->limit(8)->get()->toArray();
+        $newProducts = Product::orderBy('id', 'Desc')->with('category')->with('brand')->where('status', 1)->limit(30)->get()->toArray();
         $bestSellers = Product::where(['is_bestseller' => 'Yes', 'status' => 1])->with('category')->with('brand')->inRandomOrder()->get()->toArray();
-        $discounterProducts = Product::where('product_discount', '>', 0)->with('category')->with('brand')->where('status', 1)->limit(6)->inRandomOrder()->get()->toArray();
+        $discounterProducts = Product::where('product_discount', '>', 0)->with('category')->with('brand')->where('status', 1)->limit(20)->inRandomOrder()->get()->toArray();
         $isfeatured = Product::where(['is_featured' => 'Yes', 'status' => 1])->with('category')->with('brand')->inRandomOrder()->get()->toArray();
 
 

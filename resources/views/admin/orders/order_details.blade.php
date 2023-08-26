@@ -146,31 +146,31 @@ use App\Models\Coupon;
                       <label style="font-weight: 550;">Name </label>
                       <label>{{ $orderDetails['name'] }}</label>
                     </div>
-                    @if(!empty($userDetails['address']))
+                    @if(!empty($orderDetails['address']))
                     <div class="form-group" style="height: 15px;">
                       <label style="font-weight: 550;">Address </label>
                       <label>{{ $orderDetails['address'] }}</label>
                     </div>
                     @endif
-                    @if(!empty($userDetails['city']))
+                    @if(!empty($orderDetails['city']))
                     <div class="form-group" style="height: 15px;">
                       <label style="font-weight: 550;">City </label>
                       <label>{{ $orderDetails['city'] }}</label>
                     </div>
                     @endif
-                    @if(!empty($userDetails['state']))
+                    @if(!empty($orderDetails['state']))
                     <div class="form-group" style="height: 15px;">
                       <label style="font-weight: 550;">State </label>
                       <label>{{ $orderDetails['state'] }}</label>
                     </div>
                     @endif
-                    @if(!empty($userDetails['country']))
+                    @if(!empty($orderDetails['country']))
                     <div class="form-group" style="height: 15px;">
                       <label style="font-weight: 550;">Country </label>
                       <label>{{ $orderDetails['country'] }}</label>
                     </div>
                     @endif
-                    @if(!empty($userDetails['pincode']))
+                    @if(!empty($orderDetails['pincode']))
                     <div class="form-group" style="height: 15px;">
                       <label style="font-weight: 550;">Pincode </label>
                       <label>{{ $orderDetails['pincode'] }}</label>
@@ -291,9 +291,7 @@ use App\Models\Coupon;
                           @endif
                         @endif
                         @if($product['vendor_id']>0)
-                          @php $getVendorCommission =
-                          Vendor::getVendorCommission($product['vendor_id']); @endphp
-                          <td>{{ $commission = round($total_price * $getVendorCommission/100,2) }}</td>
+                          <td>{{ $commission = round($total_price * $product['commission']/100,2) }}</td>
                           <td>{{ $total_price - $commission }}</td>
                         @else
                           <td>0</td>
@@ -309,7 +307,6 @@ use App\Models\Coupon;
                                     @endforeach
                                 </select>
                                 <input style="width: 100px;" type="text" name="item_courier_name" id="item_courier_name" placeholder="Courier Name" @if(!empty($product['courier_name'])) value="{{ $product['courier_name'] }}" @endif>
-                                <input style="width: 100px;" type="text" name="item_tracking_number" id="item_tracking_number" placeholder="Tracking Number" @if(!empty($product['tracking_number'])) value="{{ $product['tracking_number'] }}" @endif>
                                 <button type="submit">Update</button>
                             </form>
                         </td>

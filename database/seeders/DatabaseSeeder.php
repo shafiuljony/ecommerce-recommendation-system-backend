@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::create([
+       /**  User::create([
             'name' => 'user',
             'address' => 'user address', 
             'city' => 'user city',
@@ -30,27 +30,30 @@ class DatabaseSeeder extends Seeder
             'status' => 1,
             'email_verified_at' => now(),
         ]);
+        */
 
-        $this->call(AdminTableSeeder::class);
-        $this->call(VendorsTableSeeder::class);
-        $this->call(VendorsBusinessDetailsTableSeeder::class);
-        $this->call(VendorsBankDetailsTableSeeder::class);
-        $this->call(SectionsTableSeeder::class);
-        $this->call(CategoryTableSeeder::class);
-        $this->call(BrandsTableSeeder::class);
-        $this->call([ProductsTableSeeder::class]);
-        $this->call([ProductsAttributesTableSeeder::class]);
-        $this->call([UserTableSeeder::class]);
-        $this->call(BannersTableSeeder::class);
-        $this->call(FiltersTableSeeder::class);
-        $this->call(FiltersValuesTableSeeder::class);
-        $this->call(CouponsTableSeeder::class);
-        $this->call(DeliveryAddressTableSeeder::class);
-    $this->call([RatingsTableSeeder::class]);
-        $this->call([OrdersTableSeeder::class]);
-         $this->call(OrderStatusTableSeeder::class);
+        //$this->call(AdminTableSeeder::class);
+        //$this->call(VendorsTableSeeder::class);
+        //$this->call(VendorsBusinessDetailsTableSeeder::class);
+       // $this->call(VendorsBankDetailsTableSeeder::class);
+       // $this->call(SectionsTableSeeder::class);
+       // $this->call(CategoryTableSeeder::class);
+       // $this->call(BrandsTableSeeder::class);
+        //$this->call([ProductsTableSeeder::class]);
+       // $this->call([ProductsAttributesTableSeeder::class]);
+       // $this->call([UserTableSeeder::class]);
+        //$this->call(BannersTableSeeder::class);
+       // $this->call(FiltersTableSeeder::class);
+       // $this->call(FiltersValuesTableSeeder::class);
+       // $this->call(CouponsTableSeeder::class);
+       // $this->call(DeliveryAddressTableSeeder::class);
+       // $this->call([RatingsTableSeeder::class]);
+        //$this->call([OrdersTableSeeder::class]);
+       // $this->call(OrderStatusTableSeeder::class);
+       // $this->call(OrderItemStatusTableSeeder::class);
+       <!-- $this->call(CmsPageTableSeeder::class); -->
 
-         $this->call(CountrySeeder::class);
-         $this->call(ShippingChargeTableSeeder::class);
+        // $this->call(CountrySeeder::class);
+        //$this->call(ShippingChargeTableSeeder::class);
     }
 }

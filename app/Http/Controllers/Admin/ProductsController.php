@@ -227,8 +227,7 @@ class ProductsController extends Controller
 
         return view('admin.products.add_edit_product')->with(compact('title','categories','brands','product'));
     }
-    public function deleteProductImage($id)
-    {
+    public function deleteProductImage($id){
         //Get the Product Image
         $productImage = Product::select('product_image')->where('id',$id)->first();
         
@@ -258,8 +257,7 @@ class ProductsController extends Controller
         $message = 'Product Images has been deleted successfully!';
         return redirect()->back()->with('success_message',$message);
     }
-    public function deleteProductVideo($id)
-    {
+    public function deleteProductVideo($id){
         //Get the Product  Video
         $productVideo = Product::select('product_video')->where('id',$id)->first();
         

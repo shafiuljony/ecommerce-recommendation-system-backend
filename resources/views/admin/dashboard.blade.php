@@ -27,84 +27,165 @@
             </div>
         </div>
     </div>
-    <div class="row">
-    <div class="col-md-6 grid-margin transparent">
-            <div class="row">
-                <div class="col-md-6 mb-4 stretch-card transparent">
-                    <div class="card card-tale">
-                        <div class="card-body">
-                            <p class="mb-4">Total Sections</p>
-                            <p class="fs-30 mb-2">{{ $sectionsCount }}</p>
+    @if(Auth::guard('admin')->user()->type=="vendor")
+        <div class="row">
+            <div class="col-md-6 grid-margin transparent">
+                <div class="row">
+                    <div class="col-md-6 mb-4 stretch-card transparent">
+                        <div class="card card-tale">
+                            <div class="card-body">
+                                <p class="mb-4">Total Sections</p>
+                                <p class="fs-30 mb-2">{{ $sectionsCount }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4 stretch-card transparent">
+                        <div class="card card-dark-blue">
+                            <div class="card-body">
+                                <p class="mb-4">Total Categories</p>
+                                <p class="fs-30 mb-2">{{ $categoriesCount }}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 mb-4 stretch-card transparent">
-                    <div class="card card-dark-blue">
-                        <div class="card-body">
-                            <p class="mb-4">Total Categories</p>
-                            <p class="fs-30 mb-2">{{ $categoriesCount }}</p>
+                <div class="row">
+                    <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
+                        <div class="card card-light-blue">
+                            <div class="card-body">
+                                <p class="mb-4">My Products</p>
+                                <p class="fs-30 mb-2">{{ $vendorProductsCount }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 stretch-card transparent">
+                        <div class="card card-light-danger">
+                            <div class="card-body">
+                                <p class="mb-4">My orders</p>
+                                <p class="fs-30 mb-2">{{ $vendorOrdersCount }}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
-                    <div class="card card-light-blue">
-                        <div class="card-body">
-                            <p class="mb-4">Total Products</p>
-                            <p class="fs-30 mb-2">{{ $productsCount }}</p>
+            <div class="col-md-6 grid-margin transparent">
+                <div class="row">
+                    <div class="col-md-6 mb-4 stretch-card transparent">
+                        <div class="card card-tale">
+                            <div class="card-body">
+                                <p class="mb-4">My Coupon</p>
+                                <p class="fs-30 mb-2">{{ $vendorCouponsCount }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4 stretch-card transparent">
+                        <div class="card card-dark-blue">
+                            <div class="card-body">
+                                <p class="mb-4">Total Brands</p>
+                                <p class="fs-30 mb-2">{{ $brandsCount }}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 stretch-card transparent">
-                    <div class="card card-light-danger">
-                        <div class="card-body">
-                            <p class="mb-4">Total orders</p>
-                            <p class="fs-30 mb-2">{{ $ordersCount }}</p>
+                <!-- <div class="row">
+                    <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
+                        <div class="card card-light-blue">
+                            <div class="card-body">
+                                <p class="mb-4">Total Users</p>
+                                <p class="fs-30 mb-2">{{ $usersCount }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 stretch-card transparent">
+                        <div class="card card-light-danger">
+                            <div class="card-body">
+                                <p class="mb-4">Total Vendors</p>
+                                <p class="fs-30 mb-2">{{ $vendorsCount }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    @else
+        <div class="row">
+            <div class="col-md-6 grid-margin transparent">
+                <div class="row">
+                    <div class="col-md-6 mb-4 stretch-card transparent">
+                        <div class="card card-tale">
+                            <div class="card-body">
+                                <p class="mb-4">Total Sections</p>
+                                <p class="fs-30 mb-2">{{ $sectionsCount }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4 stretch-card transparent">
+                        <div class="card card-dark-blue">
+                            <div class="card-body">
+                                <p class="mb-4">Total Categories</p>
+                                <p class="fs-30 mb-2">{{ $categoriesCount }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
+                        <div class="card card-light-blue">
+                            <div class="card-body">
+                                <p class="mb-4">Total Products</p>
+                                <p class="fs-30 mb-2">{{ $productsCount }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 stretch-card transparent">
+                        <div class="card card-light-danger">
+                            <div class="card-body">
+                                <p class="mb-4">Total orders</p>
+                                <p class="fs-30 mb-2">{{ $ordersCount }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 grid-margin transparent">
+                <div class="row">
+                    <div class="col-md-6 mb-4 stretch-card transparent">
+                        <div class="card card-tale">
+                            <div class="card-body">
+                                <p class="mb-4">Total Coupon</p>
+                                <p class="fs-30 mb-2">{{ $couponsCount }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4 stretch-card transparent">
+                        <div class="card card-dark-blue">
+                            <div class="card-body">
+                                <p class="mb-4">Total Brands</p>
+                                <p class="fs-30 mb-2">{{ $brandsCount }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
+                        <div class="card card-light-blue">
+                            <div class="card-body">
+                                <p class="mb-4">Total Users</p>
+                                <p class="fs-30 mb-2">{{ $usersCount }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 stretch-card transparent">
+                        <div class="card card-light-danger">
+                            <div class="card-body">
+                                <p class="mb-4">Total Vendors</p>
+                                <p class="fs-30 mb-2">{{ $vendorsCount }}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-6 grid-margin transparent">
-            <div class="row">
-                <div class="col-md-6 mb-4 stretch-card transparent">
-                    <div class="card card-tale">
-                        <div class="card-body">
-                            <p class="mb-4">Total Coupon</p>
-                            <p class="fs-30 mb-2">{{ $couponsCount }}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 mb-4 stretch-card transparent">
-                    <div class="card card-dark-blue">
-                        <div class="card-body">
-                            <p class="mb-4">Total Brands</p>
-                            <p class="fs-30 mb-2">{{ $brandsCount }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
-                    <div class="card card-light-blue">
-                        <div class="card-body">
-                            <p class="mb-4">Total Users</p>
-                            <p class="fs-30 mb-2">{{ $usersCount }}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 stretch-card transparent">
-                    <div class="card card-light-danger">
-                        <div class="card-body">
-                            <p class="mb-4">Total Vendors</p>
-                            <p class="fs-30 mb-2">{{ $vendorsCount }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    @endif
 </div>
 
 @endsection

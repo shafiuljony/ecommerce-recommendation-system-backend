@@ -306,35 +306,35 @@
                                             <div class="star">
                                                 <span style='width:0'></span>
                                             </div>
-                                            <span>(0)</span>
+                                            <span>{{ $ratingFiveStarCount }}</span>
                                         </div>
                                         <div class="star-wrapper">
                                             <span>4 Stars</span>
                                             <div class="star">
                                                 <span style='width:67px'></span>
                                             </div>
-                                            <span>(23)</span>
+                                            <span>{{ $ratingFourStarCount }}</span>
                                         </div>
                                         <div class="star-wrapper">
                                             <span>3 Stars</span>
                                             <div class="star">
                                                 <span style='width:0'></span>
                                             </div>
-                                            <span>(0)</span>
+                                            <span>{{ $ratingThreeStarCount }}</span>
                                         </div>
                                         <div class="star-wrapper">
                                             <span>2 Stars</span>
                                             <div class="star">
                                                 <span style='width:0'></span>
                                             </div>
-                                            <span>(0)</span>
+                                            <span>{{ $ratingTowStarCount }}</span>
                                         </div>
                                         <div class="star-wrapper">
                                             <span>1 Star</span>
                                             <div class="star">
                                                 <span style='width:0'></span>
                                             </div>
-                                            <span>(0)</span>
+                                            <span>{{ $ratingOneStarCount }}</span>
                                         </div>
                                     </div>
                                 </div>

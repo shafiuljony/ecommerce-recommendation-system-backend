@@ -27,6 +27,10 @@ class AdminController extends Controller
 {
     public function dashboard(){
         Session::put('page','dashboard');
+        $adminType = Auth::guard('admin')->user()->type;
+        $vendor_id = Auth::guard('admin')->user()->vendor_id;
+        
+        
         $sectionsCount = Section::count();
         $categoriesCount = Category::count();
         $productsCount = Product::count();
@@ -35,7 +39,20 @@ class AdminController extends Controller
         $brandsCount = Brand::count();
         $usersCount = User::count();
         $vendorsCount = Vendor::count();
-        return view('admin.dashboard')->with(compact('sectionsCount','categoriesCount','productsCount','ordersCount','couponsCount','brandsCount','usersCount','vendorsCount'));
+
+        //Vendor dashboard information
+        $vendorOrdersCount = 0;
+        $vendorProductsCount = 0;
+        $vendorCouponsCount = 0;
+        if ($adminType == "vendor") {
+             $vendorOrdersCount = Order::whereHas('orders_products', function ($query) use ($vendor_id) {
+                $query->where('vendor_id', $vendor_id);
+            })->count();
+            $vendorProductsCount = Product::where('vendor_id', $vendor_id)->count();
+            $vendorCouponsCount = Coupon::where('vendor_id', $vendor_id)->count();
+        }
+
+        return view('admin.dashboard')->with(compact('sectionsCount','categoriesCount','productsCount','ordersCount','couponsCount','brandsCount','usersCount','vendorsCount','vendorOrdersCount','vendorProductsCount','vendorCouponsCount'));
     }
     public function updateAdminPassword(Request $request){
         Session::put('page','update_admin_password');

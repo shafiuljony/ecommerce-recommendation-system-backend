@@ -8,27 +8,22 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('orders_logs', function (Blueprint $table) {
+        Schema::create('order_item_statuses', function (Blueprint $table) {
             $table->id();
-            $table->integer('order_id');
-            $table->string('order_status');
-            $table->string('order_item_id');
+            $table->string('name');
+            $table->tinyInteger('status');
             $table->timestamps();
         });
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
-        Schema::dropIfExists('orders_logs');
+        Schema::dropIfExists('order_item_statuses');
     }
 };

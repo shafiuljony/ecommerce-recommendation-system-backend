@@ -247,13 +247,20 @@ class ProductsController extends Controller
         }
 
         // Get All Reating of product
-        $ratings = Rating::with('user')->where('status',1)->where('product_id',$id)->orderBy('id','desc')->get()->toArray();
+        $ratings = Rating::with('user')->where(['product_id'=>$id,'status'=>1])->orderBy('id','desc')->get()->toArray();
         // dd($rating);
 
         // Get Avarage Rating of product
 
-        $ratingsSum = Rating::where('status',1)->where('product_id',$id)->sum('rating');
-        $ratingsCount = Rating::where('status',1)->where('product_id',$id)->count();
+        $ratingsSum = Rating::where(['product_id'=>$id,'status'=>1])->sum('rating');
+        $ratingsCount = Rating::where(['product_id'=>$id, 'status'=>1])->count();
+
+        //get star rating
+        $ratingOneStarCount = Rating::where(['product_id'=> $id, 'status'=> 1, 'rating'=> 1])->count();
+        $ratingTowStarCount = Rating::where(['product_id'=> $id, 'status'=> 1, 'rating'=> 2])->count();
+        $ratingThreeStarCount = Rating::where(['product_id'=> $id, 'status'=> 1, 'rating'=> 3])->count();
+        $ratingFourStarCount = Rating::where(['product_id'=> $id, 'status'=> 1, 'rating'=> 4])->count();
+        $ratingFiveStarCount = Rating::where(['product_id'=> $id, 'status'=> 1, 'rating'=> 5])->count();
 
         if ($ratingsCount > 0) {
             $avgRating = $ratingsSum / $ratingsCount;
@@ -263,8 +270,9 @@ class ProductsController extends Controller
             $avgStarRating = 0;
         }
         $totalStock = ProductsAttributes::where('product_id', $id)->sum('stock');
-        $ratings = Rating::with('user')->where('status',1)->where('product_id',$id)->get()->toArray();
-        return view('front.products.detail')->with(compact('productDetails','categoryDetails','totalStock','similarProducts','recentlyViewedProducts','groupProducts','ratings','avgRating','avgStarRating','ratingsCount'));
+        $ratings = Rating::with('user')->where(['product_id'=>$id, 'status'=>1])->get()->toArray();
+
+        return view('front.products.detail')->with(compact('productDetails','categoryDetails','totalStock','similarProducts','recentlyViewedProducts','groupProducts','ratings','avgRating','avgStarRating','ratingsCount', 'ratingOneStarCount', 'ratingTowStarCount', 'ratingThreeStarCount', 'ratingFourStarCount', 'ratingFiveStarCount'));
     }
     public function getProductPrice(Request $request){
         if($request->ajax()){
@@ -703,10 +711,15 @@ class ProductsController extends Controller
                 $getCartItems->order_id = $order_id;
                 $getCartItems->user_id = Auth::user()->id;
                 $getProductDetails = Product::select('product_code','product_name','product_color','admin_id','vendor_id')->where('id',$item['product_id'])->first()->toArray();
-                // dd($getProductDetails);
+                //dd($getProductDetails);
 
                 $getCartItems->admin_id = $getProductDetails['admin_id'];
                 $getCartItems->vendor_id = $getProductDetails['vendor_id'];
+                if($getProductDetails['vendor_id'] > 0){
+                    $vendorCommission = Vendor::getVendorCommission($getProductDetails['vendor_id']);
+                }
+
+                $getCartItems->commission = $vendorCommission;
                 $getCartItems->product_id = $item['product_id'];
                 $getCartItems->product_code = $getProductDetails['product_code'];
                 $getCartItems->product_name = $getProductDetails['product_name'];
