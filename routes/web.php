@@ -153,8 +153,7 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::get('cms-pages','CmsController@index');
         Route::post('update-cms-page-status','CmsController@update');
         Route::match(['get','post'],'add-edit-cms-page/{id?}','CmsController@edit');
-        /**Route::get('delete-page/{id}','CmsController@deletePage');
-        */
+        Route::get('delete-page/{id}','CmsController@destroy');
 
        //Orders
        Route::get('orders','OrderController@orders');
@@ -239,6 +238,7 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
 
      //Search Product
      Route::get('search-products','ProductsController@listing');
+     Route::match(['GET','POST'],'contact','CmsController@contact');
 
     Route::group(['middleware'=>['auth']],function(){
         //User Account

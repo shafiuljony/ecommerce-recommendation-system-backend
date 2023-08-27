@@ -30,7 +30,7 @@ class ShippingController extends Controller
     }
 
     public function editShippingCharges($id, Request $request){
-        Session::put('page','shipping');
+        Session::get('page','edit-shipping-charges');
         if($request->isMethod('post')){
             $data = $request->all();
             ShippingCharge::where('id',$id)->update(['0_500g'=>$data['0_500g'],'501_1000g'=>$data['501_1000g'],'1001_2000g'=>$data['1001_2000g'],'2001_5000g'=>$data['2001_5000g'],'above_5000g'=>$data['above_5000g']]);

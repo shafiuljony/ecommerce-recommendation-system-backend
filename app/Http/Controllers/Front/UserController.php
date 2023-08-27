@@ -23,7 +23,7 @@ class UserController extends Controller
     public function userRegister(Request $request){
         if($request->ajax()){
             $data = $request->all();
-            echo "<pre"; print_r($data); die;
+            echo "<pre>"; print_r($data); die;
 
                 $validator = Validator::make($request->all(),[
                     'name' => 'required|string|max:100',

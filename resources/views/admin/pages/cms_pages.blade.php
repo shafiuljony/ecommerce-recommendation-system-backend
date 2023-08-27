@@ -66,6 +66,9 @@
                                             <a title="Edit page" href="{{ url('admin/add-edit-cms-page/'.$page['id']) }}">
                                                  <i style="font-size: 25px;" class="mdi mdi-pencil-box"></i>
                                             </a>
+                                            <a title="Delete Page" class="confirmDelete" href="javascript:void(0)" module="page" moduleid="{{ $page['id'] }}">
+                                                 <i style="font-size: 25px;" class="mdi mdi-delete"></i>
+                                            </a> 
                                         </td>
                                     </tr>
                                     @endforeach

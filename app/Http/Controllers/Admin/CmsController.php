@@ -66,18 +66,19 @@ class CmsController extends Controller
 
             //CMS Page Validation
             $rules = [
-                'title' => 'require',
-                'url' => 'require',
-                'description' => 'require',
+                'title' => 'required',         // Change 'require' to 'required'
+                'url' => 'required',           // Change 'require' to 'required'
+                'description' => 'required',   // Change 'require' to 'required'
             ];
+
             $customMessages = [
-                'title.require' => 'Page Title is Require',
-                'url.require' => 'Page URL is Require',
-                'description.require' => 'Page Description is Require',
+                'title.required' => 'Page Title is required',           // Change 'require' to 'required'
+                'url.required' => 'Page URL is required',               // Change 'require' to 'required'
+                'description.required' => 'Page Description is required', // Change 'require' to 'required'
             ];
             $this->validate($request,$rules,$customMessages);
             $cmspage->title = $data['title'];
-            $cmspage->url = $data['title'];
+            $cmspage->url = $data['url'];
             $cmspage->description = $data['description'];
             $cmspage->meta_title = $data['meta_title'];
             $cmspage->meta_description = $data['meta_description'];
@@ -112,8 +113,9 @@ class CmsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(CmsPage $cmsPage)
+    public function destroy($id)
     {
-        //
+        CmsPage::where('id',$id)->delete();
+        return redirect()->back()->with('success_message', 'CMS Page deleted successfully');
     }
 }

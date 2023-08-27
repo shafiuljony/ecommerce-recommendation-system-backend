@@ -133,6 +133,7 @@ class AdminController extends Controller
         return view('admin.settings.update_admin_details');
     }
     public function updateVendorDetails($slug, Request $request){
+
         $vendorDetails ='';
        
         if($slug=="personal"){
@@ -326,7 +327,6 @@ class AdminController extends Controller
     }
 
     public function admins($type=null){
-
         $admins = Admin::query();
         if(!empty($type)){
             $admins = $admins->where('type',$type);
