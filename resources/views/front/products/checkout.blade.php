@@ -135,10 +135,10 @@
                                 <label class="label-text" for="cash-on-delivery">Cash on Delivery</label>
                             </div>
                     
-                            <div class="u-s-m-b-13">
+                            <!-- <div class="u-s-m-b-13">
                                     <input type="radio" class="radio-box" name="payment_gateway" id="paypal" value="Paypal">
                                     <label class="label-text" for="paypal">Paypal</label>
-                            </div>
+                            </div> -->
                             <div class="u-s-m-b-13">
                                 <input type="checkbox" class="check-box" id="accept" name="accept" value="Yes" title="Please agree to T&C">
                                 <label class="label-text no-color" for="accept">I’ve read and accept the

@@ -40,7 +40,7 @@ class IndexController extends Controller
             if (!empty($recommendedProductIds)) {
                 $recommendedProducts = Product::whereIn('id', $recommendedProductIds)
                     ->where('status', 1)
-                    ->orderByRaw("FIELD(id, " . implode(',', $recommendedProductIds) . ") ASC")
+                    ->orderByRaw("FIELD(id, " . implode(',', $recommendedProductIds) . ") Desc")
                     ->with('category')
                     ->with('brand')
                     ->get()
